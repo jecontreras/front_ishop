@@ -1,0 +1,24 @@
+<ion-toolbar>
+  <ion-buttons slot="start" (click)="salir()">
+    <ion-back-button defaultHref="/"></ion-back-button>
+  </ion-buttons>
+  <ion-text color="dark">
+    <h5>Buscador</h5>
+  </ion-text>
+</ion-toolbar>
+<ion-content>
+  <ion-card>
+    <img src="https://image.shutterstock.com/image-photo/women-shopping-summer-she-using-260nw-1027446970.jpg" />
+    <ion-card-header>
+      <ion-card-subtitle>Destination</ion-card-subtitle>
+      <ion-card-title>Madison, WI</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      Founded in 1829 on an isthmus between Lake Monona and Lake Mendota, Madison was named the capital of the Wisconsin Territory in 1836.
+    </ion-card-content>
+  </ion-card>
+</ion-content>
+<ion-toolbar>
+  <ion-searchbar placeholder="Buscar Pelicula" animated debounce="700" [value]="textoBuscar"
+          (ionChange)="buscar( $event )"></ion-searchbar>
+</ion-toolbar>

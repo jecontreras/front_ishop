@@ -1,0 +1,46 @@
+
+<ion-toolbar>
+  <ion-buttons slot="start">
+    <ion-menu-button>
+      <ion-icon class="padding_menu" name="menu"></ion-icon>
+    </ion-menu-button>
+  </ion-buttons>
+  <ion-text color="dark">
+    <h5>Dilisap Live</h5>
+  </ion-text>
+  <ion-button slot="end" fill="clear" (click)="openEndSearch()">
+    <ion-icon class="padding_menu"  name="search"></ion-icon>
+  </ion-button>
+  <!-- <div>
+    <ion-grid>
+      <ion-row>
+        <ion-col size="2">
+          <ion-buttons>
+            <ion-menu-button>
+              <ion-icon class="padding_menu" size="large" name="menu"></ion-icon>
+            </ion-menu-button>
+          </ion-buttons>
+        </ion-col>
+        <ion-col size="10">
+            <ion-text>
+              <h5>Dilisap Live</h5>
+            </ion-text>
+            <p>Buscar</p>
+        </ion-col>
+        <ion-col size="12">
+          <ion-searchbar placeholder="Buscar Pelicula" animated debounce="700" [value]="textoBuscar"
+          (ionChange)="buscar( $event )"></ion-searchbar>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div> -->
+
+</ion-toolbar>
+
+<ion-toolbar>
+  <ion-segment scrollable mode="md" color="primary" (ionChange)="selectCategoria( $event )">
+    <ion-segment-button mode="md" [value]="item" *ngFor="let item of listCategoria">
+      <ion-label text-capitalize> {{ item.name }} </ion-label>
+    </ion-segment-button>
+  </ion-segment>
+</ion-toolbar>

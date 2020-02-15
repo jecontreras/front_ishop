@@ -1,3 +1,132 @@
 <ion-app>
-  <ion-router-outlet></ion-router-outlet>
+  <ion-split-pane when="md" contentId="principal">
+    <ion-menu side="start" menuId="primerMenu" contentId="principal">
+      <ion-header translucent>
+        <ion-toolbar>
+          <ion-item-divider class="itemDivider">
+            <ion-list>
+              <ion-item>
+                <ion-avatar slot="start" class="logo">
+                  <img [src]="data.foto || './assets/perfil.png'">
+                </ion-avatar>
+                <ion-label>
+                  <ion-text color="dark">
+                    <p> {{ ( data.username || 'Nombre User' ) | slice: 0: 20 }} </p>
+                  </ion-text>
+                  <ion-text color="dark">
+                    <p> <span> ID: </span> <span color="success"> {{ data.documento || '0000000000' }} </span> </p>
+                  </ion-text>
+                  <ion-text>
+                    <p> <span color="dark">{{ data.ranking || '4.1' }}</span> <span class="mi mi-face"></span> </p>
+                  </ion-text>
+                </ion-label>
+              </ion-item>
+            </ion-list>
+          </ion-item-divider>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content>
+        <ion-item-divider>
+          <ion-list>
+  
+            <ion-menu-toggle autoHide="false" *ngFor="let c of dataMenu.menu1">
+              <ion-item [routerLink]="c.redirectTo">
+                <ion-icon slot="start" [name]="c.icon"></ion-icon>
+                <ion-label>{{ c.name }}</ion-label>
+              </ion-item>
+            </ion-menu-toggle>
+            <ion-menu-toggle auto-hide="false">
+              <ion-item *ngIf="!data.id" (click)="iniciar_seccion()">
+                <ion-icon slot="start" name="man"></ion-icon>
+                <ion-label>
+                  <h6>Iniciar sesion</h6>
+                </ion-label>
+              </ion-item>
+              <ion-item [routerLink]="['/perfil']">
+                <ion-icon slot="start" name="person"></ion-icon>
+                <ion-label>
+                  <h6>Perfil</h6>
+                </ion-label>
+              </ion-item>
+              <ion-item *ngIf="data.id" (click)="cerrar_seccion()">
+                <ion-icon slot="start" name="walk"></ion-icon>
+                <ion-label>
+                  <h6>Cerrar sesion</h6>
+                </ion-label>
+              </ion-item>
+            </ion-menu-toggle>
+          </ion-list>
+        </ion-item-divider>
+
+        <ion-item-divider>
+          <ion-list>
+  
+            <ion-menu-toggle autoHide="false" *ngFor="let c of dataMenu.menu2">
+              <ion-item [routerLink]="c.redirectTo">
+                <ion-icon slot="start" [name]="c.icon"></ion-icon>
+                <ion-label>{{ c.name }}</ion-label>
+              </ion-item>
+            </ion-menu-toggle>
+            <ion-menu-toggle auto-hide="false">
+              <ion-item *ngIf="!data.id" (click)="iniciar_seccion()">
+                <ion-icon slot="start" name="man"></ion-icon>
+                <ion-label>
+                  <h6>Iniciar sesion</h6>
+                </ion-label>
+              </ion-item>
+              <ion-item [routerLink]="['/perfil']">
+                <ion-icon slot="start" name="person"></ion-icon>
+                <ion-label>
+                  <h6>Perfil</h6>
+                </ion-label>
+              </ion-item>
+              <ion-item *ngIf="data.id" (click)="cerrar_seccion()">
+                <ion-icon slot="start" name="walk"></ion-icon>
+                <ion-label>
+                  <h6>Cerrar sesion</h6>
+                </ion-label>
+              </ion-item>
+            </ion-menu-toggle>
+          </ion-list>
+        </ion-item-divider>
+
+        <ion-item-divider>
+          <ion-list>
+   
+            <ion-menu-toggle autoHide="false" *ngFor="let c of dataMenu.menu3">
+              <ion-item [routerLink]="c.redirectTo">
+                <ion-icon slot="start" [name]="c.icon"></ion-icon>
+                <ion-label>{{ c.name }}</ion-label>
+              </ion-item>
+            </ion-menu-toggle>
+            <ion-menu-toggle auto-hide="false">
+              <ion-item *ngIf="!data.id" (click)="iniciar_seccion()">
+                <ion-icon slot="start" name="man"></ion-icon>
+                <ion-label>
+                  <h6>Iniciar sesion</h6>
+                </ion-label>
+              </ion-item>
+              <ion-item [routerLink]="['/perfil']">
+                <ion-icon slot="start" name="person"></ion-icon>
+                <ion-label>
+                  <h6>Perfil</h6>
+                </ion-label>
+              </ion-item>
+              <ion-item *ngIf="data.id" (click)="cerrar_seccion()">
+                <ion-icon slot="start" name="walk"></ion-icon>
+                <ion-label>
+                  <h6>Cerrar sesion</h6>
+                </ion-label>
+              </ion-item>
+            </ion-menu-toggle>
+          </ion-list>
+        </ion-item-divider>
+      </ion-content>
+    </ion-menu>
+
+    <ion-router-outlet id="principal"></ion-router-outlet>
+  
+  </ion-split-pane>
+
+
 </ion-app>
