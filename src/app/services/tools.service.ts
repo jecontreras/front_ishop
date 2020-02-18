@@ -29,7 +29,7 @@ export class ToolsService {
     await this.loading.present();
   }
   async dismisPresent(){
-    await this.loading.onDidDismiss();
+    if(this.loading) await this.loading.onDidDismiss();
   }
 
 }

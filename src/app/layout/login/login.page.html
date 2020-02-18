@@ -1,0 +1,29 @@
+<ion-content>
+  <ion-slides [options]="sliderOpts">
+    <ion-slide>
+      <div class="ion-text-center divPrincipal">
+        <br>
+        <img src="./assets/login.jpg">
+        <ion-text color="success">
+          <h4>Iniciar sesión</h4>
+        </ion-text>
+        <ion-text color="dark" class="texto1">
+          <strong>Revisa los nuevos productos. compartelos con tus amigos y aumenta tus ganancias</strong>
+        </ion-text>
+        <br>
+        <br>
+        <ion-input *ngIf="!disablePass" class="ion-color-lavel inputemail" [(ngModel)]="data.cedula" placeholder="Numero de documento" required type="text"></ion-input>
+        <ion-input *ngIf="disablePass" class="ion-color-lavel inputemail" [(ngModel)]="data.password" placeholder="Ingrese tu contraseña" required type="text"></ion-input>
+        <br>
+        <ion-label class="texto2" *ngIf="!disablePass">Ingresa tu numero de documento para continuar</ion-label>
+        <ion-label class="texto2" *ngIf="disablePass">Ingresa tu contraseña para continuar</ion-label>
+        <br>
+        <br>
+        <ion-button color="success" (click)="iniciar()">
+          Iniciar sesión
+        </ion-button>
+      </div>
+    </ion-slide>
+  </ion-slides>
+
+</ion-content>

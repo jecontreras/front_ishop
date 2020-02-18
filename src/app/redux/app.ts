@@ -38,8 +38,32 @@ export function appReducer(state: STORAGES = APP, action: _action.actions) {
   }
   function validacion_key(state: STORAGES){
     //if(!state.articulos) state.articulos = [];
+    if(!state.persona) state.persona = {};
   }
   switch (action.type) {
+    case _action.PERSONA: {
+      switch(action.opt) {
+        case 'post' :
+          if(!state.persona) state.persona = {};
+            state.persona = action.payload;
+            return local_Storage(state);
+        break;
+        case 'put': {
+          state.persona = action.payload;
+        }
+        return local_Storage(state);
+        break;
+        case 'delete': 
+          state.persona = {};
+          return local_Storage(state);
+        break;
+        case 'drop': {
+          state.persona = {};
+          return local_Storage(state);
+        }
+        break;
+      }
+    }
     /*case _action.ARTICULOS:{
       switch (action.opt){
         case 'post': {

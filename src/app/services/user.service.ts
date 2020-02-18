@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ServiciosService } from './servicios.service';
 import { LOGINUSER } from './../interfas/interfaces';
-import { USER } from '../interfas/sotarage';
+import { PERSONA } from '../interfas/sotarage';
 @Injectable({
   providedIn: 'root'
 })
@@ -12,14 +12,17 @@ export class UserService {
     private _model: ServiciosService
   ) {
  }
+  get(user: any){
+    return this._model.querys<LOGINUSER>('personas/querys', user, 'post');
+  }
   login(user: Object) {
-    return this._model.querys<LOGINUSER>('user/login', user, 'post');
+    return this._model.querys<LOGINUSER>('personas/login', user, 'post');
   }
   register(user: Object) {
-    return this._model.querys<USER>('user/register', user, 'post');
+    return this._model.querys<PERSONA>('personas/register', user, 'post');
   }
   update(query:any = {}){
-    return this._model.querys<USER>('user'+query.id ,query, 'put');
+    return this._model.querys<PERSONA>('personas'+query.id ,query, 'put');
   }
 
 }

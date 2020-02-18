@@ -8,9 +8,9 @@ export interface STORAGES {
     compras?: COMPRAS[],
     cart?: CART[],
     favorito?: FAVORITO[],
-    user?: USER,
+    user?: PERSONA,
     usuario?: object,
-    search?: object,
+    persona?: PERSONA,
     eventos?: EVENTOS[],
     categoria?: CATEGORIA[],
     subasta?: SUBASTA[],
@@ -18,7 +18,7 @@ export interface STORAGES {
     articulo_select?: object
 };
 
-export interface USER{
+export interface PERSONA{
 
 }
 

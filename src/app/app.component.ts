@@ -31,7 +31,7 @@ export class AppComponent {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
-      this.dataService.getMenuOpts().subscribe(rta=>{this.dataMenu=rta.data; console.log(rta) });
+      //this.dataService.getMenuOpts().subscribe(rta=>{this.dataMenu=rta.data; console.log(rta) });
     });
   }
 }
