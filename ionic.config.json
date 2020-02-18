@@ -1,5 +1,7 @@
 {
   "name": "ishopt",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }

@@ -5,6 +5,7 @@ import { PersonaAction } from 'src/app/redux/app.actions';
 import { PERSONA } from 'src/app/interfas/sotarage';
 import { Store } from '@ngrx/store';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -25,8 +26,13 @@ export class LoginPage implements OnInit {
     private _user: UserService,
     private _tools: ToolsService,
     private _store: Store<PERSONA>,
-    private _router: Router
-  ) { }
+    private _router: Router,
+    private _authSrvice: AuthService
+  ) { 
+    if (this._authSrvice.isLoggedIn()) {
+      this._router.navigate(['/tabs/home']);
+    }
+  }
 
   ngOnInit() {
   }
@@ -45,7 +51,6 @@ export class LoginPage implements OnInit {
     if(this.data.cedula && !this.data.password)return this.validarDocumento();
     else{
       this._user.login(this.data).subscribe((res:any)=>{
-        console.log(res);
         this._tools.dismisPresent();
         if(res.success){
           let accion:any = new PersonaAction(res.data, 'post');
@@ -55,7 +60,7 @@ export class LoginPage implements OnInit {
           this._tools.presentToast("Error de login");
         }
       },(error)=>{
-        this._tools.presentToast("Error de login")
+        this._tools.presentToast("Error de servidor")
         this._tools.dismisPresent();
       });
     }

@@ -13,7 +13,7 @@
         <br>
         <br>
         <ion-input *ngIf="!disablePass" class="ion-color-lavel inputemail" [(ngModel)]="data.cedula" placeholder="Numero de documento" required type="text"></ion-input>
-        <ion-input *ngIf="disablePass" class="ion-color-lavel inputemail" [(ngModel)]="data.password" placeholder="Ingrese tu contraseña" required type="text"></ion-input>
+        <ion-input *ngIf="disablePass" class="ion-color-lavel inputemail" [(ngModel)]="data.password" placeholder="Ingrese tu contraseña" required type="password"></ion-input>
         <br>
         <ion-label class="texto2" *ngIf="!disablePass">Ingresa tu numero de documento para continuar</ion-label>
         <ion-label class="texto2" *ngIf="disablePass">Ingresa tu contraseña para continuar</ion-label>

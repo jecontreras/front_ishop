@@ -4,6 +4,8 @@ import * as moment from 'moment';
 import * as _ from 'lodash';
 import { tap } from 'rxjs/operators';
 import {Router, CanActivate } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { PERSONA } from '../interfas/sotarage';
 
 export interface User {
   heroesUrl: string;
@@ -14,8 +16,13 @@ export interface User {
   providedIn: 'root'
 })
 export class AuthService implements CanActivate {
-
-  constructor(private http: HttpClient, private router: Router) {
+  dataUser:any = {};
+  constructor(private http: HttpClient, private router: Router, private _store: Store<PERSONA>) {
+      this._store
+      .subscribe((store:any)=>{
+        store = store.name;
+        this.dataUser = store;
+      });
     }
 
    private setSession(authResult) {
@@ -56,29 +63,13 @@ export class AuthService implements CanActivate {
         return moment(expiresAt);
     }
     canActivate() {
-      var
-        identity:any = localStorage.getItem('user'),
-        splice: any = [];
-      // console.log(identity, window.location.pathname);
-      splice = _.split(window.location.pathname, "/", 3);
-      // console.log(splice);
-      if(splice[1] === 'admin' || identity){
-        if (identity) {
-          return true;
-        } else {
-          this.router.navigate(['/']);
-          return false;
-        }
-      }
-    }
-    urlreturn(splice, identity){
-      if(splice){
-        if (identity) {
-          return true;
-        } else {
-          this.router.navigate(['/']);
-          return false;
-        }
+      const identity = this.dataUser;
+      //console.log(identity)
+      if (Object.keys(identity).length >0) {
+        return true;
+      } else {
+        this.router.navigate(['/login']);
+        return false;
       }
     }
 }

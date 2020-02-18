@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { STORAGES } from 'src/app/interfas/sotarage';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-perfil',
@@ -7,7 +9,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PerfilPage implements OnInit {
   dataUser: any = {};
-  constructor() { }
+  constructor(
+    private _store: Store<STORAGES>
+  ) { 
+    this._store.subscribe((store:any)=>{
+      console.log(store);
+      store = store.name;
+      this.dataUser = store.persona;
+    });
+  }
 
   ngOnInit() {
   }

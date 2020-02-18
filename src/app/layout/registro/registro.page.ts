@@ -34,7 +34,6 @@ export class RegistroPage implements OnInit {
   iniciar(){
     this._tools.presentLoading();
     this._user.register(this.data).subscribe((res)=>{
-      console.log(res);
       if(res.status == 200){
         let accion:any = new PersonaAction(res.data, 'post');
         this._store.dispatch(accion);

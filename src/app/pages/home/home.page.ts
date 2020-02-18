@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { STORAGES } from 'src/app/interfas/sotarage';
 
 @Component({
   selector: 'app-home',
@@ -41,7 +43,13 @@ export class HomePage implements OnInit {
     freeMode: true
   }; 
 
-  constructor() { }
+  constructor( private _store: Store<STORAGES> ) {
+    this._store.subscribe((store:any)=>{
+      console.log(store);
+      store = store.name;
+      this.dataUser = store.persona;
+    });
+   }
 
   ngOnInit() {
   }

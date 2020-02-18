@@ -12,10 +12,10 @@
 
   <ion-toolbar color="success" class="submenu">
     <ion-avatar slot="start" class="perfil">
-      <img src="./assets/perfil.png">
+      <img [src]=" dataUser.foto || './assets/perfil.png' ">
     </ion-avatar>
     <ion-label>
-      <h3>Vamos {{ dataUser.name || '¡Juan Fernando!'}}</h3>
+      <h3>Vamos {{ dataUser.nombre || '¡Juan Fernando!'}}</h3>
       <p>Tu Código {{ dataUser.username }}</p>
     </ion-label>
   </ion-toolbar>
