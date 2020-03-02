@@ -39,6 +39,8 @@ export function appReducer(state: STORAGES = APP, action: _action.actions) {
   function validacion_key(state: STORAGES){
     //if(!state.articulos) state.articulos = [];
     if(!state.persona) state.persona = {};
+    if(!state.buscador) state.buscador = {};
+    if(!state.menus) state.menus = [];
   }
   switch (action.type) {
     case _action.PERSONA: {
@@ -61,6 +63,62 @@ export function appReducer(state: STORAGES = APP, action: _action.actions) {
           state.persona = {};
           return local_Storage(state);
         }
+        break;
+      }
+    }
+    case _action.BUSCADOR: {
+      switch(action.opt) {
+        case 'post' :
+          if(!state.buscador) state.buscador = {};
+            state.buscador = action.payload;
+            return local_Storage(state);
+        break;
+        case 'put': {
+          state.buscador = action.payload;
+        }
+        return local_Storage(state);
+        break;
+        case 'delete': 
+          console.log(action.opt)
+          state.buscador = {};
+          return local_Storage(state);
+        break;
+        case 'drop': {
+          state.buscador = {};
+          return local_Storage(state);
+        }
+        break;
+      }
+    }
+    case _action.MENUS:{
+      switch (action.opt){
+        case 'post': {
+          // console.log(action.payload);
+          if(!state.menus) state.menus = [];
+          data = proceso_data(state.menus,action.payload, 'post');
+          state.menus = data;
+          return local_Storage(state);
+        }
+        break;
+        case 'put': {
+          data = proceso_data(state.menus,action.payload, 'put');
+          state.menus = data;
+          return local_Storage(state);
+        }
+        break;
+        case 'delete': {
+          data = proceso_data(state.menus,action.payload, 'delete');
+          state.menus = data;
+          return local_Storage(state);
+        }
+        break;
+        case 'drop': {
+          state.menus = [];
+          return local_Storage(state);
+        }
+        break;
+        default:
+        return local_Storage(state);
         break;
       }
     }

@@ -31,12 +31,72 @@ const routes: Routes = [
         ]
       },
       {
+        path: 'clientes',
+        children: [
+          {
+            path: '',
+            loadChildren: () =>
+              import('../clientes/clientes.module').then(m => m.ClientesPageModule)
+          }
+        ]
+      },
+      {
+        path: 'notificacion',
+        children: [
+          {
+            path: '',
+            loadChildren: () =>
+              import('../notificaciones/notificaciones.module').then(m => m.NotificacionesPageModule)
+          }
+        ]
+      },
+      {
         path: 'ofertas',
         children: [
           {
             path: '',
             loadChildren: () =>
               import('../ofertas/ofertas.module').then(m => m.OfertasPageModule)
+          }
+        ]
+      },
+      {
+        path: 'ordenes',
+        children: [
+          {
+            path: '',
+            loadChildren: () =>
+              import('../ordenes/ordenes.module').then(m => m.OrdenesPageModule)
+          }
+        ]
+      },
+      {
+        path: 'chat',
+        children: [
+          {
+            path: '',
+            loadChildren: () =>
+              import('../chat/chat.module').then(m => m.ChatPageModule)
+          }
+        ]
+      },
+      {
+        path: 'categorias',
+        children: [
+          {
+            path: '',
+            loadChildren: () =>
+              import('../categorias/categorias.module').then(m => m.CategoriasPageModule)
+          }
+        ]
+      },
+      {
+        path: 'productoView/:id',
+        children: [
+          {
+            path: '',
+            loadChildren: () =>
+              import('../producto-view/producto-view.module').then(m => m.ProductoViewPageModule)
           }
         ]
       },

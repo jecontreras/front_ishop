@@ -15,6 +15,9 @@ export class UserService {
   get(user: any){
     return this._model.querys<LOGINUSER>('personas/querys', user, 'post');
   }
+  clientes(user: any){
+    return this._model.querys<LOGINUSER>('personas/clientes', user, 'post');
+  }
   login(user: Object) {
     return this._model.querys<LOGINUSER>('personas/login', user, 'post');
   }

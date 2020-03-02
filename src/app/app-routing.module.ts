@@ -23,8 +23,12 @@ const routes: Routes = [
     loadChildren: () => import('./layout/registro/registro.module').then( m => m.RegistroPageModule)
   },
   {
-    path: 'producto-view',
-    loadChildren: () => import('./pages/producto-view/producto-view.module').then( m => m.ProductoViewPageModule)
+    path: 'chat',
+    loadChildren: () => import('./pages/chat/chat.module').then( m => m.ChatPageModule)
+  },
+  {
+    path: 'clientes',
+    loadChildren: () => import('./pages/clientes/clientes.module').then( m => m.ClientesPageModule)
   }
 ];
 
