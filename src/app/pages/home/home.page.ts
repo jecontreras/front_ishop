@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { STORAGES } from 'src/app/interfas/sotarage';
-
+import { ModalController } from '@ionic/angular';
+import { BuscadorComponent } from 'src/app/components/buscador/buscador.component';
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
@@ -43,15 +44,26 @@ export class HomePage implements OnInit {
     freeMode: true
   }; 
 
-  constructor( private _store: Store<STORAGES> ) {
+  constructor( 
+    private _store: Store<STORAGES>,
+    private modalCtrl: ModalController
+  ) {
     this._store.subscribe((store:any)=>{
       console.log(store);
       store = store.name;
       this.dataUser = store.persona;
     });
-   }
+  }
 
   ngOnInit() {
+  }
+  openSearch(){
+    this.modalCtrl.create({
+      component: BuscadorComponent,
+      componentProps: {
+        obj: {}
+      }
+    }).then(modal=>modal.present());
   }
 
 }

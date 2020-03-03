@@ -15,6 +15,7 @@ import { appReducer } from './redux/app';
 import { environment } from 'src/environments/environment';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { FormordenesPageModule } from './form/formordenes/formordenes.module';
+import { ComponentsModule } from 'src/app/components/components.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -29,7 +30,8 @@ import { FormordenesPageModule } from './form/formordenes/formordenes.module';
     }),
     AppRoutingModule,
     HttpClientModule,
-    FormordenesPageModule
+    FormordenesPageModule,
+    ComponentsModule
   ],
   providers: [
     StatusBar,
