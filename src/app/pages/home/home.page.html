@@ -1,39 +1,45 @@
-<ion-header>
-
-  <ion-toolbar color="success">
-    <div class="ion-text-center">
-      <!--<img src="./assets/logo.png" class="logo">-->
-      <h3>Ishop.com</h3>
-    </div>
-    <ion-button fill="clear" slot="end" color="light">
-      <i class="material-icons">search</i>
-    </ion-button>
-  </ion-toolbar>
-
-  <ion-toolbar color="success" class="submenu">
-    <ion-avatar slot="start" class="perfil">
-      <img [src]=" dataUser.foto || './assets/perfil.png' ">
-    </ion-avatar>
-    <ion-label>
-      <h3>Vamos {{ dataUser.nombre || '¡Juan Fernando!'}}</h3>
-      <p>Tu Código {{ dataUser.username }}</p>
-    </ion-label>
-  </ion-toolbar>
-
-  <ion-toolbar color="success" class="submenu">
-    <ion-icon slot="start" size="large" name="stats-chart-outline" class="paddingLeft"></ion-icon>
-    <ion-text color="light">
-      <h6>Ganancias Por Ventas</h6>
-    </ion-text>
-    <ion-label slot="end">
-      {{ ( dataUser.ganancias || 20000 ).toLocaleString('de-DE', { style: 'currency', currency: 'COP' }) }}
-    </ion-label>
-  </ion-toolbar>
-
-</ion-header>
-
 <ion-content>
   
+  <ion-toolbar color="success">
+  
+    <ion-toolbar color="success">
+      
+      <div class="ion-text-center">
+        <!--<img src="./assets/logo.png" class="logo">-->
+        <h3>Ishop.com</h3>
+      </div>
+      <ion-button fill="clear" slot="end" color="light">
+        <i class="material-icons">search</i>
+      </ion-button>
+
+    </ion-toolbar>
+  
+    <ion-toolbar color="success" class="submenu">
+     
+      <ion-avatar slot="start" class="perfil">
+        <img [src]=" dataUser.foto || './assets/perfil.png' ">
+      </ion-avatar>
+      <ion-label>
+        <h3>Vamos {{ dataUser.nombre || '¡Juan Fernando!'}}</h3>
+        <p>Tu Código {{ dataUser.username }}</p>
+      </ion-label>
+    
+    </ion-toolbar>
+  
+    <ion-toolbar color="success" class="submenu">
+      
+      <ion-icon slot="start" size="large" name="stats-chart-outline" class="paddingLeft"></ion-icon>
+      <ion-text color="light">
+        <h6>Ganancias Por Ventas</h6>
+      </ion-text>
+      <ion-label slot="end">
+        {{ ( dataUser.ganancias || 20000 ).toLocaleString('de-DE', { style: 'currency', currency: 'COP' }) }}
+      </ion-label>
+
+    </ion-toolbar>
+
+  </ion-toolbar>
+    
   <ion-list>
     <ion-item>
       <ion-label>

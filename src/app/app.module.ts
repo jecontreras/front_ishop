@@ -14,6 +14,7 @@ import { StoreModule } from '@ngrx/store';
 import { appReducer } from './redux/app';
 import { environment } from 'src/environments/environment';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { FormordenesPageModule } from './form/formordenes/formordenes.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -27,7 +28,8 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
       logOnly: environment.production, // Restrict extension to log-only mode
     }),
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormordenesPageModule
   ],
   providers: [
     StatusBar,

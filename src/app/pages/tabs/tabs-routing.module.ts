@@ -121,6 +121,16 @@ const routes: Routes = [
         ]
       },
       {
+        path: 'regalos',
+        children: [
+          {
+            path: '',
+            loadChildren: () =>
+              import('../regalos/regalos.module').then(m => m.RegalosPageModule)
+          }
+        ]
+      },
+      {
         path: '',
         redirectTo: '/tabs/home',
         pathMatch: 'full'

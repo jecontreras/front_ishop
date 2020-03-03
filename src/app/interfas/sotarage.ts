@@ -19,7 +19,12 @@ export interface STORAGES {
     buscador?: object;
     menus?: MENUS[];
     ordenes?: ORDENES;
+    regalos?: REGALOS;
 };
+
+export interface REGALOS{
+    
+}
 
 export interface ORDENES{
     

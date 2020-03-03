@@ -2,28 +2,31 @@
   
   <ion-toolbar color="success">
 
-    <div class="ion-text-center">
-      <img src="./assets/perfil.png" class="perfil">
-
-      <ion-text>
-        <h5>¡Hola {{ dataUser.nombre || 'Juan Fernando!' }}</h5>
-        <p>Tu correo es  {{ dataUser.email || 'juan@email.com' }}</p>
+    <ion-toolbar color="success">
+      <div class="ion-text-center">
+        <img src="./assets/perfil.png" class="perfil">
+  
+        <ion-text>
+          <h5>¡Hola {{ dataUser.nombre || 'Juan Fernando!' }}</h5>
+          <p>Tu correo es  {{ dataUser.email || 'juan@email.com' }}</p>
+        </ion-text>
+  
+      </div>
+  
+    </ion-toolbar>
+  
+    <ion-toolbar color="success" class="paddingToolbar2">
+      <ion-text slot="start">
+          <h6>{{ dataUser.username || 'Fernando231' }}</h6>
+          <p>Tu Codigo</p>
       </ion-text>
+  
+      <ion-text slot="end">
+        <h6>{{ dataUser.clientes || 11 }}</h6>
+        <p>Clientes</p>
+      </ion-text>
+    </ion-toolbar>
 
-    </div>
-
-  </ion-toolbar>
-
-  <ion-toolbar color="success" class="paddingToolbar2">
-    <ion-text slot="start">
-        <h6>{{ dataUser.username || 'Fernando231' }}</h6>
-        <p>Tu Codigo</p>
-    </ion-text>
-
-    <ion-text slot="end">
-      <h6>{{ dataUser.clientes || 11 }}</h6>
-      <p>Clientes</p>
-  </ion-text>
   </ion-toolbar>
 
   <ion-list class="paddingCenter">

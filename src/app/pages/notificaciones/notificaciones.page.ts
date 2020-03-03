@@ -39,6 +39,13 @@ export class NotificacionesPage implements OnInit {
     this.get_notificacion();
   }
 
+  loadData(ev){
+    //console.log(ev);
+    this.evScroll = ev;
+    this.query.skip++;
+    this.get_notificacion();
+  }
+
   async get_notificacion(){
     return this._notificaion.get(this.query)
     .subscribe((rta:any)=>{

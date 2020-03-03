@@ -23,12 +23,8 @@ const routes: Routes = [
     loadChildren: () => import('./layout/registro/registro.module').then( m => m.RegistroPageModule)
   },
   {
-    path: 'chat',
-    loadChildren: () => import('./pages/chat/chat.module').then( m => m.ChatPageModule)
-  },
-  {
-    path: 'clientes',
-    loadChildren: () => import('./pages/clientes/clientes.module').then( m => m.ClientesPageModule)
+    path: 'formordenes',
+    loadChildren: () => import('./form/formordenes/formordenes.module').then( m => m.FormordenesPageModule)
   }
 ];
 
