@@ -3,6 +3,7 @@ import { NOTIFICACIONES } from 'src/app/interfas/sotarage';
 import { Store } from '@ngrx/store';
 import { NotificacionesService } from 'src/app/service-component/notificaciones.service';
 import { Router } from '@angular/router';
+import { ToolsService } from 'src/app/services/tools.service';
 
 @Component({
   selector: 'app-notificaciones',
@@ -26,6 +27,7 @@ export class NotificacionesPage implements OnInit {
   constructor(
     private _store: Store<NOTIFICACIONES>,
     private _notificaion: NotificacionesService,
+    private _tools: ToolsService,
     private router: Router
   ) { }
 
@@ -50,25 +52,11 @@ export class NotificacionesPage implements OnInit {
     return this._notificaion.get(this.query)
     .subscribe((rta:any)=>{
       // console.log(rta);
-
-      if(this.ev){
-        this.disable_list = true;
-        if(this.ev.target){
-          this.ev.target.complete();
-        }
-      }
-      /*this.list_notificacion.push(...rta.data );*/
+      this.list_notificacion.push(...rta.data );
       if( this.evScroll.target ){
         this.evScroll.target.complete()
       }
-    }, (err)=>{
-      if(this.ev){
-        this.disable_list = true;
-        if(this.ev.target){
-          this.ev.target.complete();
-        }
-      }
-    });
+    }, (err)=>{ console.error(err); this._tools.presentToast("Error de servidor o conexion"); });
   }
   view(item:any){
     if(item.tipo === 'chat'){

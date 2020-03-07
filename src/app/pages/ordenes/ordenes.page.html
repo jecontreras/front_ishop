@@ -9,7 +9,7 @@
         Ordenes
       </ion-label>
     </ion-text>
-    <ion-button color="light" fill="clear" slot="end" [routerLink]="['/chech']">
+    <ion-button color="light" fill="clear" slot="end" (click)="openSearch()">
       <ion-icon name="search"></ion-icon>
     </ion-button>
     <ion-button color="light" fill="clear" slot="end" (click)="agregar(false)">

@@ -4,6 +4,7 @@ import { HeaderComponent } from './header/header.component';
 import { IonicModule } from '@ionic/angular';
 import { PipeModule } from '../pipe/pipe.module';
 import { BuscadorComponent } from './buscador/buscador.component';
+import { AppRoutingModule } from '../app-routing.module';
 
 
 
@@ -20,6 +21,7 @@ import { BuscadorComponent } from './buscador/buscador.component';
     BuscadorComponent
   ],
   imports: [
+    AppRoutingModule, 
     CommonModule,
     IonicModule,
     PipeModule

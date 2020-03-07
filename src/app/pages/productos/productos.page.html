@@ -1,40 +1,34 @@
 <ion-header no-border translucent>
 
   <ion-toolbar color="success">
-    <ion-buttons slot="start" color="primary">
-      <ion-back-button defaultHref="/"></ion-back-button>
-    </ion-buttons>
-    <ion-text>
-      <ion-label>
-        Productos
-      </ion-label>
-    </ion-text>
-    <ion-button color="light" fill="clear" slot="end" [routerLink]="['/chech']">
-      <ion-icon name="search"></ion-icon>
-    </ion-button>
+
+    <ion-toolbar color="success">
+      <ion-buttons slot="start" color="primary">
+        <ion-back-button defaultHref="/tabs"></ion-back-button>
+      </ion-buttons>
+      <ion-text>
+        <ion-label>
+          Productos
+        </ion-label>
+      </ion-text>
+      <ion-button color="light" fill="clear" (click)="openSearch()" slot="end">
+        <ion-icon name="search"></ion-icon>
+      </ion-button>
+    </ion-toolbar>
+  
+    <ion-toolbar color="success">
+      <ion-segment scrollable mode="md" color="light" (ionChange)="cambioCategoria( $event )">
+        <ion-segment-button color="light" mode="md" [value]="item" *ngFor="let item of listCategorias">
+          <ion-label class="colorText" text-capitalize> {{ item.nombre }} </ion-label>
+        </ion-segment-button>
+      </ion-segment>
+    </ion-toolbar>
+    
   </ion-toolbar>
 
 </ion-header>
 <ion-content class="ion-padding">
-
-    <ion-segment scrollable mode="md" color="primary" (ionChange)="cambioCategoria( $event )">
-      <ion-segment-button mode="md" [value]="item.id" *ngFor="let item of listCategorias">
-        <ion-label text-capitalize> {{ item.nombre }}</ion-label>
-      </ion-segment-button>
-    </ion-segment>
-  
-  <!--<ion-card class="padding_car" *ngFor="let off of listProductos">
-    <img [src]="off.foto" class="imgPrincipal">
-    <ion-card-content no-border class="padding_car">
-      <ion-text color="dark" class="sizeText">
-        <ion-label>
-          {{ off.titulo }}
-          <p class="sizeSubheader">{{ off.detalle }}</p>
-        </ion-label>
-      </ion-text>
-    </ion-card-content>
-  </ion-card> -->
-
+    
   <ion-grid>
     <ion-row>
       <ion-col *ngFor="let off of listProductos" size="6" [routerLink]="[ '/tabs/productoView', off.id ]">
@@ -51,5 +45,20 @@
       </ion-col>
     </ion-row>
   </ion-grid>
+
+  <div class="ion-text-center" *ngIf="listProductos.length === 0">
+    <ion-title>
+      <h6>No hay datos a mostrar</h6>
+    </ion-title>
+  </div>
+
+  <ion-infinite-scroll threshold="150px"
+                         (ionInfinite)="loadData( $event )"
+                        >
+    <ion-infinite-scroll-content loadingSpinner="crescent"
+                                  loadingtext="Cargando data..">
+
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 
 </ion-content>

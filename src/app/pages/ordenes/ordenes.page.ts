@@ -3,6 +3,7 @@ import { OrdenesService } from 'src/app/service-component/ordenes.service';
 import { ToolsService } from 'src/app/services/tools.service';
 import { ModalController } from '@ionic/angular';
 import { FormordenesPage } from 'src/app/form/formordenes/formordenes.page';
+import { BuscadorComponent } from 'src/app/components/buscador/buscador.component';
 
 @Component({
   selector: 'app-ordenes',
@@ -27,6 +28,15 @@ export class OrdenesPage implements OnInit {
     this._ordenes.get(this.query).subscribe((res:any)=>{
       this.listOrdenes = res.data;
     },error=>{ console.error(error); this._tools.presentToast("Error de servidor")});
+  }
+  
+  openSearch(){
+    this.modalCtrl.create({
+      component: BuscadorComponent,
+      componentProps: {
+        obj: {}
+      }
+    }).then(modal=>modal.present());
   }
 
   agregar( obj:any ){
