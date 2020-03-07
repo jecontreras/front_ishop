@@ -142,6 +142,16 @@
           </ion-item>
         </ion-list>
       </ion-col>
+      <ion-col size="12">
+        <ion-infinite-scroll threshold="150px"
+                         (ionInfinite)="loadData1( $event )"
+        >
+          <ion-infinite-scroll-content loadingSpinner="crescent"
+                                        loadingtext="Cargando data..">
+
+          </ion-infinite-scroll-content>
+        </ion-infinite-scroll>
+      </ion-col>
     </ion-row>
   </ion-grid>
 
@@ -159,13 +169,23 @@
           <h6>{{ ( off.precioCompra ).toLocaleString('de-DE', { style: 'currency', currency: 'COP' }) }}</h6>
         </ion-text>
       </ion-col>
+      <ion-col size="12">
+        <ion-infinite-scroll threshold="150px"
+                         (ionInfinite)="loadData2( $event )"
+        >
+          <ion-infinite-scroll-content loadingSpinner="crescent"
+                                        loadingtext="Cargando data..">
+
+          </ion-infinite-scroll-content>
+        </ion-infinite-scroll>
+      </ion-col>
     </ion-row>
   </ion-grid>
 
 </ion-content>
 <ion-footer>
   <div class="ion-text-center">
-    <ion-button color="success">
+    <ion-button color="success" (click)="submitCart()">
       ¡Montar Pedido!
     </ion-button>
     <ion-button color="success">

@@ -31,8 +31,8 @@
     
   <ion-grid>
     <ion-row>
-      <ion-col *ngFor="let off of listProductos" size="6" [routerLink]="[ '/tabs/productoView', off.id ]">
-        <img [src]="off.foto || './assets/product.jpg'" class="imgPrincipal">
+      <ion-col *ngFor="let off of listProductos" size="6">
+        <img [src]="off.foto || './assets/product.jpg'" class="imgPrincipal" [routerLink]="[ '/tabs/productoView', off.id ]">
         <ion-text color="dark" class="sizeText">
           <ion-label>
             {{ off.titulo }}
@@ -42,6 +42,14 @@
         <ion-text color="success">
           <h6>{{ ( off.precioOferta || off.precioCompra || 0 ).toLocaleString('de-DE', { style: 'currency', currency: 'COP' }) }}</h6>
         </ion-text>
+        <div class="ion-text-end">
+          <ion-button fill="clear" (click)="submitCart( off )">
+            <ion-icon name="cart-outline"></ion-icon>
+          </ion-button>
+          <ion-button fill="clear">
+            <ion-icon name="share-social-outline"></ion-icon>
+          </ion-button>
+        </div>
       </ion-col>
     </ion-row>
   </ion-grid>

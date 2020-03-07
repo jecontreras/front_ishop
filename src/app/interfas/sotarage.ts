@@ -1,21 +1,13 @@
 export interface STORAGES {
     nameapp?: object;
     articulos?: PRODUCTOS[];
-    mensajes?: MENSAJES[];
-    mensajes_init?: MENSAJESINIT[];
     notificaciones?: NOTIFICACIONES[];
-    comentarios?: COMENTARIOS[];
-    compras?: COMPRAS[];
-    cart?: CART[];
+    carrito?: CARRITO[];
     favorito?: FAVORITO[];
     user?: PERSONA;
     usuario?: object;
-    persona?: PERSONA;
-    eventos?: EVENTOS[];
     categoria?: CATEGORIA[];
-    subasta?: SUBASTA[];
-    negocios?: NEGOCIO[];
-    articulo_select?: object;
+    persona?: PERSONA;
     buscador?: object;
     menus?: MENUS[];
     ordenes?: ORDENES;
@@ -64,7 +56,7 @@ export interface MENSAJES{
 export interface PRODUCTOS{
 
 };
-export interface CART{
+export interface CARRITO{
 
 };
 export interface FAVORITO{

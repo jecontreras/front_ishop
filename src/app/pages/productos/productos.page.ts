@@ -4,7 +4,7 @@ import { ToolsService } from 'src/app/services/tools.service';
 import { ProductosService } from 'src/app/service-component/productos.service';
 import { STORAGES } from 'src/app/interfas/sotarage';
 import { Store } from '@ngrx/store';
-import { BuscadorAction } from 'src/app/redux/app.actions';
+import { BuscadorAction, CarritoAction } from 'src/app/redux/app.actions';
 import { ModalController } from '@ionic/angular';
 import { BuscadorComponent } from 'src/app/components/buscador/buscador.component';
 
@@ -121,5 +121,11 @@ export class ProductosPage  {
       }
     }).then(modal=>modal.present());
   }
-  
+
+  submitCart(item:any){
+    item.cantidadAduiridad = 1;
+    let accion = new CarritoAction(item, 'post');
+    this._store.dispatch(accion);
+  }
+
 }

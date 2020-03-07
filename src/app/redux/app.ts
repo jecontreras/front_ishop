@@ -28,7 +28,7 @@ export function appReducer(state: STORAGES = APP, action: _action.actions) {
   }
   function proceso_data(lista:any, data:any, opt){
     let idx = _.findIndex(lista, ['id', data.id]);
-    if(idx >-1){
+    if(idx >-1 && opt != 'post'){
       if(opt === 'delete') lista.splice(idx, 1);
       else lista[idx]= data;
     }else{
@@ -41,6 +41,7 @@ export function appReducer(state: STORAGES = APP, action: _action.actions) {
     if(!state.persona) state.persona = {};
     if(!state.buscador) state.buscador = {};
     if(!state.menus) state.menus = [];
+    if(!state.carrito) state.carrito = [];
   }
   switch (action.type) {
     case _action.PERSONA: {
@@ -114,6 +115,38 @@ export function appReducer(state: STORAGES = APP, action: _action.actions) {
         break;
         case 'drop': {
           state.menus = [];
+          return local_Storage(state);
+        }
+        break;
+        default:
+        return local_Storage(state);
+        break;
+      }
+    }
+    case _action.CARRITO:{
+      switch (action.opt){
+        case 'post': {
+          // console.log(action.payload);
+          if(!state.carrito) state.carrito = [];
+          data = proceso_data(state.carrito,action.payload, 'post');
+          state.carrito = data;
+          return local_Storage(state);
+        }
+        break;
+        case 'put': {
+          data = proceso_data(state.carrito,action.payload, 'put');
+          state.carrito = data;
+          return local_Storage(state);
+        }
+        break;
+        case 'delete': {
+          data = proceso_data(state.carrito,action.payload, 'delete');
+          state.carrito = data;
+          return local_Storage(state);
+        }
+        break;
+        case 'drop': {
+          state.carrito = [];
           return local_Storage(state);
         }
         break;
