@@ -126,6 +126,7 @@ export class ProductosPage  {
     item.cantidadAduiridad = 1;
     let accion = new CarritoAction(item, 'post');
     this._store.dispatch(accion);
+    this._tools.presentToast("Agregado al Carro");
   }
 
 }

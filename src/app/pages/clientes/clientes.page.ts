@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from 'src/app/services/user.service';
+import { ClientesService } from 'src/app/service-component/clientes.service';
 
 @Component({
   selector: 'app-clientes',
@@ -14,7 +15,7 @@ export class ClientesPage implements OnInit {
   };
   
   constructor(
-    private _user: UserService
+    private _cliente: ClientesService
   ) { }
 
   ngOnInit() {
@@ -22,7 +23,7 @@ export class ClientesPage implements OnInit {
   }
 
   getClientes(){
-    this._user.clientes(this.query).subscribe((res:any)=>{
+    this._cliente.get(this.query).subscribe((res:any)=>{
       this.listClientes = res.data;
     },(error)=>{ console.error(error); });
   }

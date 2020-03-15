@@ -27,9 +27,35 @@
   </ion-toolbar>
 
 </ion-header>
-<ion-content class="ion-padding">
+<ion-content fullscreen>
     
   <ion-grid>
+    <ion-row>
+      <ion-col size="6" class="tumbaPaddin2" *ngFor="let off of listProductos">
+        <ion-card class="marginCard">
+          <img [src]="off.foto || './assets/product.jpg'" [routerLink]="[ '/tabs/productoView', off.id ]">
+          <ion-card-header class="tumbaPadding">
+            <ion-card-subtitle>{{ off['idEmpresa']?.nombre }}</ion-card-subtitle>
+            <ion-card-title>{{ off.titulo }}</ion-card-title>
+          </ion-card-header>
+          <ion-card-content class="tumbaPadding">
+            <ion-text color="success">
+              <h6>{{ ( off.precioOferta || off.precioCompra || 0 ).toLocaleString('de-DE', { style: 'currency', currency: 'COP' }) }}</h6>
+            </ion-text>
+            <div class="ion-text-end">
+              <ion-button fill="clear" (click)="submitCart( off )">
+                <ion-icon name="cart-outline"></ion-icon>
+              </ion-button>
+              <ion-button fill="clear">
+                <ion-icon name="share-social-outline"></ion-icon>
+              </ion-button>
+            </div>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <!-- <ion-grid>
     <ion-row>
       <ion-col *ngFor="let off of listProductos" size="6">
         <img [src]="off.foto || './assets/product.jpg'" class="imgPrincipal" [routerLink]="[ '/tabs/productoView', off.id ]">
@@ -52,7 +78,7 @@
         </div>
       </ion-col>
     </ion-row>
-  </ion-grid>
+  </ion-grid> -->
 
   <div class="ion-text-center" *ngIf="listProductos.length === 0">
     <ion-title>

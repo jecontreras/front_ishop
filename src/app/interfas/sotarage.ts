@@ -12,7 +12,12 @@ export interface STORAGES {
     menus?: MENUS[];
     ordenes?: ORDENES;
     regalos?: REGALOS;
+    cliente?: CLIENTE;
 };
+
+export interface CLIENTE {
+    
+}
 
 export interface REGALOS{
     

@@ -31,7 +31,7 @@
         </ion-avatar>
         <ion-label>
           
-          <h3>Cliente {{ item.idCliente.username }}</h3>
+          <h3>Cliente {{ item.idCliente.nombre }}</h3>
           <h4>Precio Total {{ ( item.precio || 0 ).toLocaleString('de-DE', { style: 'currency', currency: 'COP' }) }}</h4>
           <h4>Ganancias {{ ( item.precio || 0 ).toLocaleString('de-DE', { style: 'currency', currency: 'COP' }) }}</h4>
           <p>{{ item.createdAt }}</p>

@@ -27,23 +27,27 @@
     </ion-item>
     <ion-item>
         <ion-label position="floating">Nombre Cliente</ion-label>
-        <ion-input [(ngModel)]="data.cliente.nombre" type="text"></ion-input>
+        <ion-input [(ngModel)]="data.cliente.nombreCliente" type="text"></ion-input>
     </ion-item>
     <ion-item>
         <ion-label position="floating">Cedula del cliente</ion-label>
-        <ion-input [(ngModel)]="data.cliente.cedula" type="text"></ion-input>
+        <ion-input [(ngModel)]="data.cliente.cedulaCliente" type="text"></ion-input>
     </ion-item>
     <ion-item>
         <ion-label position="floating">Telefono del cliente</ion-label>
-        <ion-input [(ngModel)]="data.cliente.telefono" type="text"></ion-input>
+        <ion-input [(ngModel)]="data.cliente.celularCliente" type="text"></ion-input>
     </ion-item>
+    <ion-item>
+      <ion-label position="floating">Email del cliente</ion-label>
+      <ion-input [(ngModel)]="data.cliente.emailCliente" type="text"></ion-input>
+  </ion-item>
     <ion-item>
         <ion-label position="floating">Fecha de Pedido</ion-label>
-        <ion-input [(ngModel)]="data.cliente.fecha_pedido" type="text"></ion-input>
+        <ion-input [(ngModel)]="data.factura.fecha_pedido" type="text"></ion-input>
     </ion-item>
-    <ion-item>
+    <ion-item>  
         <ion-label position="floating">Direccion del Cliente</ion-label>
-        <ion-input [(ngModel)]="data.cliente.telefono" type="text"></ion-input>
+        <ion-input [(ngModel)]="data.cliente.direccionCliente" type="text"></ion-input>
     </ion-item>
     <ion-item>
       <ion-toolbar>
@@ -71,3 +75,14 @@
       </ion-item>
   </ion-list>
 </ion-content>
+
+<ion-footer>
+  <ion-list>
+    <ion-item slot="start">
+      <p>Total: {{ ( data.total || 0 ).toLocaleString('de-DE', { style: 'currency', currency: 'COP' }) }}</p>
+    </ion-item>
+    <ion-item slot="end">
+      <p>Comision 11%: {{ ( data.ganancias || 0 ).toLocaleString('de-DE', { style: 'currency', currency: 'COP' }) }}</p>
+    </ion-item>
+  </ion-list>
+</ion-footer>
