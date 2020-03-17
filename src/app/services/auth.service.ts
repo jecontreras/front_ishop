@@ -18,10 +18,9 @@ export interface User {
 export class AuthService implements CanActivate {
   dataUser:any = {};
   constructor(private http: HttpClient, private router: Router, private _store: Store<PERSONA>) {
-      this._store
-      .subscribe((store:any)=>{
+      this._store.subscribe((store:any)=>{
         store = store.name;
-        this.dataUser = store;
+        this.dataUser = store.persona || {};
       });
     }
 
@@ -64,11 +63,10 @@ export class AuthService implements CanActivate {
     }
     canActivate() {
       const identity = this.dataUser;
-      //console.log(identity)
       if (Object.keys(identity).length >0) {
         return true;
       } else {
-        this.router.navigate(['/login']);
+        this.router.navigate(['/portada']);
         return false;
       }
     }

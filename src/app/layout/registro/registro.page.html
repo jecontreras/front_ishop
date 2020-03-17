@@ -19,16 +19,16 @@
         <ion-input class="ion-color-lavel inputemail" [(ngModel)]="data.celular" placeholder="Telefono Celular" required type="text"></ion-input>
         <ion-input class="ion-color-lavel inputemail" [(ngModel)]="data.email" placeholder="Correo electrónicos" required type="text"></ion-input>
         <ion-input class="ion-color-lavel inputemail" [(ngModel)]="data.password" placeholder="contraseñea (min 6 caracteres)" required type="password"></ion-input>
-        <ion-input class="ion-color-lavel inputemail" [(ngModel)]="data.confirpassword" placeholder="Confirmar contraseña" required type="password"></ion-input>
+        <ion-input class="ion-color-lavel inputemail" [(ngModel)]="data.confirpassword" (change)="iniciar()" placeholder="Confirmar contraseña" required type="password"></ion-input>
         <br>
         <ion-checkbox checked="true" class="checkbook"></ion-checkbox> <span class="footer"> He leido y acepto los <ion-text color="primary"><p>terminos de condiciones</p></ion-text></span>
         <ion-text color="primary" class="footer">
           <p>¿Tienes un problema con el registro? Contáctenos viá Whatsapp</p>
         </ion-text>
-        <ion-button expand="full" color="success" (click)="iniciar()" >
+        <ion-button expand="full" color="success" (click)="iniciar()" [routerLink]="['/registro']">
           Crea tu cuenta
         </ion-button>
-        <div class="ion-text-center divPrincipal">
+        <div class="ion-text-center divPrincipal" [routerLink]="['/login']">
           <ion-text color="primary" class="footer">
             <p>Ya tengo una cuenta</p>
           </ion-text>
