@@ -16,6 +16,7 @@ import { environment } from 'src/environments/environment';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { FormordenesPageModule } from './form/formordenes/formordenes.module';
 import { ComponentsModule } from 'src/app/components/components.module';
+import { ProductosPageModule } from './pages/productos/productos.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -31,7 +32,8 @@ import { ComponentsModule } from 'src/app/components/components.module';
     AppRoutingModule,
     HttpClientModule,
     FormordenesPageModule,
-    ComponentsModule
+    ComponentsModule,
+    ProductosPageModule
   ],
   providers: [
     StatusBar,

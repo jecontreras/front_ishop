@@ -6,6 +6,8 @@ import { STORAGES } from 'src/app/interfas/sotarage';
 import { Store } from '@ngrx/store';
 import { CalificacionesService } from 'src/app/service-component/calificaciones.service';
 import { CarritoAction } from 'src/app/redux/app.actions';
+import { ModalController } from '@ionic/angular';
+import { BuscadorComponent } from 'src/app/components/buscador/buscador.component';
 
 @Component({
   selector: 'app-producto-view',
@@ -38,13 +40,15 @@ export class ProductoViewPage implements OnInit {
     where:{ },
     skip: 0
   };
+  btndisableComentario:boolean = false;
 
   constructor(
     private activate: ActivatedRoute,
     private _producto: ProductosService,
     private _tools: ToolsService,
     private _store: Store<STORAGES>,
-    private _calificaciones: CalificacionesService
+    private _calificaciones: CalificacionesService,
+    private modalCtrl: ModalController
   ) { 
     this._store.subscribe((store:any)=>{
       console.log(store);
@@ -94,6 +98,7 @@ export class ProductoViewPage implements OnInit {
   
   submitComentario(){
     //console.log(this.dataComentario);
+    this.btndisableComentario = true;
     let data:any = {
       idComentario: {detalle:this.dataComentario.detalle},
       calificacion: this.dataComentario.calificacion,
@@ -102,8 +107,14 @@ export class ProductoViewPage implements OnInit {
     };
     this._calificaciones.saved(data).subscribe((res:any)=>{
       console.log(res);
+      this.btndisableComentario = false;
       this.dataComentario = {};
       this._tools.presentToast('Comentario Agregado');
+      this.lisComentario.push({
+        idPersona: { nombre: this.dataUser.nombre },
+        idComentario: {detalle:this.dataComentario.detalle},
+        calificacion:  this.dataComentario.calificacion
+      })
     },(error)=>{ console.error(error); this._tools.presentToast('Error de servidor')});
 
   }
@@ -124,5 +135,16 @@ export class ProductoViewPage implements OnInit {
     this.data.cantidadAduiridad = 1;
     let accion = new CarritoAction(this.data, 'post');
     this._store.dispatch(accion);
+    this._tools.presentToast("Agregado al carro");
   }
+
+  openSearch(){
+    this.modalCtrl.create({
+      component: BuscadorComponent,
+      componentProps: {
+        obj: {}
+      }
+    }).then(modal=>modal.present());
+  }
+
 }

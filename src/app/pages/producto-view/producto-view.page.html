@@ -11,7 +11,7 @@
           Productos
         </ion-label>
       </ion-text>
-      <ion-button color="light" fill="clear" slot="end" [routerLink]="['/chech']">
+      <ion-button color="light" fill="clear" slot="end" (click)="openSearch()">
         <ion-icon name="search"></ion-icon>
       </ion-button>
     </ion-toolbar>
@@ -85,7 +85,7 @@
   <ion-grid *ngIf="dataVisible == 'Calificaciones'">
     <ion-row>
       <ion-col size="12">
-        <ion-text color="dark" slot="start">
+        <ion-text color="dark">
           <ion-label>
             {{ data.titulo }}
             <p>({{ data.cantidad }})<span>UNIDADES DISPONIBLES</span></p>
@@ -110,7 +110,7 @@
         </ion-label>
         <ion-textarea [(ngModel)]="dataComentario.detalle" placeholder="Descripcion del Producto" rows="6" cols="20">
         </ion-textarea>
-        <ion-button color="success" (click)="submitComentario()">
+        <ion-button color="success" (click)="submitComentario()" [disabled]="btndisableComentario">
           Enviar
         </ion-button>
       </ion-col>

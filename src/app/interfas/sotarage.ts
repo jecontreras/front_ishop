@@ -1,5 +1,5 @@
 export interface STORAGES {
-    nameapp?: object;
+    nameapp?: NAMEAPP;
     articulos?: PRODUCTOS[];
     notificaciones?: NOTIFICACIONES[];
     carrito?: CARRITO[];
@@ -14,6 +14,9 @@ export interface STORAGES {
     regalos?: REGALOS;
     cliente?: CLIENTE;
 };
+export interface NAMEAPP {
+    
+}
 
 export interface CLIENTE {
     

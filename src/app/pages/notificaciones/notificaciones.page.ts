@@ -56,6 +56,12 @@ export class NotificacionesPage implements OnInit {
       if( this.evScroll.target ){
         this.evScroll.target.complete()
       }
+      if(this.ev){
+        this.disable_list = true;
+        if(this.ev.target){
+          this.ev.target.complete();
+        }
+      }
     }, (err)=>{ console.error(err); this._tools.presentToast("Error de servidor o conexion"); });
   }
   view(item:any){

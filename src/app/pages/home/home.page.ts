@@ -3,6 +3,9 @@ import { Store } from '@ngrx/store';
 import { STORAGES } from 'src/app/interfas/sotarage';
 import { ModalController } from '@ionic/angular';
 import { BuscadorComponent } from 'src/app/components/buscador/buscador.component';
+import { HomeService } from 'src/app/service-component/home.service';
+import { ToolsService } from 'src/app/services/tools.service';
+import { NameappAction } from 'src/app/redux/app.actions';
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
@@ -14,49 +17,62 @@ export class HomePage implements OnInit {
     allowSlidePrev: false,
     allowSlideNext: false
   };
-  data_app:any = [
-    {
-      titulo:"Nuevos Productos",
-      subtitle: "16 Productos desde $16.000",
-      descripcion: "Entrega de 5 a 10 dias hábiles",
-      productos:[
-        {
-          id: 1,
-          foto: "./assets/product.jpg"
-        },
-        {
-          id: 2,
-          foto: "./assets/product.jpg"
-        },
-        {
-          id: 3,
-          foto: "./assets/product.jpg"
-        },
-        {
-          id: 4,
-          foto: "./assets/product.jpg"
-        },
-      ]
-    }
-  ];
+  data_app:any = [];
   slideOpts = {
     slidesPerView: 2.6,
     freeMode: true
   }; 
+  public ev:any = {};
+  public disable_list:boolean = true;
 
   constructor( 
     private _store: Store<STORAGES>,
-    private modalCtrl: ModalController
+    private modalCtrl: ModalController,
+    private _home: HomeService,
+    private _tools: ToolsService
   ) {
     this._store.subscribe((store:any)=>{
       console.log(store);
       store = store.name;
       this.dataUser = store.persona;
+      this.data_app = store.nameapp || [];
     });
+
+    if( Object.keys(this.data_app).length == 0 ) this.getHome();
   }
 
   ngOnInit() {
+    
   }
+  
+  doRefresh(ev){
+    this.ev = ev;
+    this.disable_list = false;
+    this.data_app = [];
+    this.getHome();
+  }
+
+  getHome(){
+    this._home.get({}).subscribe((res:any)=> this.dataFormatHome(res), (error)=> this._tools.presentToast("Error de servidor"));
+  }
+
+  dataFormatHome(res:any){
+    for(let row of this.data_app){
+      let filtro:any = this.data_app.find(item => item.id == row.id);
+      if(!filtro){
+        let accion = new NameappAction( row, 'post');
+        this._store.dispatch(accion);
+      }
+    }
+    this.data_app.push(...res.data );
+    if(this.ev){
+      this.disable_list = true;
+      if(this.ev.target){
+        this.ev.target.complete();
+      }
+    }
+  }
+
   openSearch(){
     this.modalCtrl.create({
       component: BuscadorComponent,
@@ -64,6 +80,10 @@ export class HomePage implements OnInit {
         obj: {}
       }
     }).then(modal=>modal.present());
+  }
+
+  compartir(obj:any){
+    console.log(obj);
   }
 
 }

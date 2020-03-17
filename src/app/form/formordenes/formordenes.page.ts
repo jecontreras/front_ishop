@@ -5,6 +5,8 @@ import { NOTIFICACIONES } from 'src/app/interfas/sotarage';
 import { CarritoAction } from 'src/app/redux/app.actions';
 import { OrdenesService } from 'src/app/service-component/ordenes.service';
 import { ToolsService } from 'src/app/services/tools.service';
+import * as moment from 'moment';
+import { BuscadorComponent } from 'src/app/components/buscador/buscador.component';
 
 @Component({
   selector: 'app-formordenes',
@@ -16,10 +18,13 @@ export class FormordenesPage implements OnInit {
   titulo:string = 'Create';
   data:any = {
     cliente: {},
-    factura: {},
+    factura: {
+      fecha_pedido: moment().format('YYYY-MM-DD')
+    },
     articulo: []
   };
   dataUser:any = {};
+  btnDisabled:boolean = false;
 
   constructor(
     private modalCtrl: ModalController,
@@ -64,6 +69,7 @@ export class FormordenesPage implements OnInit {
   agregar(){
     if(!this.dataUser.id) return false;
     this.suma();
+    this.btnDisabled = true;
     let data:any = {
       factura: {
         idVendedor: this.dataUser.id,
@@ -90,8 +96,26 @@ export class FormordenesPage implements OnInit {
       console.log(res);
       this._tools.presentToast("Orden creado exitoso");
       this.data.id = res.id;
+      this.data = {
+        cliente: {},
+        factura: {
+          fecha_pedido: moment().format('YYYY-MM-DD')
+        },
+        articulo: []
+      };
+      this.btnDisabled = false;
+      this.close();
     },(error)=> console.error(error));
     
+  }
+
+  openCarro(){
+    this.modalCtrl.create({
+      component: BuscadorComponent,
+      componentProps: {
+        obj: true
+      }
+    }).then(modal=>modal.present());
   }
 
   codigo(){

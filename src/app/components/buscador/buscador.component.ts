@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController, NavParams } from '@ionic/angular';
 import { ProductosService } from 'src/app/service-component/productos.service';
 import { STORAGES } from 'src/app/interfas/sotarage';
 import { Store } from '@ngrx/store';
 import { ToolsService } from 'src/app/services/tools.service';
 import * as _ from 'lodash';
 import { CategoriaService } from 'src/app/service-component/categoria.service';
+import { Router } from '@angular/router';
+import { CarritoAction } from 'src/app/redux/app.actions';
 
 @Component({
   selector: 'app-buscador',
@@ -13,13 +15,15 @@ import { CategoriaService } from 'src/app/service-component/categoria.service';
   styleUrls: ['./buscador.component.scss'],
 })
 export class BuscadorComponent implements OnInit {
-
+  evento:any;
   constructor(
     private modalCtrl: ModalController,
     private _productos: ProductosService,
     private _tools: ToolsService,
     private _store: Store<STORAGES>,
+    private navparams: NavParams,
     private _categoria: CategoriaService,
+    private _router: Router
   ) { }
 
   textoBuscar = "";
@@ -36,6 +40,8 @@ export class BuscadorComponent implements OnInit {
   listCategorias:any = [];
 
   ngOnInit() {
+    this.evento = this.navparams.get('obj');
+    console.log(this.evento)
     this.getProductos();
     this.getCategoria();
   }
@@ -60,6 +66,17 @@ export class BuscadorComponent implements OnInit {
     },(error)=>{ 
       console.error(error); this._tools.presentToast("Error de servidor");this._tools.dismisPresent();if( this.evScroll.target ){ this.evScroll.target.complete() }
     });
+  }
+  viewProducto(off:any){
+    if(!this.evento){
+      this._router.navigate([ '/tabs/productoView', off.id ])
+      this.salir();
+    }else{
+      off.cantidadAduiridad = 1;
+      let accion = new CarritoAction(off, 'post');
+      this._store.dispatch(accion);
+      this._tools.presentToast("Agregado al Carro");
+    }
   }
 
   salir(){

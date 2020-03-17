@@ -9,7 +9,7 @@
         {{ titulo }} Ordenes
       </ion-label>
     </ion-text>
-    <ion-button fill="clear" slot="end" (click)="agregar()">
+    <ion-button fill="clear" slot="end" (click)="agregar()" [disabled]="btnDisabled">
       <ion-icon name="save-outline"></ion-icon>
     </ion-button>
   </ion-toolbar>
@@ -43,7 +43,11 @@
   </ion-item>
     <ion-item>
         <ion-label position="floating">Fecha de Pedido</ion-label>
-        <ion-input [(ngModel)]="data.factura.fecha_pedido" type="text"></ion-input>
+        <ion-datetime placeholder="fecha de la orden" [(ngModel)]="data.factura.fecha_pedido"></ion-datetime>
+    </ion-item>
+    <ion-item>  
+        <ion-label position="floating">Ciudad del Cliente</ion-label>
+        <ion-input [(ngModel)]="data.cliente.ciudadCliente" type="text"></ion-input>
     </ion-item>
     <ion-item>  
         <ion-label position="floating">Direccion del Cliente</ion-label>
@@ -51,9 +55,12 @@
     </ion-item>
     <ion-item>
       <ion-toolbar>
-        <ion-label color="primary">
+        <ion-label color="primary" slot="start">
           Productos
         </ion-label>
+        <ion-button fill="clear" slot="end" (click)="openCarro()">
+          <ion-icon name="add-circle-outline"></ion-icon>
+        </ion-button>
       </ion-toolbar>
     </ion-item>
     <ion-item>

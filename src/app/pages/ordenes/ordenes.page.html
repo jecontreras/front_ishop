@@ -21,17 +21,22 @@
 
 <ion-content class="ion-padding">
 
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)" pullMin="200" pullMax="300">
+    <ion-refresher-content>
+    </ion-refresher-content>
+  </ion-refresher>
+
   <ion-list #lista>
 
     <ion-item-sliding *ngFor="let item of listOrdenes; let idx=index">
       
       <ion-item>
         <ion-avatar slot="start">
-          <img [src]="item.idCliente.idFoto">
+          <img [src]="item['idCliente']?.idFoto">
         </ion-avatar>
         <ion-label>
           
-          <h3>Cliente {{ item.idCliente.nombre }}</h3>
+          <h3>Cliente {{ item['idCliente']?.nombre }}</h3>
           <h4>Precio Total {{ ( item.precio || 0 ).toLocaleString('de-DE', { style: 'currency', currency: 'COP' }) }}</h4>
           <h4>Ganancias {{ ( item.precio || 0 ).toLocaleString('de-DE', { style: 'currency', currency: 'COP' }) }}</h4>
           <p>{{ item.createdAt }}</p>
@@ -50,5 +55,13 @@
     </ion-item-sliding>
     
   </ion-list>
+  <ion-infinite-scroll threshold="150px"
+                         (ionInfinite)="loadData( $event )"
+                        >
+    <ion-infinite-scroll-content loadingSpinner="crescent"
+                                  loadingtext="Cargando data..">
+
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 
 </ion-content>

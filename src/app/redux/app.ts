@@ -155,6 +155,38 @@ export function appReducer(state: STORAGES = APP, action: _action.actions) {
         break;
       }
     }
+    case _action.NAMEAPP:{
+      switch (action.opt){
+        case 'post': {
+          // console.log(action.payload);
+          if(!state.nameapp) state.nameapp = [];
+          data = proceso_data(state.nameapp,action.payload, 'post');
+          state.nameapp = data;
+          return local_Storage(state);
+        }
+        break;
+        case 'put': {
+          data = proceso_data(state.nameapp,action.payload, 'put');
+          state.nameapp = data;
+          return local_Storage(state);
+        }
+        break;
+        case 'delete': {
+          data = proceso_data(state.nameapp,action.payload, 'delete');
+          state.nameapp = data;
+          return local_Storage(state);
+        }
+        break;
+        case 'drop': {
+          state.nameapp = [];
+          return local_Storage(state);
+        }
+        break;
+        default:
+        return local_Storage(state);
+        break;
+      }
+    }
     /*case _action.ARTICULOS:{
       switch (action.opt){
         case 'post': {
