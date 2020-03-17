@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController, NavParams } from '@ionic/angular';
 import { Store } from '@ngrx/store';
 import { NOTIFICACIONES } from 'src/app/interfas/sotarage';
 import { CarritoAction } from 'src/app/redux/app.actions';
 import { OrdenesService } from 'src/app/service-component/ordenes.service';
 import { ToolsService } from 'src/app/services/tools.service';
 import * as moment from 'moment';
+import * as _ from 'lodash';
 import { BuscadorComponent } from 'src/app/components/buscador/buscador.component';
 
 @Component({
@@ -25,12 +26,14 @@ export class FormordenesPage implements OnInit {
   };
   dataUser:any = {};
   btnDisabled:boolean = false;
+  evento:any = {};
 
   constructor(
     private modalCtrl: ModalController,
     private _store: Store<NOTIFICACIONES>,
     private _orden: OrdenesService,
-    private _tools: ToolsService
+    private _tools: ToolsService,
+    private navparams: NavParams
   ) {
 
     this._store.subscribe((store:any)=>{
@@ -43,6 +46,49 @@ export class FormordenesPage implements OnInit {
    }
 
   ngOnInit() {
+    this.evento = this.navparams.get('obj');
+    console.log(this.evento);
+    if(this.evento){
+      this.data = {
+        cliente: {
+          emailCliente: this.evento.emailCliente,
+          cedulaCliente: this.evento.cedulaCliente,
+          numeroCliente: this.evento.numeroCliente,
+          ciudadCliente: this.evento.ciudadCliente,
+          nombreCliente: this.evento.idCliente.nombre,
+          emailVendedor: this.evento.emailVendedor,
+          cedulaVendedor: this.evento.cedulaVendedor,
+          celularCliente: this.evento.idCliente.cedula,
+          direccionCliente: this.evento.direccionCliente
+        },
+        factura: {
+          fecha_pedido: this.evento.fecha_pedido,
+          id: this.evento.id,
+          comision: this.evento.comision,
+          precio: this.evento.precio,
+          codigo: this.evento.codigo
+        },
+        total: this.evento.precio,
+        ganancias: this.evento.comision,
+        articulo: []
+      };
+    }
+    this.getArticulo();
+  }
+
+  getArticulo(){
+    this._orden.getArticulo({ where:{ factura: this.evento.id } }).subscribe((res:any)=>{
+      console.log(res);
+      this.data.articulo = _.map(res.data, row=>{
+        return {
+          files: [ row.producto.foto || './assets/product.jpg'],
+          titulo: row.producto.titulo,
+          cantidadAduiridad: row.cantidad,
+          precioVenta: row.precio
+        };
+      });
+      console.log(this.data.articulo);
+    },(error)=>this._tools.presentToast("Error de servidor") );
   }
 
   deleteCart( idx:any, item:any ){
@@ -82,7 +128,9 @@ export class FormordenesPage implements OnInit {
         nombreCliente: this.data.cliente.nombreCliente,
         fecha_pedido: this.data.factura.fecha_pedido,
         cedulaVendedor: this.dataUser.cedula,
-        emailVendedor: this.dataUser.email
+        emailVendedor: this.dataUser.email,
+        ciudadCliente: this.data.cliente.ciudadCliente,
+        direccionCliente: this.data.cliente.direccionCliente
       },
       cliente: {
         nombreCliente: this.data.cliente.nombreCliente,

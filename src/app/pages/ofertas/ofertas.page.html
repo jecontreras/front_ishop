@@ -17,32 +17,60 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-  
-  <ion-toolbar>
 
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)" pullMin="200" pullMax="300">
+    <ion-refresher-content>
+    </ion-refresher-content>
+  </ion-refresher>
+
+  <ion-toolbar>
     <ion-segment scrollable mode="md" color="primary" (ionChange)="cambioCategoria( $event )">
       <ion-segment-button mode="md" [value]="item.id" *ngFor="let item of listCategorias">
         <ion-label text-capitalize> {{ item.nombre }}</ion-label>
       </ion-segment-button>
     </ion-segment>
-
   </ion-toolbar>
 
   <ion-grid>
     <ion-row>
-      <ion-col *ngFor="let off of listProductos" size="6" [routerLink]="[ '/tabs/productoView', off.id ]">
-        <img [src]="off.foto || './assets/product.jpg'" class="imgPrincipal">
-        <ion-text color="dark" class="sizeText">
-          <ion-label>
-            {{ off.titulo }}
-            <p class="sizeSubheader">{{ off['idEmpresa']?.nombre }}</p>
-          </ion-label>
-        </ion-text>
-        <ion-text color="success">
-          <h6>{{ ( off.precioOferta || off.precioCompra ).toLocaleString('de-DE', { style: 'currency', currency: 'COP' }) }}</h6>
-        </ion-text>
+      <ion-col size="6" class="tumbaPaddin2" *ngFor="let off of listProductos">
+        <ion-card class="marginCard">
+          <img [src]="off.foto || './assets/product.jpg'" [routerLink]="[ '/tabs/productoView', off.id ]">
+          <ion-card-header class="tumbaPadding">
+            <ion-card-subtitle>{{ off['idEmpresa']?.nombre }}</ion-card-subtitle>
+            <ion-card-title>{{ off.titulo }}</ion-card-title>
+          </ion-card-header>
+          <ion-card-content class="tumbaPadding">
+            <ion-text color="success">
+              <h6>{{ ( off.precioOferta || off.precioCompra || 0 ).toLocaleString('de-DE', { style: 'currency', currency: 'COP' }) }}</h6>
+            </ion-text>
+            <div class="ion-text-end">
+              <ion-button fill="clear" (click)="submitCart( off )">
+                <ion-icon name="cart-outline"></ion-icon>
+              </ion-button>
+              <ion-button fill="clear">
+                <ion-icon name="share-social-outline"></ion-icon>
+              </ion-button>
+            </div>
+          </ion-card-content>
+        </ion-card>
       </ion-col>
     </ion-row>
   </ion-grid>
+  
+  <div class="ion-text-center" *ngIf="listProductos.length === 0">
+    <ion-title>
+      <h6>No hay datos a mostrar</h6>
+    </ion-title>
+  </div>
+
+  <ion-infinite-scroll threshold="150px"
+                         (ionInfinite)="loadData( $event )"
+                        >
+    <ion-infinite-scroll-content loadingSpinner="crescent"
+                                  loadingtext="Cargando data..">
+
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 
 </ion-content>

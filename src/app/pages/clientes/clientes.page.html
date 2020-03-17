@@ -24,11 +24,11 @@
       
       <ion-item>
         <ion-avatar slot="start">
-          <img [src]="item.idFoto">
+          <img [src]="item.idFoto || './assets/perfil.png'">
         </ion-avatar>
         <ion-label>
           
-          <h3>{{ item.username }}</h3>
+          <h3>{{ item.nombre }}</h3>
           <h4>{{ item.celular }}</h4>
           <p>{{ item.email }}</p>
         </ion-label>

@@ -28,7 +28,7 @@
 
   <ion-list #lista>
 
-    <ion-item-sliding *ngFor="let item of listOrdenes; let idx=index">
+    <ion-item-sliding *ngFor="let item of listOrdenes; let idx=index" (click)="agregar(item)">
       
       <ion-item>
         <ion-avatar slot="start">

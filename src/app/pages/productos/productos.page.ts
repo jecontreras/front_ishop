@@ -7,6 +7,7 @@ import { Store } from '@ngrx/store';
 import { BuscadorAction, CarritoAction } from 'src/app/redux/app.actions';
 import { ModalController } from '@ionic/angular';
 import { BuscadorComponent } from 'src/app/components/buscador/buscador.component';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-productos',
@@ -60,11 +61,18 @@ export class ProductosPage  {
     this.deleteStoreBuscador();
   }
 
+  doRefresh(ev){
+    this.ev = ev;
+    this.disable_list = false;
+    this.listProductos = [];
+    this.getSearch();
+  }
+  
   loadData(ev){
     //console.log(ev);
     this.evScroll = ev;
     this.query.skip++;
-    this.getProductos();
+    this.getSearch();
   }
   
   getSearch(){
@@ -101,16 +109,21 @@ export class ProductosPage  {
     console.log(this.query);
     this._tools.presentLoading();
     this._productos.get(this.query).subscribe((res:any)=>{
-      this.listProductos = res.data;
-
+      this.listProductos.push(...res.data );
+      this.listProductos =_.unionBy(this.listProductos || [], res.data, 'id');
+      
       if( this.evScroll.target ){
         this.evScroll.target.complete()
       }
-
+      if(this.ev){
+        this.disable_list = true;
+        if(this.ev.target){
+          this.ev.target.complete();
+        }
+      }
       this._tools.dismisPresent();
-    },(error)=>{ 
-      console.error(error); this._tools.presentToast("Error de servidor");this._tools.dismisPresent();if( this.evScroll.target ){ this.evScroll.target.complete() }
-    });
+
+    },(error)=>{console.error(error); this._tools.presentToast("Error de servidor")})
   }
 
   openSearch(){

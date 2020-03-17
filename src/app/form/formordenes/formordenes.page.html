@@ -9,7 +9,7 @@
         {{ titulo }} Ordenes
       </ion-label>
     </ion-text>
-    <ion-button fill="clear" slot="end" (click)="agregar()" [disabled]="btnDisabled">
+    <ion-button fill="clear" slot="end" (click)="agregar()" [disabled]="btnDisabled" *ngIf="evento">
       <ion-icon name="save-outline"></ion-icon>
     </ion-button>
   </ion-toolbar>
@@ -58,7 +58,7 @@
         <ion-label color="primary" slot="start">
           Productos
         </ion-label>
-        <ion-button fill="clear" slot="end" (click)="openCarro()">
+        <ion-button fill="clear" slot="end" (click)="openCarro()" *ngIf="evento">
           <ion-icon name="add-circle-outline"></ion-icon>
         </ion-button>
       </ion-toolbar>
@@ -74,7 +74,7 @@
               <h3>Cantidad: {{ item.cantidadAduiridad || 1 }}</h3>
               <p>Precio: ${{ ( item.precioVenta || 0 ).toLocaleString('de-DE', { style: 'currency', currency: 'COP' }) }}</p>
             </ion-label>
-            <ion-button fill="clear" color="danger" (click)="deleteCart( idx, item )" slot="end">
+            <ion-button fill="clear" color="danger" (click)="deleteCart( idx, item )" slot="end" *ngIf="evento">
               <ion-icon name="close-circle-outline"></ion-icon>
             </ion-button>
           </ion-item>

@@ -4,7 +4,8 @@ import { ProductosService } from 'src/app/service-component/productos.service';
 import { ToolsService } from 'src/app/services/tools.service';
 import { STORAGES } from 'src/app/interfas/sotarage';
 import { Store } from '@ngrx/store';
-import { BuscadorAction } from 'src/app/redux/app.actions';
+import { BuscadorAction, CarritoAction } from 'src/app/redux/app.actions';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-ofertas',
@@ -22,6 +23,9 @@ export class OfertasPage {
       estado: 0
     }
   };
+  public ev:any = {};
+  public disable_list:boolean = true;
+  public evScroll:any = {};
 
   constructor(
     private _categoria: CategoriaService,
@@ -43,12 +47,28 @@ export class OfertasPage {
     this.buscadorStore = buscadorTxt;
     this.deleteStoreBuscador();
   }
+
+  doRefresh(ev){
+    this.ev = ev;
+    this.disable_list = false;
+    this.listProductos = [];
+    this.getSearch();
+  }
+  
+  loadData(ev){
+    //console.log(ev);
+    this.evScroll = ev;
+    this.query.skip++;
+    this.getSearch();
+  }
+
   async ionViewWillEnter(){
     console.log("heyy");
     this.storeProcess();
     this.getCategoria();
     this.getSearch();
   }
+  
   getSearch(){
     if(this.buscadorStore.opt === "categoria")this.query.where.idSubCategoria = this.buscadorStore.value;
     this.getProductos();
@@ -73,9 +93,30 @@ export class OfertasPage {
   }
   getProductos(){
     console.log(this.query);
+    this._tools.presentLoading();
     this._productos.get(this.query).subscribe((res:any)=>{
-      this.listProductos = res.data;
+      this.listProductos.push(...res.data );
+      this.listProductos =_.unionBy(this.listProductos || [], res.data, 'id');
+      
+      if( this.evScroll.target ){
+        this.evScroll.target.complete()
+      }
+      if(this.ev){
+        this.disable_list = true;
+        if(this.ev.target){
+          this.ev.target.complete();
+        }
+      }
+      this._tools.dismisPresent();
+
     },(error)=>{console.error(error); this._tools.presentToast("Error de servidor")})
+  }
+
+  submitCart(item:any){
+    item.cantidadAduiridad = 1;
+    let accion = new CarritoAction(item, 'post');
+    this._store.dispatch(accion);
+    this._tools.presentToast("Agregado al Carro");
   }
 
 

@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { DataService } from 'src/app/services/data.service';
 import { STORAGES } from 'src/app/interfas/sotarage';
 import { Store } from '@ngrx/store';
-import { MenusAction } from 'src/app/redux/app.actions';
+import { MenusAction, PersonaAction } from 'src/app/redux/app.actions';
 import * as _ from 'lodash';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-menu',
@@ -19,14 +20,16 @@ export class MenuPage implements OnInit {
   };
   public ev:any = {};
   public disable_list:boolean = true;
-
+  dataUser:any = {};
   constructor(
     private dataService: DataService,
-    private _store: Store<STORAGES>
+    private _store: Store<STORAGES>,
+    private Router: Router
   ) {
     this._store.subscribe((store:any)=>{
       store = store.name;
       this.dataMenu = store.menus;
+      this.dataUser = store.persona || {};
     });
    }
 
@@ -67,6 +70,11 @@ export class MenuPage implements OnInit {
         this._store.dispatch(accion);
       }
     }
+  }
+  cerrar_seccion(){
+    let accion = new PersonaAction( this.dataUser, 'delete');
+    this._store.dispatch(accion);
+    this.Router.navigate(['/login']);
   }
 
 }
