@@ -68,7 +68,7 @@ export class BuscadorComponent implements OnInit {
     });
   }
   viewProducto(off:any){
-    if(!this.evento){
+    if(this.evento != false){
       this._router.navigate([ '/tabs/productoView', off.id ])
       this.salir();
     }else{

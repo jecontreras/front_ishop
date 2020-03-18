@@ -31,6 +31,7 @@ export class HomePage implements OnInit {
     private _home: HomeService,
     private _tools: ToolsService
   ) {
+    console.log("*****************************Iniciando--------------------->>>>>>>>>>>>>>>")
     this._store.subscribe((store:any)=>{
       console.log(store);
       store = store.name;
@@ -39,12 +40,17 @@ export class HomePage implements OnInit {
     });
 
     if( Object.keys(this.data_app).length == 0 ) this.getHome();
+    console.log("*****************************pasando--------------------->>>>>>>>>>>>>>>")
   }
 
   ngOnInit() {
     
   }
   
+  async ionViewWillEnter(){
+    if( Object.keys(this.data_app).length == 0 ) this.getHome();
+  }
+
   doRefresh(ev){
     this.ev = ev;
     this.disable_list = false;
