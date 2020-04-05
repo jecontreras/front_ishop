@@ -34,6 +34,7 @@ export class HomePage implements OnInit {
   ) {
     this.storeGet();
     if( Object.keys(this.data_app).length == 0 ) this.getHome();
+    console.log("*****************************pasando--------------------->>>>>>>>>>>>>>>")
   }
 
   ngOnInit() {

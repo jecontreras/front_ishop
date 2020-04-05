@@ -100,7 +100,7 @@ export class OrdenesPage implements OnInit {
     this.modalCtrl.create({
       component: BuscadorComponent,
       componentProps: {
-        obj: {}
+        obj: true
       }
     }).then(modal=>modal.present());
   }

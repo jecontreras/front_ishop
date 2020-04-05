@@ -41,7 +41,6 @@ export class BuscadorComponent implements OnInit {
 
   ngOnInit() {
     this.evento = this.navparams.get('obj');
-    console.log(this.evento)
     this.getProductos();
     this.getCategoria();
   }
@@ -53,7 +52,6 @@ export class BuscadorComponent implements OnInit {
   }
 
   getProductos(){
-    console.log(this.query);
     this._tools.presentLoading();
     this._productos.get(this.query).subscribe((res:any)=>{
       this.listProductos = res.data;
@@ -85,7 +83,6 @@ export class BuscadorComponent implements OnInit {
 
   getCategoria(){
     this._categoria.get({}).subscribe((res:any)=>{
-      console.log(res);
       this.listCategorias = res.data;
       if(!res.data[0]) this.listCategorias = [{id: 1, nombre:"Trajes de Baño"},{id: 2, nombre:"Zapatos"},{id: 3, nombre:"Camisas"}];
     },(error)=>this._tools.presentToast("Error de servidor"));
@@ -99,7 +96,6 @@ export class BuscadorComponent implements OnInit {
   }
 
   buscar(ev){
-    console.log(ev);
     this.textoBuscar = ev.detail.value;
     if(this.textoBuscar.length >= 1){
       this.query.where.or = [
