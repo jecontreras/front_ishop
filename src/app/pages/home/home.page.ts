@@ -6,6 +6,7 @@ import { BuscadorComponent } from 'src/app/components/buscador/buscador.componen
 import { HomeService } from 'src/app/service-component/home.service';
 import { ToolsService } from 'src/app/services/tools.service';
 import { NameappAction } from 'src/app/redux/app.actions';
+import { ComponentsModule } from 'src/app/components/components.module';
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
@@ -31,20 +32,24 @@ export class HomePage implements OnInit {
     private _home: HomeService,
     private _tools: ToolsService
   ) {
-    this._store.subscribe((store:any)=>{
-      console.log(store);
-      store = store.name;
-      this.dataUser = store.persona;
-      this.data_app = store.nameapp || [];
-    });
-
+    this.storeGet();
     if( Object.keys(this.data_app).length == 0 ) this.getHome();
   }
 
   ngOnInit() {
     
   }
-  
+  storeGet(){
+    this._store.subscribe((store:any)=>{
+      store = store.name;
+      this.dataUser = store.persona || {};
+      this.data_app = store.nameapp || [];
+    });
+  }
+  async ionViewWillEnter(){
+    this.storeGet();
+    if( Object.keys(this.data_app).length == 0 ) this.getHome();
+  }
   doRefresh(ev){
     this.ev = ev;
     this.disable_list = false;
@@ -53,11 +58,11 @@ export class HomePage implements OnInit {
   }
 
   getHome(){
-    this._home.get({}).subscribe((res:any)=> this.dataFormatHome(res), (error)=> this._tools.presentToast("Error de servidor"));
+    this._home.get({ where: {} }).subscribe((res:any)=> this.dataFormatHome(res), (error)=> this._tools.presentToast("Error de servidor"));
   }
 
   dataFormatHome(res:any){
-    for(let row of this.data_app){
+    for(let row of res.data){
       let filtro:any = this.data_app.find(item => item.id == row.id);
       if(!filtro){
         let accion = new NameappAction( row, 'post');

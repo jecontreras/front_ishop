@@ -68,14 +68,14 @@ export class BuscadorComponent implements OnInit {
     });
   }
   viewProducto(off:any){
-    if(!this.evento){
-      this._router.navigate([ '/tabs/productoView', off.id ])
-      this.salir();
-    }else{
+    if(this.evento === true){
       off.cantidadAduiridad = 1;
       let accion = new CarritoAction(off, 'post');
       this._store.dispatch(accion);
       this._tools.presentToast("Agregado al Carro");
+    }else{
+      this._router.navigate([ '/tabs/productoView', off.id ])
+      this.salir();
     }
   }
 

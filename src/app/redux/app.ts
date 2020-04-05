@@ -187,30 +187,30 @@ export function appReducer(state: STORAGES = APP, action: _action.actions) {
         break;
       }
     }
-    /*case _action.ARTICULOS:{
+    case _action.ORDENES:{
       switch (action.opt){
         case 'post': {
           // console.log(action.payload);
-          if(!state.articulos) state.articulos = [];
-          data = proceso_data(state.articulos,action.payload, 'post');
-          state.articulos = data;
+          if(!state.ordenes) state.ordenes = [];
+          data = proceso_data(state.ordenes,action.payload, 'post');
+          state.ordenes = data;
           return local_Storage(state);
         }
         break;
         case 'put': {
-          data = proceso_data(state.articulos,action.payload, 'put');
-          state.articulos = data;
+          data = proceso_data(state.ordenes,action.payload, 'put');
+          state.ordenes = data;
           return local_Storage(state);
         }
         break;
         case 'delete': {
-          data = proceso_data(state.articulos,action.payload, 'delete');
-          state.articulos = data;
+          data = proceso_data(state.ordenes,action.payload, 'delete');
+          state.ordenes = data;
           return local_Storage(state);
         }
         break;
         case 'drop': {
-          state.articulos = [];
+          state.ordenes = [];
           return local_Storage(state);
         }
         break;
@@ -219,7 +219,6 @@ export function appReducer(state: STORAGES = APP, action: _action.actions) {
         break;
       }
     }
-    break;*/
     default: return state;
   }
 }

@@ -35,7 +35,7 @@
     <ion-row>
       <ion-col size="6" class="tumbaPaddin2" *ngFor="let off of listProductos">
         <ion-card class="marginCard">
-          <img [src]="off.foto || './assets/product.jpg'" [routerLink]="[ '/tabs/productoView', off.id ]">
+          <img [src]="( ( off.foto | imagen ) || './assets/product.jpg' )" [routerLink]="[ '/tabs/productoView', off.id ]">
           <ion-card-header class="tumbaPadding">
             <ion-card-subtitle>{{ off['idEmpresa']?.nombre }}</ion-card-subtitle>
             <ion-card-title>{{ off.titulo }}</ion-card-title>

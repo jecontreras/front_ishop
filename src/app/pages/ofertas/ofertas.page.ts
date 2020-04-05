@@ -40,7 +40,6 @@ export class OfertasPage {
   storeProcess(){
     let buscadorTxt = {};
     this._store.subscribe((store:any)=>{
-      console.log(store);
       store = store.name;
       buscadorTxt = store.buscador;
     });
@@ -63,7 +62,6 @@ export class OfertasPage {
   }
 
   async ionViewWillEnter(){
-    console.log("heyy");
     this.storeProcess();
     this.getCategoria();
     this.getSearch();
@@ -82,8 +80,7 @@ export class OfertasPage {
     this._store.dispatch(accion);
   }
   getCategoria(){
-    this._categoria.get({}).subscribe((res:any)=>{
-      console.log(res);
+    this._categoria.get({ where:{ estado:0 } }).subscribe((res:any)=>{
       this.listCategorias = res.data;
       if(!res.data[0]) this.listCategorias = [{id: 1, nombre:"Trajes de Baño"},{id: 2, nombre:"Zapatos"},{id: 3, nombre:"Camisas"}];
     },(error)=>this._tools.presentToast("Error de servidor"));
@@ -92,7 +89,6 @@ export class OfertasPage {
     
   }
   getProductos(){
-    console.log(this.query);
     this._tools.presentLoading();
     this._productos.get(this.query).subscribe((res:any)=>{
       this.listProductos.push(...res.data );

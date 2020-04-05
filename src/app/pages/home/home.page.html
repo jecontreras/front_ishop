@@ -74,7 +74,7 @@
         <br>
         <ion-slides [options]="slideOpts">
           <ion-slide *ngFor="let off of info.productos" [routerLink]="[ '/tabs/productoView', off.id ]">
-            <img [src]="off.foto" class="imgPrincipal">
+            <img [src]="off.foto | imagen" class="imgPrincipal">
           </ion-slide>
         </ion-slides>
 

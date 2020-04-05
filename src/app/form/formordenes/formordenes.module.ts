@@ -7,9 +7,11 @@ import { IonicModule } from '@ionic/angular';
 import { FormordenesPageRoutingModule } from './formordenes-routing.module';
 
 import { FormordenesPage } from './formordenes.page';
+import { PipeModule } from 'src/app/pipe/pipe.module';
 
 @NgModule({
   imports: [
+    PipeModule,
     CommonModule,
     FormsModule,
     IonicModule,

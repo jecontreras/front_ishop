@@ -7,9 +7,11 @@ import { IonicModule } from '@ionic/angular';
 import { ProductoViewPageRoutingModule } from './producto-view-routing.module';
 
 import { ProductoViewPage } from './producto-view.page';
+import { PipeModule } from 'src/app/pipe/pipe.module';
 
 @NgModule({
   imports: [
+    PipeModule,
     CommonModule,
     FormsModule,
     IonicModule,

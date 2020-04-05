@@ -26,17 +26,24 @@ export class MenuPage implements OnInit {
     private _store: Store<STORAGES>,
     private Router: Router
   ) {
-    this._store.subscribe((store:any)=>{
-      store = store.name;
-      this.dataMenu = store.menus;
-      this.dataUser = store.persona || {};
-    });
+    this.storeGet();  
    }
 
   ngOnInit() {
     if(Object.keys(this.dataMenu).length == 0) {
       this.getMenus();
     }
+  }
+  storeGet(){
+    this._store.subscribe((store:any)=>{
+      store = store.name;
+      this.dataMenu = store.menus;
+      this.dataUser = store.persona || {};
+    });
+  }
+  async ionViewWillEnter(){
+    this.storeGet()
+    if(Object.keys(this.dataMenu).length == 0) this.getMenus();
   }
   getMenus(){
     this.dataService.getMenuOpts().subscribe(rta=>{
@@ -74,7 +81,7 @@ export class MenuPage implements OnInit {
   cerrar_seccion(){
     let accion = new PersonaAction( this.dataUser, 'delete');
     this._store.dispatch(accion);
-    this.Router.navigate(['/login']);
+    this.Router.navigate(['/portada']);
   }
 
 }

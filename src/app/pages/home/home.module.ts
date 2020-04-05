@@ -7,9 +7,11 @@ import { IonicModule } from '@ionic/angular';
 import { HomePageRoutingModule } from './home-routing.module';
 
 import { HomePage } from './home.page';
+import { PipeModule } from 'src/app/pipe/pipe.module';
 
 @NgModule({
   imports: [
+    PipeModule,
     CommonModule,
     FormsModule,
     IonicModule,

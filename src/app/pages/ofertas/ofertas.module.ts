@@ -7,9 +7,11 @@ import { IonicModule } from '@ionic/angular';
 import { OfertasPageRoutingModule } from './ofertas-routing.module';
 
 import { OfertasPage } from './ofertas.page';
+import { PipeModule } from 'src/app/pipe/pipe.module';
 
 @NgModule({
   imports: [
+    PipeModule,
     CommonModule,
     FormsModule,
     IonicModule,

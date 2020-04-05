@@ -4,7 +4,9 @@
 
 export const environment = {
   production: false,
-  url: "http://localhost:1337"
+  // url: "http://localhost:1337",
+  url: "https://backendishop.herokuapp.com",
+  imgPathProductos: "https://backendishop.herokuapp.com/images/productos/"
 };
 
 /*

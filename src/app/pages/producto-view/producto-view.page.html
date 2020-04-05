@@ -36,7 +36,7 @@
       <ion-col size="12">
         <ion-slides class="alto_slide" *ngIf="data" pager="true" [options]="slideOptsTho" #slideWithNav>
           <ion-slide *ngFor="let s of data.files">
-            <img class="ancho_slide" [src]="s">
+            <img class="ancho_slide" [src]="s | imagen">
           </ion-slide>
         </ion-slides>
       </ion-col>
@@ -157,7 +157,7 @@
   <ion-grid *ngIf="dataVisible == 'Relecion'">
     <ion-row>
       <ion-col *ngFor="let off of listProductos" size="6" [routerLink]="[ '/tabs/productoView', off.id ]">
-        <img [src]="off.foto || './assets/product.jpg'" class="imgPrincipal">
+        <img [src]="( ( off.foto | imagen ) || './assets/product.jpg' )" [routerLink]="[ '/tabs/productoView', off.id ]">
         <ion-text color="dark" class="sizeText">
           <ion-label>
             {{ off.titulo }}
@@ -165,7 +165,7 @@
           </ion-label>
         </ion-text>
         <ion-text color="success">
-          <h6>{{ ( off.precioCompra ).toLocaleString('de-DE', { style: 'currency', currency: 'COP' }) }}</h6>
+          <h6>{{ ( data.precioOferta || data.precioVenta || 0 ).toLocaleString('de-DE', { style: 'currency', currency: 'COP' }) }}</h6>
         </ion-text>
       </ion-col>
       <ion-col size="12">

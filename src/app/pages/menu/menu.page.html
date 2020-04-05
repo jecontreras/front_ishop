@@ -23,25 +23,23 @@
     </ion-refresher-content>
   </ion-refresher>
 
-  <ion-item-divider>
-    <ion-list>
+  <ion-list>
       
-      <ion-menu-toggle autoHide="false" *ngFor="let c of dataMenu">
-        <ion-item [routerLink]="c.redirectTo" size="12">
-          <ion-icon slot="start" [name]="c.icon"></ion-icon>
-          <ion-label>{{ c.name }}</ion-label>
-        </ion-item>
-      </ion-menu-toggle>
-      <ion-menu-toggle auto-hide="false">
-        <ion-item *ngIf="data.id" (click)="cerrar_seccion()" size="12">
-          <ion-icon slot="start" name="walk"></ion-icon>
-          <ion-label>
-            <h6>Cerrar sesion</h6>
-          </ion-label>
-        </ion-item>
-      </ion-menu-toggle>
+    <ion-menu-toggle autoHide="false" *ngFor="let c of dataMenu">
+      <ion-item [routerLink]="c.redirectTo" size="12" lines="none">
+        <ion-icon slot="start" [name]="c.icon"></ion-icon>
+        <ion-label>{{ c.name }}</ion-label>
+      </ion-item>
+    </ion-menu-toggle>
+    <ion-menu-toggle auto-hide="false">
+      <ion-item *ngIf="dataUser.id" (click)="cerrar_seccion()" size="12" lines="none">
+        <ion-icon slot="start" name="walk"></ion-icon>
+        <ion-label>
+          <h6>Cerrar sesion</h6>
+        </ion-label>
+      </ion-item>
+    </ion-menu-toggle>
 
-    </ion-list>
-  </ion-item-divider>
+  </ion-list>
   
 </ion-content>

@@ -7,9 +7,11 @@ import { IonicModule } from '@ionic/angular';
 import { ProductosPageRoutingModule } from './productos-routing.module';
 
 import { ProductosPage } from './productos.page';
+import { PipeModule } from 'src/app/pipe/pipe.module';
 
 @NgModule({
   imports: [
+    PipeModule,
     CommonModule,
     FormsModule,
     IonicModule,

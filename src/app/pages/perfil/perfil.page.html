@@ -4,7 +4,7 @@
 
     <ion-toolbar color="success">
       <div class="ion-text-center">
-        <img src="./assets/perfil.png" class="perfil">
+        <img [src]="dataUser.idFoto || './assets/perfil.png'" class="perfil">
   
         <ion-text>
           <h5>¡Hola {{ dataUser.nombre || 'Juan Fernando!' }}</h5>

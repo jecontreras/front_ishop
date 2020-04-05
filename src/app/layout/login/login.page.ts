@@ -57,6 +57,7 @@ export class LoginPage implements OnInit {
           this._store.dispatch(accion);
           this._router.navigate(['/tabs/home']);
         }else{
+          this.data.password = "";
           this._tools.presentToast("Error de login");
         }
       },(error)=>{

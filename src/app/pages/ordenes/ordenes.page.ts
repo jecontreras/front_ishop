@@ -5,6 +5,9 @@ import { ModalController } from '@ionic/angular';
 import { FormordenesPage } from 'src/app/form/formordenes/formordenes.page';
 import { BuscadorComponent } from 'src/app/components/buscador/buscador.component';
 import * as _ from 'lodash';
+import { STORAGES } from 'src/app/interfas/sotarage';
+import { Store } from '@ngrx/store';
+import { OrdenesAction } from 'src/app/redux/app.actions';
 
 @Component({
   selector: 'app-ordenes',
@@ -25,15 +28,24 @@ export class OrdenesPage implements OnInit {
     private _ordenes: OrdenesService,
     private _tools: ToolsService,
     private modalCtrl: ModalController,
-  ) { }
+    private _store: Store<STORAGES>,
+  ) { 
+    this.storeProcess();
+  }
 
   ngOnInit() {
     
   }
-
+  storeProcess(){
+    this._store.subscribe((store:any)=>{
+      store = store.name;
+      this.listOrdenes = store.ordenes || [];
+    });
+  }
   async ionViewWillEnter(){
-
-    this.getOrdenes();
+    this.storeProcess();
+    console.log( this.listOrdenes );
+    if(Object.keys(this.listOrdenes).length == 0) this.getOrdenes();
   }
 
   doRefresh(ev){
@@ -58,6 +70,7 @@ export class OrdenesPage implements OnInit {
   }
   
   dataFormaList(res:any){
+    this.PushStoreOrdenes( res.data );
     this.listOrdenes.push(...res.data );
     //console.log(this.listOrdenes)
     this.listOrdenes =_.unionBy(this.listOrdenes || [], res.data, 'id');
@@ -71,6 +84,16 @@ export class OrdenesPage implements OnInit {
       }
     }
     this._tools.dismisPresent();
+  }
+
+  PushStoreOrdenes(menus){
+    for(let row of menus){
+      let idx = this.listOrdenes.find(item => item.id == row.id);
+      if(!idx){
+        let accion = new OrdenesAction(row, 'post');
+        this._store.dispatch(accion);
+      }
+    }
   }
 
   openSearch(){

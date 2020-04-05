@@ -8,6 +8,7 @@ import { ToolsService } from 'src/app/services/tools.service';
 import * as moment from 'moment';
 import * as _ from 'lodash';
 import { BuscadorComponent } from 'src/app/components/buscador/buscador.component';
+import { OrdenesAction } from 'src/app/redux/app.actions';
 
 @Component({
   selector: 'app-formordenes',
@@ -47,7 +48,6 @@ export class FormordenesPage implements OnInit {
 
   ngOnInit() {
     this.evento = this.navparams.get('obj');
-    console.log(this.evento);
     if(this.evento){
       this.data = {
         cliente: {
@@ -72,13 +72,13 @@ export class FormordenesPage implements OnInit {
         ganancias: this.evento.comision,
         articulo: []
       };
+      this.getArticulo();
     }
-    this.getArticulo();
   }
 
   getArticulo(){
+    this._tools.presentLoading();
     this._orden.getArticulo({ where:{ factura: this.evento.id } }).subscribe((res:any)=>{
-      console.log(res);
       this.data.articulo = _.map(res.data, row=>{
         return {
           files: [ row.producto.foto || './assets/product.jpg'],
@@ -87,7 +87,7 @@ export class FormordenesPage implements OnInit {
           precioVenta: row.precio
         };
       });
-      console.log(this.data.articulo);
+      this._tools.dismisPresent();
     },(error)=>this._tools.presentToast("Error de servidor") );
   }
 
@@ -114,6 +114,8 @@ export class FormordenesPage implements OnInit {
 
   agregar(){
     if(!this.dataUser.id) return false;
+    if( !this.data.cliente.cedulaCliente || !this.data.cliente.celularCliente || !this.data.cliente.ciudadCliente || !this.data.cliente.direccionCliente) return this._tools.presentToast("Error llenar los campos requeridos");
+    if(Object.keys(this.data.articulo).length == 0 ) return this._tools.presentToast("Error no ay articulos agregados");
     this.suma();
     this.btnDisabled = true;
     let data:any = {
@@ -141,7 +143,6 @@ export class FormordenesPage implements OnInit {
       articulo: this.data.articulo
     };
     this._orden.saved( data ).subscribe((res:any)=>{
-      console.log(res);
       this._tools.presentToast("Orden creado exitoso");
       this.data.id = res.id;
       this.data = {
@@ -152,6 +153,8 @@ export class FormordenesPage implements OnInit {
         articulo: []
       };
       this.btnDisabled = false;
+      let accion = new OrdenesAction( res.data, 'post');
+      this._store.dispatch(accion);
       this.close();
     },(error)=> console.error(error));
     
