@@ -23,6 +23,7 @@ export class OrdenesPage implements OnInit {
   public ev:any = {};
   public disable_list:boolean = true;
   public evScroll:any = {};
+  dataUser: any = {};
 
   constructor(
     private _ordenes: OrdenesService,
@@ -39,7 +40,9 @@ export class OrdenesPage implements OnInit {
   storeProcess(){
     this._store.subscribe((store:any)=>{
       store = store.name;
+      if( !store ) return false;
       this.listOrdenes = store.ordenes || [];
+      this.dataUser = store.persona || {};
     });
   }
   async ionViewWillEnter(){
@@ -64,7 +67,8 @@ export class OrdenesPage implements OnInit {
 
   getOrdenes(){
     this._tools.presentLoading();
-    this._ordenes.get(this.query).subscribe((res:any)=>{
+    this.query.where.idVendedor = this.dataUser.id;
+    this._ordenes.get( this.query ).subscribe((res:any)=>{
       this.dataFormaList(res);
     },error=>{ console.error(error); this._tools.presentToast("Error de servidor")});
   }

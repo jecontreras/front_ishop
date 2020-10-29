@@ -8,6 +8,7 @@ import { CalificacionesService } from 'src/app/service-component/calificaciones.
 import { CarritoAction } from 'src/app/redux/app.actions';
 import { ModalController } from '@ionic/angular';
 import { BuscadorComponent } from 'src/app/components/buscador/buscador.component';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-producto-view',
@@ -37,7 +38,9 @@ export class ProductoViewPage implements OnInit {
     skip: 0
   };
   query2:any = {
-    where:{ },
+    where:{
+      estado: 0
+    },
     skip: 0
   };
   btndisableComentario:boolean = false;
@@ -75,7 +78,7 @@ export class ProductoViewPage implements OnInit {
     this.query1.where = { idProducto: this.id };
     this._calificaciones.get(this.query1).subscribe((res:any)=>{
       //console.log(res.data);
-      this.lisComentario = res.data;
+      this.lisComentario = _.unionBy(this.lisComentario || [], res.data, 'id');
       if( this.evScroll.target ){ this.evScroll.target.complete() }
     },(error)=>{ console.error(error); this._tools.presentToast("Error de Servidor"); if( this.evScroll.target ){ this.evScroll.target.complete() } });
   }
@@ -84,7 +87,7 @@ export class ProductoViewPage implements OnInit {
     this.query2.where = { estado: 0 };
     this._producto.get(this.query2).subscribe((res:any)=>{
       console.log(res.data);
-      this.listProductos = res.data;
+      this.listProductos = _.unionBy(this.listProductos || [], res.data, 'id');
       if( this.evScroll.target ){ this.evScroll.target.complete() }
     },(error)=>{ console.error(error);this._tools.presentToast("Error de servidor");this._tools.dismisPresent(); if( this.evScroll.target ){ this.evScroll.target.complete() } });
   }
@@ -108,13 +111,13 @@ export class ProductoViewPage implements OnInit {
     this._calificaciones.saved(data).subscribe((res:any)=>{
       console.log(res);
       this.btndisableComentario = false;
-      this.dataComentario = {};
-      this._tools.presentToast('Comentario Agregado');
       this.lisComentario.push({
         idPersona: { nombre: this.dataUser.nombre },
         idComentario: {detalle:this.dataComentario.detalle},
         calificacion:  this.dataComentario.calificacion
-      })
+      });
+      this._tools.presentToast('Comentario Agregado');
+      this.dataComentario = {};
     },(error)=>{ console.error(error); this._tools.presentToast('Error de servidor')});
 
   }

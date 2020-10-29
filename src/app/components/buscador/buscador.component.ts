@@ -54,7 +54,7 @@ export class BuscadorComponent implements OnInit {
   getProductos(){
     this._tools.presentLoading();
     this._productos.get(this.query).subscribe((res:any)=>{
-      this.listProductos = res.data;
+      this.listProductos = _.unionBy(this.listProductos || [], res.data, 'id');
 
       if( this.evScroll.target ){
         this.evScroll.target.complete()
