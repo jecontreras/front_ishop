@@ -24,10 +24,11 @@ export class OrdenesPage implements OnInit {
   public disable_list:boolean = true;
   public evScroll:any = {};
   dataUser: any = {};
+  disabled:boolean = false;
 
   constructor(
     private _ordenes: OrdenesService,
-    private _tools: ToolsService,
+    public _tools: ToolsService,
     private modalCtrl: ModalController,
     private _store: Store<STORAGES>,
   ) { 
@@ -41,7 +42,7 @@ export class OrdenesPage implements OnInit {
     this._store.subscribe((store:any)=>{
       store = store.name;
       if( !store ) return false;
-      this.listOrdenes = store.ordenes || [];
+      // this.listOrdenes = store.ordenes || [];
       this.dataUser = store.persona || {};
     });
   }
@@ -74,7 +75,7 @@ export class OrdenesPage implements OnInit {
   }
   
   dataFormaList(res:any){
-    this.PushStoreOrdenes( res.data );
+    //this.PushStoreOrdenes( res.data );
     this.listOrdenes.push(...res.data );
     //console.log(this.listOrdenes)
     this.listOrdenes =_.unionBy(this.listOrdenes || [], res.data, 'id');
@@ -116,6 +117,19 @@ export class OrdenesPage implements OnInit {
         obj: obj
       }
     }).then(modal=>modal.present()); 
+  }
+
+  async eliminar( item ){
+    let result:any = await this._tools.presentAlertConfirm( { header: "Deseas eliminar Orden"} );
+    if( !result ) return false;
+    if( item.estado == 0 ) {
+      this.disabled = true;
+      this._ordenes.update( { id: item.id,  estado: 2 }).subscribe(( res:any )=> { 
+        item.estado = 2;
+        this.disabled = false;
+        this._tools.presentToast("Eliminado Exitos");
+      },( erro:any )=> { this._tools.presentToast("Eliminado Error"); this.disabled = false; });
+    }else this._tools.presentToast("lo sentimos no podemos procesar su acción");
   }
 
 }

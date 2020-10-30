@@ -14,6 +14,10 @@ export class OrdenesService {
   get(query: any){
     return this._model.querys<ORDENES>('facturas/querys', query, 'post');
   }
+
+  update(query: any){
+    return this._model.querys<ORDENES>('facturas/'+query.id, query, 'put');
+  }
   
   getArticulo(query: any){
     return this._model.querys<ORDENES>('facturasArticulos/querys', query, 'post');

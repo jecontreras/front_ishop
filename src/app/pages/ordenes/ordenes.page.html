@@ -28,18 +28,29 @@
 
   <ion-list #lista>
 
-    <ion-item-sliding *ngFor="let item of listOrdenes; let idx=index" (click)="agregar(item)">
-      
-      <ion-item>
-        <ion-avatar slot="start">
+    <ion-item-sliding *ngFor="let item of listOrdenes; let idx=index">
+      <ion-item-options side="start">
+        <ion-item-option color="danger" expandable (click)="eliminar( item )">
+          <ion-icon name="trash-outline"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+      <ion-item [ngClass]="{
+        'estProceso':item.estado === 0,
+        'estCompletado':item.estado === 1,
+        'estEliminado':item.estado === 2,
+        'estCancelado':item.estado === 3,
+        'estNovedad':item.estado === 4,
+        'estEnviando':item.estado === 5
+      }">
+        <ion-avatar slot="start" (click)="agregar(item)">
           <img [src]="item['idCliente']?.idFoto || './assets/perfil.png'">
         </ion-avatar>
-        <ion-label>
+        <ion-label (click)="agregar(item)">
           
           <h3>Cliente {{ item['idCliente']?.nombre }}</h3>
-          <h4>Precio Total {{ ( item.precio || 0 ).toLocaleString('de-DE', { style: 'currency', currency: 'COP' }) }}</h4>
-          <h4>Ganancias {{ ( item.precio || 0 ).toLocaleString('de-DE', { style: 'currency', currency: 'COP' }) }}</h4>
-          <p>{{ item.createdAt }}</p>
+          <h4>Precio Total {{ _tools.monedaChange( 3, 2, item.precio || 0 ) }}</h4>
+          <h4>Ganancias {{ _tools.monedaChange( 3, 2, item.precio || 0 ) }}</h4>
+          <p>{{ item.createdAt | date:'medium' }}</p>
         </ion-label>
   
       </ion-item>
@@ -55,6 +66,7 @@
     </ion-item-sliding>
     
   </ion-list>
+  
   <ion-infinite-scroll threshold="150px"
                          (ionInfinite)="loadData( $event )"
                         >
@@ -63,5 +75,14 @@
 
     </ion-infinite-scroll-content>
   </ion-infinite-scroll>
+
+  <div class="ion-text-center" *ngIf="listOrdenes.length === 0">
+    <ion-title>
+      <h6>No hay datos a mostrar <br><ion-button color="success" fill="clear" slot="end" (click)="agregar(false)">
+          Crear
+        </ion-button>
+      </h6>
+    </ion-title>
+  </div>
 
 </ion-content>

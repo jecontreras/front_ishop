@@ -82,7 +82,7 @@ export class BuscadorComponent implements OnInit {
   }
 
   getCategoria(){
-    this._categoria.get({}).subscribe((res:any)=>{
+    this._categoria.get({ where: { estado: 0 }, limit: 1000 }).subscribe((res:any)=>{
       this.listCategorias = res.data;
       if(!res.data[0]) this.listCategorias = [{id: 1, nombre:"Trajes de Baño"},{id: 2, nombre:"Zapatos"},{id: 3, nombre:"Camisas"}];
     },(error)=>this._tools.presentToast("Error de servidor"));
@@ -97,13 +97,15 @@ export class BuscadorComponent implements OnInit {
 
   buscar(ev){
     this.textoBuscar = ev.detail.value;
+    this.listProductos = [];
+    this.query.skip = 0;
     if(this.textoBuscar.length >= 1){
       this.query.where.or = [
-        {
-          titulo:{
-            contains: this.textoBuscar || ''
-          }
-        },
+        // {
+        //   titulo:{
+        //     contains: this.textoBuscar || ''
+        //   }
+        // },
         {
           slug:{
             contains: _.kebabCase(this.textoBuscar) || ''

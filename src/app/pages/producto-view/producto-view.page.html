@@ -4,7 +4,7 @@
     
     <ion-toolbar color="success">
       <ion-buttons slot="start" color="primary">
-        <ion-back-button defaultHref="/tabs"></ion-back-button>
+        <ion-back-button defaultHref="/tabs/productos"></ion-back-button>
       </ion-buttons>
       <ion-text>
         <ion-label>
@@ -67,13 +67,36 @@
       </ion-col>
       <ion-col size="12">
         <ion-text color="success">
-          <h6>{{ ( data.precioOferta || data.precioVenta || 0 ).toLocaleString('de-DE', { style: 'currency', currency: 'COP' }) }}</h6>
+          <span class="precioFormat2 espacio">
+            {{ _tools.monedaChange(3,2, data.precioOferta || data.precioVenta || 0 ) }}
+          </span>
+          <span class="precio precioPromicion precioFormat2" *ngIf="data.precioOferta">
+            {{ _tools.monedaChange(3,2, data.precioVenta ) }}
+          </span><br>
+          <span class="precioFormat2 espacio grandeGanas2">
+            Comision: {{ _tools.monedaChange( 3,2, ( data.precioOferta || data.precioVenta || 0 ) * ( data.comision || 10 ) / 100 ) }}
+          </span>
         </ion-text>
+        <!-- <ion-text color="success">
+          <h6>{{ ( data.precioOferta || data.precioVenta || 0 ).toLocaleString('de-DE', { style: 'currency', currency: 'COP' }) }}</h6>
+        </ion-text> -->
       </ion-col>
       <ion-col size="12">
         <ion-text>
           <span>({{ data.cantidad }})</span><span>UNIDADES DISPONIBLES</span>
         </ion-text>
+      </ion-col>
+      <ion-col size="12" *ngIf="data.tallas">
+        <ion-label>Tallas Disponibles</ion-label>
+        <ion-select placeholder="Seleccione la talla" [(ngModel)]="data.tallaSelect">
+          <ion-select-option *ngFor="let item of data.tallas" [value]="item.talla">{{ item.talla }}</ion-select-option>
+        </ion-select>
+      </ion-col>
+      <ion-col size="12" *ngIf="data.colores">
+        <ion-label>Colores</ion-label>
+        <ion-select placeholder="Seleccione el Color" [(ngModel)]="data.colorSelect" cancelText="Cancelar" (ngModelChange)="seleccionFoto()">
+          <ion-select-option *ngFor="let item of data.colores" [value]="item.color">{{ item.color }}</ion-select-option>
+        </ion-select>
       </ion-col>
       <ion-col size="12">
         <p [innerHtml]="data.detalle"></p>
@@ -165,7 +188,15 @@
           </ion-label>
         </ion-text>
         <ion-text color="success">
-          <h6>{{ ( data.precioOferta || data.precioVenta || 0 ).toLocaleString('de-DE', { style: 'currency', currency: 'COP' }) }}</h6>
+          <span class="precioFormat espacio">
+            {{ _tools.monedaChange(3,2, off.precioOferta || off.precioVenta || 0 ) }}
+          </span>
+          <span class="precio precioPromicion precioFormat" *ngIf="off.precioOferta">
+            {{ _tools.monedaChange(3,2, off.precioVenta ) }}
+          </span><br>
+          <span class="precioFormat espacio grandeGanas">
+            Comision: {{ _tools.monedaChange( 3,2, ( off.precioOferta || off.precioVenta || 0 ) * ( off.comision || 10 ) / 100 ) }}
+          </span>
         </ion-text>
       </ion-col>
       <ion-col size="12">

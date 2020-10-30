@@ -44,6 +44,7 @@ export class ProductoViewPage implements OnInit {
     skip: 0
   };
   btndisableComentario:boolean = false;
+  cloneGaleria:any = [];
 
   constructor(
     private activate: ActivatedRoute,
@@ -71,6 +72,7 @@ export class ProductoViewPage implements OnInit {
       this.data = res.data[0];
       if(!this.data.ranking) this.data.ranking = 5;
       this._tools.dismisPresent();
+      this.cloneGaleria = _.clone( res.files );
     },(error)=>{ console.error(error);this._tools.presentToast("Error de servidor");this._tools.dismisPresent(); });
   }
   
@@ -120,6 +122,12 @@ export class ProductoViewPage implements OnInit {
       this.dataComentario = {};
     },(error)=>{ console.error(error); this._tools.presentToast('Error de servidor')});
 
+  }
+
+  seleccionFoto( ){
+    let item = this.data.colores.find( ( key:any )=> key.color == this.data.colorSelect );
+    if( !item ) return false;
+    this.data.files = [ item.foto ];
   }
   
   loadData1(ev){

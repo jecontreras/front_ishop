@@ -33,7 +33,7 @@ export class FormordenesPage implements OnInit {
     private modalCtrl: ModalController,
     private _store: Store<NOTIFICACIONES>,
     private _orden: OrdenesService,
-    private _tools: ToolsService,
+    public _tools: ToolsService,
     private navparams: NavParams
   ) {
 
@@ -70,8 +70,13 @@ export class FormordenesPage implements OnInit {
         },
         total: this.evento.precio,
         ganancias: this.evento.comision,
+        estado: this.evento.estado,
+        id: this.evento.id,
+        idRemesa: this.evento.idRemesa,
+        estadoName: this.evento.estadoName,
         articulo: []
       };
+      this.titulo = "Actualizar";
       this.getArticulo();
     }
   }
@@ -105,9 +110,10 @@ export class FormordenesPage implements OnInit {
     let suma =  0;
     let ganancias = 0;
     for(let row of this.data.articulo){
-      suma+= ( row.precioOferta || row.precioVenta || 0 ) * row.cantidadAduiridad || 1;
+      let contando:number = ( row.precioOferta || row.precioVenta || 0 ) * Number( row.cantidadAduiridad ) || 1;
+      suma+= contando;
+      ganancias+= ( contando * row.comision || 10 ) / 100;
     }
-    ganancias = ( suma * 11 ) / 100;
     this.data.total = suma;
     this.data.ganancias = ganancias;
   }

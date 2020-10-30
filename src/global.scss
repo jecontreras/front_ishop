@@ -34,3 +34,42 @@
     padding: 0 !important;
     margin: 0 !important;
 }
+
+.precioFormat{
+    font-size: 10px;
+  }
+.precioFormat2{
+    font-size: 15px;
+}
+.grandeGanas{
+    font-size: 12px;
+}
+.grandeGanas2{
+    font-size: 17px;
+}
+.precioPromicion {
+    text-decoration: line-through;
+    color: green;
+    margin-left: 10px;
+}
+.textSegtman {
+    font-size: 10px;
+}
+.segmenButton{
+    min-width: 25% !important;
+}
+.precio{
+    color: #860909;
+}
+
+.secondaryBTN {
+    background: red !important;
+    color: white !important;
+    border-radius: 5px !important;
+}
+
+.primaryBTN {
+    background: green !important;
+    color: white !important;
+    border-radius: 5px !important;
+}

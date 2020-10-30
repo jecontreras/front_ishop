@@ -1,12 +1,14 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
 
 import { NotificacionesPage } from './notificaciones.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: NotificacionesPage
+    component: NotificacionesPage,
+    canActivate: [AuthService],
   }
 ];
 

@@ -25,6 +25,10 @@ export class ArchivoService {
     return this._model.querys<ARCHIVO>('galeria/file', query, 'post');
   }
 
+  compartir( item ){
+    
+  }
+
   // async upload(file_array:any, data:any){
   //   let FileTransfer: FileTransferObject = this.transfer.create();
 

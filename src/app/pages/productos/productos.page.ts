@@ -8,6 +8,7 @@ import { BuscadorAction, CarritoAction } from 'src/app/redux/app.actions';
 import { ModalController } from '@ionic/angular';
 import { BuscadorComponent } from 'src/app/components/buscador/buscador.component';
 import * as _ from 'lodash';
+import { ArchivoService } from 'src/app/service-component/archivo.services';
 
 @Component({
   selector: 'app-productos',
@@ -34,12 +35,19 @@ export class ProductosPage  {
   public ev:any = {};
   public disable_list:boolean = true;
   
+  sliderOpts = {
+    allowSlidePrev: false,
+    allowSlideNext: false
+  };
+  selecciono:any = "";
+
   constructor(
     private _categoria: CategoriaService,
     private _productos: ProductosService,
-    private _tools: ToolsService,
+    public _tools: ToolsService,
     private _store: Store<STORAGES>,
-    private modalCtrl: ModalController
+    private modalCtrl: ModalController,
+    private _archivos: ArchivoService
   ) { 
     this.storeProcess();
     this.getCategoria();
@@ -65,6 +73,7 @@ export class ProductosPage  {
     this.ev = ev;
     this.disable_list = false;
     this.listProductos = [];
+    this.query.skip = 0;
     this.getSearch();
   }
   
@@ -97,10 +106,15 @@ export class ProductosPage  {
     },(error)=>this._tools.presentToast("Error de servidor"));
   }
 
+  openProducto(){
+
+  }
+
   cambioCategoria(ev:any){
     let data:any = ev.detail.value;
-    this.query.where.idSubCategoria = data.idSubcategoria;
+    this.query.where.idSubCategoria = data.id;
     this.listProductos = [];
+    this.query.skip = 0;
     this.getProductos();
   }
 
@@ -132,12 +146,20 @@ export class ProductosPage  {
       }
     }).then(modal=>modal.present());
   }
-
+  validandoCart( item:any ){
+    console.log( item );
+    if( item.colores.length > 0 || item.tallas.length > 0) this.selecciono = item;
+    else this.submitCart( item );
+  }
   submitCart(item:any){
     item.cantidadAduiridad = 1;
     let accion = new CarritoAction(item, 'post');
     this._store.dispatch(accion);
     this._tools.presentToast("Agregado al Carro");
+  }
+  
+  compartir( off ){
+    this._archivos.compartir( off );
   }
 
 }

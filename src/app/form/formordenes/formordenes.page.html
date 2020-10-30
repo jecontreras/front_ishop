@@ -18,7 +18,44 @@
 
 <ion-content class="ion-padding">
   <ion-list>
-    <ion-item>
+    <ion-item *ngIf="data.id">
+      <ion-list class="anchar">
+        <ion-item lines="none">
+          <ion-toolbar>
+            <ion-label color="primary">
+              Informacion de la Orden
+            </ion-label>
+          </ion-toolbar>
+        </ion-item>
+        <ion-item lines="none">
+          <ion-grid>
+            <ion-row>
+              <ion-col size="12">
+                <div class="ion-text-center">
+                  <ion-button 
+                    [ngClass]="{
+                      'estProceso':data.estado === 0,
+                      'estCompletado':data.estado === 1,
+                      'estEliminado':data.estado === 2,
+                      'estCancelado':data.estado === 3,
+                      'estNovedad':data.estado === 4,
+                      'estEnviando':data.estado === 5
+                    }"
+                  >
+                    {{ data.estadoName }}
+                  </ion-button>
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-item>
+        <ion-item lines="none">
+          <ion-label position="floating">ID Numero de guia</ion-label>
+          <ion-input [(ngModel)]="data.idRemesa" [disabled]="true" type="text"></ion-input>  
+        </ion-item>
+      </ion-list>
+    </ion-item>
+    <ion-item lines="none">
       <ion-toolbar>
         <ion-label color="primary">
           Informacion del Cliente
@@ -45,15 +82,23 @@
         <ion-label position="floating">Fecha de Pedido</ion-label>
         <ion-datetime placeholder="fecha de la orden" [(ngModel)]="data.factura.fecha_pedido"></ion-datetime>
     </ion-item>
-    <ion-item>  
+    <ion-item>
         <ion-label position="floating">Ciudad del Cliente</ion-label>
         <ion-input [(ngModel)]="data.cliente.ciudadCliente" type="text"></ion-input>
     </ion-item>
-    <ion-item>  
+    <ion-item>
         <ion-label position="floating">Direccion del Cliente</ion-label>
         <ion-input [(ngModel)]="data.cliente.direccionCliente" type="text"></ion-input>
     </ion-item>
-    <ion-item>
+    <ion-item> 
+      <ion-label position="floating">Barrio del Cliente</ion-label>
+      <ion-input [(ngModel)]="data.cliente.barrioCliente" type="text"></ion-input>
+    </ion-item>
+    <ion-item> 
+      <ion-label position="floating">Detalles</ion-label>
+      <ion-textarea [(ngModel)]="data.factura.detalles" type="text"></ion-textarea>
+    </ion-item>
+    <ion-item lines="none">
       <ion-toolbar>
         <ion-label color="primary" slot="start">
           Productos
@@ -63,16 +108,19 @@
         </ion-button>
       </ion-toolbar>
     </ion-item>
-    <ion-item>
+    <ion-item lines="none">
       <ion-list>
-        <ion-item *ngFor="let item of data.articulo; let idx=index">
+        <ion-item *ngFor="let item of data.articulo; let idx=index" lines="none">
             <ion-avatar slot="start">
               <img [src]="( ( item.files[0] | imagen ) || 'https://hostel.keralauniversity.ac.in/images/NoImage.jpg' )">
             </ion-avatar>
             <ion-label>
               <h2>{{ item.titulo }}</h2>
               <h3>Cantidad: {{ item.cantidadAduiridad || 1 }}</h3>
-              <p>Precio: ${{ ( item.precioVenta || 0 ).toLocaleString('de-DE', { style: 'currency', currency: 'COP' }) }}</p>
+              <p>Precio: ${{ _tools.monedaChange( 3, 2, ( item.precioOferta || item.precioVenta || 0 ) ) }}</p>
+              <p>Comision: {{ _tools.monedaChange( 3,2, ( item.precioOferta || item.precioVenta || 0 ) * ( item.comision || 10 ) / 100 ) }}</p>
+              <p *ngIf="item.tallaSelect">Talla: {{ item.tallaSelect }}</p>
+              <p *ngIf="item.colorSelect">Color: {{ item.colorSelect }}</p>
             </ion-label>
             <ion-button fill="clear" color="danger" (click)="deleteCart( idx, item )" slot="end" *ngIf="!evento">
               <ion-icon name="close-circle-outline"></ion-icon>
@@ -85,11 +133,17 @@
 
 <ion-footer>
   <ion-list>
-    <ion-item slot="start">
-      <p>Total: {{ ( data.total || 0 ).toLocaleString('de-DE', { style: 'currency', currency: 'COP' }) }}</p>
+    <ion-item slot="start" lines="none">
+      <ion-text color="success">
+        <span>Total:</span>
+        <span class="colorBlack">{{ _tools.monedaChange( 3, 2, ( data.total || 0 ) ) }}</span>
+      </ion-text>
     </ion-item>
-    <ion-item slot="end">
-      <p>Comision 11%: {{ ( data.ganancias || 0 ).toLocaleString('de-DE', { style: 'currency', currency: 'COP' }) }}</p>
+    <ion-item slot="end" lines="none">
+      <ion-text color="success">
+        <span>Comision:</span>
+        <span class="colorBlack">{{ _tools.monedaChange( 3, 2, ( data.ganancias || 0 ) ) }}</span>
+      </ion-text>
     </ion-item>
   </ion-list>
 </ion-footer>
