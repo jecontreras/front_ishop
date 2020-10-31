@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { SocialSharing } from '@ionic-native/social-sharing/ngx';
+import { Platform } from '@ionic/angular';
 import * as _ from 'lodash';
 // import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
 import { ServiciosService } from '../services/servicios.service';
@@ -9,7 +11,9 @@ import { ServiciosService } from '../services/servicios.service';
 export class ArchivoService {
 
   constructor(
+    private platform: Platform,
     private _model: ServiciosService,
+    private socialSharing: SocialSharing
     // private transfer: FileTransfer
   ) {
   }
@@ -24,9 +28,51 @@ export class ArchivoService {
     // console.log(query);
     return this._model.querys<ARCHIVO>('galeria/file', query, 'post');
   }
+  
+  getBase64(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = error => reject(error);
+    });
+  }
 
-  compartir( item ){
-    
+  async compartir( item ){
+    if( this.platform.is('cordova') ){
+      let foto:any = await this.getBase64( item.foto );
+      await this.socialSharing.share(
+        item.title,
+        item.subtitle,
+        foto,
+        item.url
+      );
+    }
+    return true;
+  }
+
+  async compartir2( item ){
+    /*var options = {
+      message: 'share this', // not supported on some apps (Facebook, Instagram)
+      subject: 'the subject', // fi. for email
+      files: ['', ''], // an array of filenames either locally or remotely
+      url: 'https://www.website.com/foo/#bar?a=b',
+      chooserTitle: 'Pick an app', // Android only, you can override the default share sheet title
+      appPackageName: 'com.apple.social.facebook', // Android only, you can provide id of the App you want to share with
+      iPadCoordinates: '0,0,0,0' //IOS only iPadCoordinates for where the popover should be point.  Format with x,y,width,height
+    };
+    let result = await this.socialSharing.shareWithOptions(options);
+    console.log( "**************", result );*/
+    if( this.platform.is('cordova') ){
+      let foto:any = await this.getBase64( item.foto );
+      await this.socialSharing.share(
+        item.title,
+        item.subtitle,
+        [ foto, foto ],
+        item.url
+      );
+    }
+    return true;
   }
 
   // async upload(file_array:any, data:any){

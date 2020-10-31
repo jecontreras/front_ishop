@@ -9,6 +9,7 @@ import { ModalController } from '@ionic/angular';
 import { BuscadorComponent } from 'src/app/components/buscador/buscador.component';
 import * as _ from 'lodash';
 import { ArchivoService } from 'src/app/service-component/archivo.services';
+import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 
 @Component({
   selector: 'app-productos',
@@ -158,8 +159,11 @@ export class ProductosPage  {
     this._tools.presentToast("Agregado al Carro");
   }
   
-  compartir( off ){
-    this._archivos.compartir( off );
+  async compartir( off ){
+    let result:boolean = await this._archivos.compartir( { title: off.titulo, subtitle:'',foto: off.foto, url:'' } );
+  }
+  async compartir2( off ){
+    let result:boolean = await this._archivos.compartir2( { title: off.titulo, subtitle:'',foto: off.foto, url:'' } );
   }
 
 }
