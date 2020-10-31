@@ -49,7 +49,7 @@
           
           <h3>Cliente {{ item['idCliente']?.nombre }}</h3>
           <h4>Precio Total {{ _tools.monedaChange( 3, 2, item.precio || 0 ) }}</h4>
-          <h4>Ganancias {{ _tools.monedaChange( 3, 2, item.precio || 0 ) }}</h4>
+          <h4>Ganancias {{ _tools.monedaChange( 3, 2, item.comision || 0 ) }}</h4>
           <p>{{ item.createdAt | date:'medium' }}</p>
         </ion-label>
   

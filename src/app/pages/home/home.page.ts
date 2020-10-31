@@ -7,6 +7,8 @@ import { HomeService } from 'src/app/service-component/home.service';
 import { ToolsService } from 'src/app/services/tools.service';
 import { NameappAction } from 'src/app/redux/app.actions';
 import { ComponentsModule } from 'src/app/components/components.module';
+import { ResumenPersonaService } from 'src/app/service-component/resumen-persona.service';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
@@ -25,12 +27,15 @@ export class HomePage implements OnInit {
   }; 
   public ev:any = {};
   public disable_list:boolean = true;
+  dataResumen:any = {};
 
   constructor( 
     private _store: Store<STORAGES>,
     private modalCtrl: ModalController,
     private _home: HomeService,
-    private _tools: ToolsService
+    private _tools: ToolsService,
+    private Router: Router,
+    private _resumenPersona: ResumenPersonaService
   ) {
     this.storeGet();
     if( Object.keys(this.data_app).length == 0 ) this.getHome();
@@ -38,13 +43,20 @@ export class HomePage implements OnInit {
   }
 
   ngOnInit() {
-    
+    this.getResumen();  
   }
+  
+  getResumen(){
+    this._resumenPersona.get( { where: { idPersona: this.dataUser.id }, limit: 1 } ).subscribe(( res:any )=>{
+      this.dataResumen = res.data[0] || {};
+    });
+  }
+
   storeGet(){
     this._store.subscribe((store:any)=>{
       store = store.name;
       this.dataUser = store.persona || {};
-      this.data_app = store.nameapp || [];
+      // this.data_app = store.nameapp || [];
     });
   }
   async ionViewWillEnter(){
@@ -63,13 +75,13 @@ export class HomePage implements OnInit {
   }
 
   dataFormatHome(res:any){
-    for(let row of res.data){
-      let filtro:any = this.data_app.find(item => item.id == row.id);
-      if(!filtro){
-        let accion = new NameappAction( row, 'post');
-        this._store.dispatch(accion);
-      }
-    }
+    // for(let row of res.data){
+    //   let filtro:any = this.data_app.find(item => item.id == row.id);
+    //   if(!filtro){
+    //     let accion = new NameappAction( row, 'post');
+    //     this._store.dispatch(accion);
+    //   }
+    // }
     this.data_app.push(...res.data );
     if(this.ev){
       this.disable_list = true;
@@ -77,6 +89,10 @@ export class HomePage implements OnInit {
         this.ev.target.complete();
       }
     }
+  }
+
+  openProducto( item:any, info:any ){
+    if( info.tipo == 'articulos') this.Router.navigate( [ '/tabs/productoView', item .id ] );
   }
 
   openSearch(){

@@ -2,7 +2,7 @@
 
   <ion-toolbar color="success">
     <ion-buttons slot="start" color="primary">
-      <ion-back-button defaultHref="/"></ion-back-button>
+      <ion-back-button defaultHref="/tabs/menu"></ion-back-button>
     </ion-buttons>
     <ion-text>
       <ion-label>
@@ -24,31 +24,43 @@
   </ion-refresher>
 
   <ion-toolbar>
-    <ion-segment scrollable mode="md" color="primary" (ionChange)="cambioCategoria( $event )">
-      <ion-segment-button mode="md" [value]="item.id" *ngFor="let item of listCategorias">
-        <ion-label text-capitalize> {{ item.nombre }}</ion-label>
-      </ion-segment-button>
-    </ion-segment>
+      <ion-segment scrollable mode="md" color="primary" (ionChange)="cambioCategoria( $event )">
+        <ion-segment-button class="textSegtman segmenButton" mode="md" [value]="item.id" *ngFor="let item of listCategorias">
+          <ion-label text-capitalize> {{ item.nombre }}</ion-label>
+        </ion-segment-button>
+      </ion-segment>
   </ion-toolbar>
 
   <ion-grid>
-    <ion-row>
+    <ion-row *ngIf="!selecciono">
       <ion-col size="6" class="tumbaPaddin2" *ngFor="let off of listProductos">
         <ion-card class="marginCard">
-          <img [src]="( ( off.foto | imagen ) || './assets/product.jpg' )" [routerLink]="[ '/tabs/productoView', off.id ]">
+          <img [src]="( ( off.foto | imagen ) || './assets/product.jpg' )"
+            [routerLink]="[ '/tabs/productoView', off.id ]">
           <ion-card-header class="tumbaPadding">
             <ion-card-subtitle>{{ off['idEmpresa']?.nombre }}</ion-card-subtitle>
-            <ion-card-title>{{ off.titulo }}</ion-card-title>
+            <ion-card-title>
+              <ion-text color="success">
+                <span class="tituloClass">{{ off.titulo }}</span><br>
+                <span class="precioFormat espacio">
+                  {{ _tools.monedaChange(3,2, off.precioOferta || off.precioVenta || 0 ) }}
+                </span>
+                <span class="precio precioPromicion precioFormat" *ngIf="off.precioOferta">
+                  {{ _tools.monedaChange(3,2, off.precioVenta ) }}
+                </span><br>
+                <span class="precioFormat espacio grandeGanas">
+                  Comision:
+                  {{ _tools.monedaChange( 3,2, ( off.precioOferta || off.precioVenta || 0 ) * ( off.comision || 10 ) / 100 ) }}
+                </span>
+              </ion-text>
+            </ion-card-title>
           </ion-card-header>
           <ion-card-content class="tumbaPadding">
-            <ion-text color="success">
-              <h6>{{ ( off.precioOferta || off.precioCompra || 0 ).toLocaleString('de-DE', { style: 'currency', currency: 'COP' }) }}</h6>
-            </ion-text>
             <div class="ion-text-end">
-              <ion-button fill="clear" (click)="submitCart( off )">
+              <ion-button fill="clear" (click)="validandoCart( off )" color="success">
                 <ion-icon name="cart-outline"></ion-icon>
               </ion-button>
-              <ion-button fill="clear">
+              <ion-button fill="clear" color="warning" (click)="compartir( off )">
                 <ion-icon name="share-social-outline"></ion-icon>
               </ion-button>
             </div>
@@ -56,19 +68,46 @@
         </ion-card>
       </ion-col>
     </ion-row>
+    <ion-row *ngIf="selecciono">
+      <ion-col size="12" *ngIf="selecciono.tallas">
+        <ion-slides [options]="sliderOpts">
+          <ion-slide>
+            <div class="ion-text-center divPrincipal">
+              <ion-item lines="none" *ngIf="selecciono.tallas">
+                <ion-label>Tallas Disponibles</ion-label>
+                <ion-select placeholder="Seleccione la talla" [(ngModel)]="selecciono.tallaSelect">
+                  <ion-select-option *ngFor="let item of selecciono.tallas" [value]="item.talla">{{ item.talla }}
+                  </ion-select-option>
+                </ion-select>
+              </ion-item>
+              <ion-item lines="none" *ngIf="selecciono.colores">
+                <ion-label>Colores</ion-label>
+                <ion-select placeholder="Seleccione el Color" [(ngModel)]="selecciono.colorSelect"
+                  cancelText="Cancelar">
+                  <ion-select-option *ngFor="let item of selecciono.colores" [value]="item.color">{{ item.color }}
+                  </ion-select-option>
+                </ion-select>
+              </ion-item>
+              <ion-item lines="none">
+                <ion-button slot="start" color="danger" (click)="selecciono=''" expand="full">Atras</ion-button>
+                <ion-button slot="end" [disabled]="(!selecciono.tallas || !selecciono.colores)" color="success"
+                  expand="full" (click)="submitCart(selecciono)">Siguiente</ion-button>
+              </ion-item>
+            </div>
+          </ion-slide>
+        </ion-slides>
+      </ion-col>
+    </ion-row>
   </ion-grid>
-  
+
   <div class="ion-text-center" *ngIf="listProductos.length === 0">
     <ion-title>
       <h6>No hay datos a mostrar</h6>
     </ion-title>
   </div>
 
-  <ion-infinite-scroll threshold="150px"
-                         (ionInfinite)="loadData( $event )"
-                        >
-    <ion-infinite-scroll-content loadingSpinner="crescent"
-                                  loadingtext="Cargando data..">
+  <ion-infinite-scroll threshold="150px" (ionInfinite)="loadData( $event )">
+    <ion-infinite-scroll-content loadingSpinner="crescent" loadingtext="Cargando data..">
 
     </ion-infinite-scroll-content>
   </ion-infinite-scroll>

@@ -53,6 +53,10 @@
           <ion-label position="floating">ID Numero de guia</ion-label>
           <ion-input [(ngModel)]="data.idRemesa" [disabled]="true" type="text"></ion-input>  
         </ion-item>
+        <ion-item lines="none">
+          <ion-label position="floating">Empresa Transportado</ion-label>
+          <ion-input [(ngModel)]="data.empresaTrans" [disabled]="true" type="text"></ion-input>  
+        </ion-item>
       </ion-list>
     </ion-item>
     <ion-item lines="none">
@@ -117,7 +121,7 @@
             <ion-label>
               <h2>{{ item.titulo }}</h2>
               <h3>Cantidad: {{ item.cantidadAduiridad || 1 }}</h3>
-              <p>Precio: ${{ _tools.monedaChange( 3, 2, ( item.precioOferta || item.precioVenta || 0 ) ) }}</p>
+              <p>Precio: {{ _tools.monedaChange( 3, 2, ( item.precioOferta || item.precioVenta || 0 ) ) }}</p>
               <p>Comision: {{ _tools.monedaChange( 3,2, ( item.precioOferta || item.precioVenta || 0 ) * ( item.comision || 10 ) / 100 ) }}</p>
               <p *ngIf="item.tallaSelect">Talla: {{ item.tallaSelect }}</p>
               <p *ngIf="item.colorSelect">Color: {{ item.colorSelect }}</p>

@@ -41,7 +41,7 @@
       <ion-label>
         <h2>Ventas entregadas</h2>
       </ion-label>
-      <p slot="end">{{ dataUser.ventasEntregadas || 13 }}</p>
+      <p slot="end">{{ dataResumen.cantidadVentasTotales || 13 }}</p>
     </ion-item>
     
     <ion-item>
@@ -49,7 +49,7 @@
       <ion-label>
         <h2>Ganancias por ventas</h2>
       </ion-label>
-      <p slot="end">{{ dataUser.coinsVentas || '$23.000' }}</p>
+      <p slot="end">{{ _tools.monedaChange( 3, 2, dataResumen.gananciasVentasTotales || '$23.000' ) }}</p>
     </ion-item>
     
     <ion-item>
@@ -57,7 +57,7 @@
       <ion-label>
         <h2>Valance por ganar</h2>
       </ion-label>
-      <p slot="end">{{ dataUser.valanceGanar || '$0' }}</p>
+      <p slot="end">{{ _tools.monedaChange( 3, 2, dataResumen.ventasEntregadasDetalles || '$0' ) }}</p>
     </ion-item>
 
   </ion-list>
@@ -74,7 +74,7 @@
       <ion-label>
         <h2>Ventas por entregar</h2>
       </ion-label>
-      <p slot="end">{{ dataUser.ventasPorEntregar || 13 }}</p>
+      <p slot="end">{{ dataResumen.ganaciasVentasDetalles || 13 }}</p>
     </ion-item>
     
     <ion-item>
@@ -82,7 +82,7 @@
       <ion-label>
         <h2>Ganancias de ventas por...</h2>
       </ion-label>
-      <p slot="end">{{ dataUser.coinsPorVentas || '$23.000' }}</p>
+      <p slot="end">{{ _tools.monedaChange( 3, 2, dataResumen.valanceGanarDetalles || '$23.000' ) }}</p>
     </ion-item>
 
   </ion-list>
@@ -99,7 +99,7 @@
       <ion-label>
         <h2>Ventas totales</h2>
       </ion-label>
-      <p slot="end">{{ dataUser.ventasTotales || 60 }}</p>
+      <p slot="end">{{ dataResumen.ventasEntregarComision || 60  }}</p>
     </ion-item>
     
     <ion-item>
@@ -107,7 +107,7 @@
       <ion-label>
         <h2>Ganancias totales</h2>
       </ion-label>
-      <p slot="end">{{ dataUser.coinsTotalesVentas || '$23.000' }}</p>
+      <p slot="end">{{ _tools.monedaChange( 3, 2, dataResumen.gananciasVentasComision || '$23.000' ) }}</p>
     </ion-item>
 
   </ion-list>

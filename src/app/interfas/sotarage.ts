@@ -14,6 +14,10 @@ export interface STORAGES {
     regalos?: REGALOS;
     cliente?: CLIENTE;
 };
+export interface RESUMENPERSONA {
+
+}
+
 export interface NAMEAPP {
     
 }

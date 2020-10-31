@@ -34,13 +34,21 @@
           <img [src]="( ( off.foto | imagen ) || './assets/product.jpg' )">
           <ion-card-header class="tumbaPadding">
             <ion-card-subtitle>{{ off['idEmpresa']?.nombre }}</ion-card-subtitle>
-            <ion-card-title>{{ off.titulo }}</ion-card-title>
+            <ion-card-title>
+              <ion-text color="success">
+                <span class="tituloClass">{{ off.titulo }}</span><br>
+                <span class="precioFormat espacio">
+                  {{ _tools.monedaChange(3,2, off.precioOferta || off.precioVenta || 0 ) }}
+                </span>
+                <span class="precio precioPromicion precioFormat" *ngIf="off.precioOferta">
+                  {{ _tools.monedaChange(3,2, off.precioVenta ) }}
+                </span><br>
+                <span class="precioFormat espacio grandeGanas">
+                  Comision: {{ _tools.monedaChange( 3,2, ( off.precioOferta || off.precioVenta || 0 ) * ( off.comision || 10 ) / 100 ) }}
+                </span>
+              </ion-text>
+            </ion-card-title>
           </ion-card-header>
-          <ion-card-content class="tumbaPadding">
-            <ion-text color="success">
-              <h6>{{ ( off.precioOferta || off.precioVenta || 0 ).toLocaleString('de-DE', { style: 'currency', currency: 'COP' }) }}</h6>
-            </ion-text>
-          </ion-card-content>
         </ion-card>
       </ion-col>
     </ion-row>

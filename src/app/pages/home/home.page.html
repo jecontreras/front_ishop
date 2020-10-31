@@ -39,7 +39,7 @@
         <h6>Ganancias Por Ventas</h6>
       </ion-text>
       <ion-label slot="end">
-        {{ ( dataUser.ganancias || 20000 ).toLocaleString('de-DE', { style: 'currency', currency: 'COP' }) }}
+        {{ _tools.monedaChange( 3, 2, dataResumen.gananciasVentasTotales || '$23.000' ) }}
       </ion-label>
 
     </ion-toolbar>
@@ -47,7 +47,7 @@
   </ion-toolbar>
 
   <ion-list>
-    <ion-item>
+    <ion-item lines="none">
       <ion-label>
         <h2>Mira Como Logra tu</h2>
         <h3>Primera Venta</h3>
@@ -63,7 +63,7 @@
     <ion-row>
       <ion-col size="12" *ngFor="let info of data_app" >
         <ion-toolbar no-border>
-          <ion-item>
+          <ion-item lines="none">
             <ion-text color="dark" class="margin_left_home">
               <ion-label> {{ info.titulo }}</ion-label>
               <ion-label color="primary" class="subheader">{{ info.subtitle }}</ion-label>
@@ -73,17 +73,17 @@
         </ion-toolbar>
         <br>
         <ion-slides [options]="slideOpts">
-          <ion-slide *ngFor="let off of info.productos" [routerLink]="[ '/tabs/productoView', off.id ]">
+          <ion-slide *ngFor="let off of info.productos" (click)="openProducto( off, info )">
             <img [src]="off.foto | imagen" class="imgPrincipal">
           </ion-slide>
         </ion-slides>
 
-        <ion-toolbar no-border>
-          <ion-item>
+        <ion-toolbar no-border *ngIf="info.descripcion">
+          <ion-item lines="none">
             <ion-text color="dark" class="margin_left_home">
-              <ion-label> {{ info.descripcion }}</ion-label>
+              <span class="formatDesc">{{ info.descripcion }}</span>
             </ion-text>
-            <ion-icon (click)="compartir(info)" color="medium" slot="end" name="share-social-outline"></ion-icon>
+            <ion-icon *ngIf="info.tipo == 'articulos'" (click)="compartir(info)" color="medium" slot="end" name="share-social-outline"></ion-icon>
           </ion-item>
         </ion-toolbar>
 

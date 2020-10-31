@@ -74,6 +74,7 @@ export class FormordenesPage implements OnInit {
         id: this.evento.id,
         idRemesa: this.evento.idRemesa,
         estadoName: this.evento.estadoName,
+        empresaTrans: this.evento.empresaTrans,
         articulo: []
       };
       this.titulo = "Actualizar";

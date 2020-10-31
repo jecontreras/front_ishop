@@ -19,7 +19,7 @@ export class BuscadorComponent implements OnInit {
   constructor(
     private modalCtrl: ModalController,
     private _productos: ProductosService,
-    private _tools: ToolsService,
+    public _tools: ToolsService,
     private _store: Store<STORAGES>,
     private navparams: NavParams,
     private _categoria: CategoriaService,
