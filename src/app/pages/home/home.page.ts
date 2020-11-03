@@ -33,7 +33,7 @@ export class HomePage implements OnInit {
     private _store: Store<STORAGES>,
     private modalCtrl: ModalController,
     private _home: HomeService,
-    private _tools: ToolsService,
+    public _tools: ToolsService,
     private Router: Router,
     private _resumenPersona: ResumenPersonaService
   ) {

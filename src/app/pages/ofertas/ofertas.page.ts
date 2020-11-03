@@ -27,10 +27,16 @@ export class OfertasPage {
   public disable_list:boolean = true;
   public evScroll:any = {};
 
+  selecciono:any = {};
+  sliderOpts = {
+    allowSlidePrev: false,
+    allowSlideNext: false
+  };
+
   constructor(
     private _categoria: CategoriaService,
     private _productos: ProductosService,
-    private _tools: ToolsService,
+    public _tools: ToolsService,
     private _store: Store<STORAGES>
   ) { 
     
@@ -113,6 +119,14 @@ export class OfertasPage {
     let accion = new CarritoAction(item, 'post');
     this._store.dispatch(accion);
     this._tools.presentToast("Agregado al Carro");
+  }
+
+  validandoCart( off ){
+
+  }
+
+  compartir( off ){
+
   }
 
 

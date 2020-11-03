@@ -9,7 +9,6 @@ import { ModalController } from '@ionic/angular';
 import { BuscadorComponent } from 'src/app/components/buscador/buscador.component';
 import * as _ from 'lodash';
 import { ArchivoService } from 'src/app/service-component/archivo.services';
-import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 
 @Component({
   selector: 'app-productos',

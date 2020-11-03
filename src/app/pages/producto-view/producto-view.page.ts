@@ -49,7 +49,7 @@ export class ProductoViewPage implements OnInit {
   constructor(
     private activate: ActivatedRoute,
     private _producto: ProductosService,
-    private _tools: ToolsService,
+    public _tools: ToolsService,
     private _store: Store<STORAGES>,
     private _calificaciones: CalificacionesService,
     private modalCtrl: ModalController
