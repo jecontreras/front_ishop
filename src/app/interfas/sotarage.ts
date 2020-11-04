@@ -14,6 +14,18 @@ export interface STORAGES {
     regalos?: REGALOS;
     cliente?: CLIENTE;
 };
+export interface BANCOS {
+
+}
+
+export interface CATALOGOS{
+    
+}
+
+export interface COBROS {
+
+}
+
 export interface RESUMENPERSONA {
 
 }

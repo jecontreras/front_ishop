@@ -131,6 +131,26 @@ const routes: Routes = [
         ]
       },
       {
+        path: 'cobros',
+        children: [
+          {
+            path: '',
+            loadChildren: () =>
+            import('../cobros/cobros.module').then( m => m.CobrosPageModule)
+          }
+        ]
+      },
+      {
+        path: 'catalogos',
+        children: [
+          {
+            path: '',
+            loadChildren: () =>
+            import('../catalogos/catalogos.module').then( m => m.CatalogosPageModule)
+          }
+        ]
+      },
+      {
         path: '',
         redirectTo: '/tabs/home',
         pathMatch: 'full'

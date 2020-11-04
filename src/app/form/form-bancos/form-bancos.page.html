@@ -1,0 +1,52 @@
+<ion-header no-border translucent>
+
+  <ion-toolbar color="success">
+    <ion-button slot="start" fill="clear" (click)="close()">
+      <ion-icon name="close-outline"></ion-icon>
+    </ion-button>
+    <ion-text>
+      <ion-label>
+        Bancos
+      </ion-label>
+    </ion-text>
+    <ion-button fill="clear" slot="end" color="light" (click)="submit()" [disabled]="btnDisabled">
+      <ion-icon name="save-outline"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-list>
+    <ion-item>
+      <ion-label position="floating">Nombre del banco</ion-label>
+      <ion-input [(ngModel)]="data.titulo" type="text"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Numero de cuenta</ion-label>
+      <ion-input [(ngModel)]="data.numero" type="text"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Tipo Cuenta</ion-label>
+      <ion-select value="brown" [(ngModel)]="data.tipoCuenta" okText="Agregar" cancelText="Atras">
+        <ion-select-option value="ahorros">Ahorros</ion-select-option>
+        <ion-select-option value="corriente">Corriente</ion-select-option>
+      </ion-select>
+      <ion-input [(ngModel)]="data.tipoCuenta" type="text"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Nombre usuario de la cuenta</ion-label>
+      <ion-input [(ngModel)]="data.nombreCuenta" type="text"></ion-input>
+    </ion-item>
+    <ion-item lines="none">
+      <ion-toolbar>
+        <ion-label color="primary" slot="start">
+          Lista de Bancos
+        </ion-label>
+      </ion-toolbar>
+    </ion-item>
+    <ion-item *ngFor="let item of listBancos"> 
+      <ion-label>{{ item.titulo }} - {{ item.numero }}</ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>
