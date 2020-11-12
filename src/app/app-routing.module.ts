@@ -21,11 +21,13 @@ const routes: Routes = [
   {
     path: 'registro',
     loadChildren: () => import('./layout/registro/registro.module').then( m => m.RegistroPageModule)
-  },
-  {
-    path: 'formordenes',
-    loadChildren: () => import('./form/formordenes/formordenes.module').then( m => m.FormordenesPageModule)
+  },  {
+    path: 'form-bancos',
+    loadChildren: () => import('./form/form-bancos/form-bancos.module').then( m => m.FormBancosPageModule)
   }
+
+
+
 ];
 
 @NgModule({

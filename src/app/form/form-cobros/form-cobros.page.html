@@ -1,0 +1,53 @@
+<ion-header no-border translucent>
+
+  <ion-toolbar color="success">
+    <ion-button slot="start" fill="clear" (click)="close()">
+      <ion-icon name="close-outline"></ion-icon>
+    </ion-button>
+    <ion-text>
+      <ion-label>
+        {{ titulo }} Cobros
+      </ion-label>
+    </ion-text>
+    <ion-button fill="clear" slot="end" (click)="submit()" [disabled]="btnDisabled" *ngIf="!evento">
+      <ion-icon name="save-outline"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-list>
+    <ion-item>
+      <ion-label position="floating">Nombre Vendedor Completos</ion-label>
+      <ion-input [(ngModel)]="data.nombreVendedor" type="text"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Numero whatsapp Vendedor</ion-label>
+      <ion-input [(ngModel)]="data.numeroWhatVendedor" type="numero"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Cedula CC Vendedor</ion-label>
+      <ion-input [(ngModel)]="data.documentoVendedor" type="number"></ion-input>
+    </ion-item>
+    <ion-item lines="none">
+      <ion-label>
+        Bancos 
+      </ion-label>
+      <ion-button fill="clear" (click)="openBancos()" *ngIf="!evento">
+        <ion-icon name="add-circle-outline"></ion-icon>
+      </ion-button>
+      <ion-select value="brown" okText="Agregar" cancelText="Atras" [(ngModel)]="data.idBanco">
+        <ion-select-option [value]="item.id" *ngFor="let item of listBancos" >{{ item.titulo }}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Monto Retirando</ion-label>
+      <ion-input [(ngModel)]="data.monto2" [disabled]="true" type="text"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Descripcion</ion-label>
+      <ion-textarea [(ngModel)]="data.detalle" type="text"></ion-textarea>
+    </ion-item>
+  </ion-list>
+</ion-content>
