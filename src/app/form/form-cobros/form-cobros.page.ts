@@ -48,6 +48,13 @@ export class FormCobrosPage implements OnInit {
       this.data = this.evento || {};
       this.data.monto2 = this._tools.monedaChange( 3, 2, ( this.evento.monto || 0 ) );
     }else{
+      this.data = {
+        nombreVendedor: this.dataUser.nombre + this.dataUser.apellido,
+        numeroWhatVendedor: this.dataUser.celular,
+        documentoVendedor: this.dataUser.cedula,
+        detalle: "Hola Gente ishop solicitar mi retiro gracias",
+        ... this.data
+      }
       this.getResumen();
     }
     this.getBancos();
@@ -73,7 +80,12 @@ export class FormCobrosPage implements OnInit {
 
   async submit(){
     this.btnDisabled = true;
-    if( !this.data.id ) await this.agregar( this.data );
+    if( !this.data.id ) { 
+     let validando:boolean = this.validador( this.data );
+     if( !validando ) { this.btnDisabled = false; return false; }
+     let result:any =  await this.agregar( this.data );
+     if( result ) this.close();
+    }
     this.btnDisabled = false;
   }
 
@@ -81,10 +93,18 @@ export class FormCobrosPage implements OnInit {
     return new Promise( resolve =>{
       this.data.idPersona = this.dataUser.id;
       this._cobros.saved( data ).subscribe(( res:any )=>{
-        this._tools.presentToast( "Datos actualizados" );
+        this._tools.presentToast( "Datos guardados" );
         resolve( res );
-      },( error:any )=> { this._tools.presentToast("Error al guardar los registros"); resolve( false ); });
+      },( error:any )=> { this._tools.presentToast("Error al guardar los registros vuelva a intentarlo"); resolve( false ); });
     });
+  }
+
+  validador( data ):boolean {
+    if( !data.nombreVendedor ) { this._tools.presentToast( "Error falta el nombre del vendedor" ); return false; }
+    if( !data.numeroWhatVendedor ) { this._tools.presentToast( "Error falta el numero de whatsapp del vendedor" ); return false; }
+    if( !data.documentoVendedor ) { this._tools.presentToast( "Error falta el documento del vendedor" ); return false; }
+    if( !data.idBanco ) { this._tools.presentToast( "Error falta el Banco" ); return false; }
+    return true;
   }
 
   openBancos(){
