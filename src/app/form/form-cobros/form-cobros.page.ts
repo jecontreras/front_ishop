@@ -49,7 +49,7 @@ export class FormCobrosPage implements OnInit {
       this.data.monto2 = this._tools.monedaChange( 3, 2, ( this.evento.monto || 0 ) );
     }else{
       this.data = {
-        nombreVendedor: this.dataUser.nombre + this.dataUser.apellido,
+        nombreVendedor: this.dataUser.nombre + " " + this.dataUser.apellido,
         numeroWhatVendedor: this.dataUser.celular,
         documentoVendedor: this.dataUser.cedula,
         detalle: "Hola Gente ishop solicitar mi retiro gracias",

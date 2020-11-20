@@ -1,9 +1,73 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>catalogos</ion-title>
+<ion-header no-border translucent>
+
+  <ion-toolbar color="success">
+    <ion-buttons slot="start" color="primary">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-text>
+      <ion-label>
+        Catalogos
+      </ion-label>
+    </ion-text>
   </ion-toolbar>
+
 </ion-header>
 
-<ion-content>
+
+<ion-content fullscreen>
+  
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)" pullMin="200" pullMax="300">
+    <ion-refresher-content>
+    </ion-refresher-content>
+  </ion-refresher>
+
+  <ion-grid>
+    <ion-row *ngIf="!selecciono">
+      <ion-col size="6" class="tumbaPaddin2" *ngFor="let off of listCatalogos">
+        <ion-card class="marginCard">
+          <img [src]="( ( off.foto ) || './assets/product.jpg' )" [routerLink]="[ '/tabs/productoView', off.id ]">
+          <ion-card-header class="tumbaPadding">
+            <ion-card-subtitle>{{ off['idEmpresa']?.nombre }}</ion-card-subtitle>
+            <ion-card-title>
+              <ion-text color="success">
+                <span class="tituloClass">{{ off.titulo }}</span><br>
+                <span class="precioFormat espacio">
+                  {{ _tools.monedaChange(3,2, off.precioOferta || off.precioVenta || 0 ) }}
+                </span>
+                <span class="precio precioPromicion precioFormat" *ngIf="off.precioOferta">
+                  {{ _tools.monedaChange(3,2, off.precioVenta ) }}
+                </span><br>
+                <span class="precioFormat espacio grandeGanas">
+                  Comision: {{ _tools.monedaChange( 3,2, ( off.precioOferta || off.precioVenta || 0 ) * ( off.comision || 10 ) / 100 ) }}
+                </span>
+              </ion-text>
+            </ion-card-title>
+          </ion-card-header>
+          <ion-card-content class="tumbaPadding">
+            <div class="ion-text-end">
+              <ion-button fill="clear" color="warning" (click)="compartir( off )">
+                <ion-icon name="share-social-outline"></ion-icon>
+              </ion-button>
+            </div>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <div class="ion-text-center" *ngIf="listCatalogos.length === 0">
+    <ion-title>
+      <h6>No hay datos a mostrar</h6>
+    </ion-title>
+  </div>
+
+  <ion-infinite-scroll threshold="150px"
+                         (ionInfinite)="loadData( $event )"
+                        >
+    <ion-infinite-scroll-content loadingSpinner="crescent"
+                                  loadingtext="Cargando data..">
+
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 
 </ion-content>
