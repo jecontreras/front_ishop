@@ -1,21 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { STORAGES } from 'src/app/interfas/sotarage';
-import { ArchivoService } from 'src/app/service-component/archivo.services';
-import { ProductosService } from 'src/app/service-component/productos.service';
 import { ToolsService } from 'src/app/services/tools.service';
-import * as _ from 'lodash';
-import { CatalogosService } from 'src/app/service-component/catalogos.service';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+import * as _ from 'lodash';
+import { CobrosService } from 'src/app/service-component/cobros.service';
 
 @Component({
-  selector: 'app-catalogos',
-  templateUrl: './catalogos.page.html',
-  styleUrls: ['./catalogos.page.scss'],
+  selector: 'app-embajadores',
+  templateUrl: './embajadores.page.html',
+  styleUrls: ['./embajadores.page.scss'],
 })
-export class CatalogosPage implements OnInit {
+export class EmbajadoresPage implements OnInit {
   
-  listCatalogos:any = [];
+  listEmbajadores:any = [];
   query:any = {
     where:{
       estado: 0
@@ -25,10 +23,9 @@ export class CatalogosPage implements OnInit {
   public evScroll:any = {};
   public ev:any = {};
   public disable_list:boolean = true;
-
+  
   constructor(
-    private _archivos: ArchivoService,
-    private _catalago: CatalogosService,
+    private _cobros: CobrosService,
     public _tools: ToolsService,
     private _store: Store<STORAGES>,
     private iab: InAppBrowser,
@@ -46,7 +43,7 @@ export class CatalogosPage implements OnInit {
   doRefresh(ev){
     this.ev = ev;
     this.disable_list = false;
-    this.listCatalogos = [];
+    this.listEmbajadores = [];
     this.query.skip = 0;
     this.getProductos();
   }
@@ -60,9 +57,9 @@ export class CatalogosPage implements OnInit {
 
   getProductos(){
     this._tools.presentLoading();
-    this._catalago.get(this.query).subscribe((res:any)=>{
-      this.listCatalogos.push(...res.data );
-      this.listCatalogos =_.unionBy(this.listCatalogos || [], res.data, 'id');
+    this._cobros.get(this.query).subscribe((res:any)=>{
+      this.listEmbajadores.push(...res.data );
+      this.listEmbajadores =_.unionBy(this.listEmbajadores || [], res.data, 'id');
       
       if( this.evScroll.target ){
         this.evScroll.target.complete()
@@ -76,14 +73,6 @@ export class CatalogosPage implements OnInit {
       this._tools.dismisPresent();
 
     },(error)=>{console.error(error); this._tools.presentToast("Error de servidor")})
-  }
-
-  async compartir( off ){
-    let result:boolean = await this._archivos.compartir( { title: off.titulo, subtitle:'',foto: off.foto, url:'' } );
-  }
-
-  openCatalago( off ){
-    const browser = this.iab.create(off.url, '_system');
   }
 
 }

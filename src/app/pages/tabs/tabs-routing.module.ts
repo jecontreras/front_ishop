@@ -151,6 +151,16 @@ const routes: Routes = [
         ]
       },
       {
+        path: 'embajadores',
+        children: [
+          {
+            path: '',
+            loadChildren: () =>
+            import('../embajadores/embajadores.module').then( m => m.EmbajadoresPageModule)
+          }
+        ]
+      },
+      {
         path: '',
         redirectTo: '/tabs/home',
         pathMatch: 'full'

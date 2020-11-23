@@ -22,7 +22,6 @@ const routes: Routes = [
     path: 'registro',
     loadChildren: () => import('./layout/registro/registro.module').then( m => m.RegistroPageModule)
   }
-
 ];
 
 @NgModule({
