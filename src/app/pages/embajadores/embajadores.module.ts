@@ -4,23 +4,21 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { HomePageRoutingModule } from './home-routing.module';
+import { EmbajadoresPageRoutingModule } from './embajadores-routing.module';
 
-import { HomePage } from './home.page';
-import { PipeModule } from 'src/app/pipe/pipe.module';
+import { EmbajadoresPage } from './embajadores.page';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 
 @NgModule({
   imports: [
-    PipeModule,
     CommonModule,
     FormsModule,
     IonicModule,
-    HomePageRoutingModule
+    EmbajadoresPageRoutingModule
   ],
   providers:[
     InAppBrowser
   ],
-  declarations: [HomePage]
+  declarations: [EmbajadoresPage]
 })
-export class HomePageModule {}
+export class EmbajadoresPageModule {}

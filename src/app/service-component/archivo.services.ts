@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-//import { SocialSharing } from '@ionic-native/social-sharing/ngx';
+import { SocialSharing } from '@ionic-native/social-sharing/ngx';
+import { File } from '@ionic-native/file/ngx';
 import { Platform } from '@ionic/angular';
 import * as _ from 'lodash';
 // import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
@@ -13,7 +14,8 @@ export class ArchivoService {
   constructor(
     private platform: Platform,
     private _model: ServiciosService,
-    //private socialSharing: SocialSharing
+    private socialSharing: SocialSharing,
+    private file: File,
     // private transfer: FileTransfer
   ) {
   }
@@ -39,6 +41,7 @@ export class ArchivoService {
   }
 
   async compartir( item ){
+    this.compartirWhat( item );
     if( this.platform.is('cordova') ){
       // let foto:any = await this.getBase64( item.foto );
       // await this.socialSharing.share(
@@ -51,6 +54,16 @@ export class ArchivoService {
     return true;
   }
 
+  compartirWhat( item ){
+     this.socialSharing.shareViaWhatsApp( item.titulo, item.foto, item.url ).then((res) => {
+        //Success
+       console.log("***COMPLETADO", res);
+     }).catch((e) => {
+        //Error!
+       console.log("***ERROR", e);
+     });
+  }
+
   async compartir2( item ){
     var options = {
       message: 'share this', // not supported on some apps (Facebook, Instagram)
@@ -58,8 +71,8 @@ export class ArchivoService {
       files: [ item.foto, item.foto ], // an array of filenames either locally or remotely
       url: 'https://www.website.com/foo/#bar?a=b',
     };
-    // let result = await this.socialSharing.shareWithOptions(options);
-    // console.log( "**************", result );
+    let result = await this.socialSharing.shareWithOptions(options);
+    console.log( "**************", result );
     // if( this.platform.is('cordova') ){
     //   let foto:any = await this.getBase64( item.foto );
     //   await this.socialSharing.share(

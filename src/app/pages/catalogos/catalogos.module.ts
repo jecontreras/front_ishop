@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { CatalogosPageRoutingModule } from './catalogos-routing.module';
 
 import { CatalogosPage } from './catalogos.page';
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 
 @NgModule({
   imports: [
@@ -14,6 +15,9 @@ import { CatalogosPage } from './catalogos.page';
     FormsModule,
     IonicModule,
     CatalogosPageRoutingModule
+  ],
+  providers:[
+    InAppBrowser
   ],
   declarations: [CatalogosPage]
 })

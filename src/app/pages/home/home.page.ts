@@ -5,10 +5,10 @@ import { ModalController } from '@ionic/angular';
 import { BuscadorComponent } from 'src/app/components/buscador/buscador.component';
 import { HomeService } from 'src/app/service-component/home.service';
 import { ToolsService } from 'src/app/services/tools.service';
-import { NameappAction } from 'src/app/redux/app.actions';
-import { ComponentsModule } from 'src/app/components/components.module';
 import { ResumenPersonaService } from 'src/app/service-component/resumen-persona.service';
 import { Router } from '@angular/router';
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
@@ -35,7 +35,8 @@ export class HomePage implements OnInit {
     private _home: HomeService,
     public _tools: ToolsService,
     private Router: Router,
-    private _resumenPersona: ResumenPersonaService
+    private _resumenPersona: ResumenPersonaService,
+    private iab: InAppBrowser
   ) {
     this.storeGet();
     if( Object.keys(this.data_app).length == 0 ) this.getHome();
@@ -106,6 +107,10 @@ export class HomePage implements OnInit {
 
   compartir(obj:any){
     console.log(obj);
+  }
+
+  openPasos(){
+    const browser = this.iab.create("https://www.youtube.com/watch?v=t9h-ML5acDA", '_system');
   }
 
 }
