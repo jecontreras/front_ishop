@@ -27,7 +27,12 @@
         <ion-card class="marginCard">
           <img [src]="( ( off.idPersona.foto ) || './assets/product.jpg' )">
           <ion-card-header class="tumbaPadding">
-            <ion-card-subtitle>{{ off['idPersona']?.nombre }}</ion-card-subtitle>
+            <ion-card-subtitle>
+              <ion-text class="espacio" color="primary">
+                <span>Vendedora: </span>
+                <span>{{ off['idPersona']?.nombre }}</span>
+              </ion-text>
+            </ion-card-subtitle>
             <ion-card-title>
               <ion-text color="success">
                 <span class="precioFormat espacio grandeGanas">

@@ -7,8 +7,8 @@
         <img [src]="dataUser.idFoto || './assets/perfil.png'" class="perfil">
   
         <ion-text>
-          <h5>¡Hola {{ dataUser.nombre || 'Juan Fernando!' }}</h5>
-          <p>Tu correo es  {{ dataUser.email || 'juan@email.com' }}</p>
+          <h5>¡Hola {{ dataUser.nombre }}</h5>
+          <p>Tu correo es  {{ dataUser.email }}</p>
         </ion-text>
   
       </div>
@@ -17,13 +17,13 @@
   
     <ion-toolbar color="success" class="paddingToolbar2">
       <ion-text slot="start">
-          <h6>{{ dataUser.username || 'Fernando231' }}</h6>
+          <h6>{{ dataUser.username }}</h6>
           <p>Tu Codigo</p>
       </ion-text>
   
       <ion-text slot="end">
         <h6>{{ dataUser.clientes || 11 }}</h6>
-        <p>Clientes</p>
+        <p>{{ dataUser.cedula }}</p>
       </ion-text>
     </ion-toolbar>
 

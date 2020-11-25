@@ -21,7 +21,11 @@ const routes: Routes = [
   {
     path: 'registro',
     loadChildren: () => import('./layout/registro/registro.module').then( m => m.RegistroPageModule)
+  },  {
+    path: 'ayudas',
+    loadChildren: () => import('./layout/ayudas/ayudas.module').then( m => m.AyudasPageModule)
   }
+
 ];
 
 @NgModule({
