@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { VideoPlayer } from '@ionic-native/video-player/ngx';
 import { Store } from '@ngrx/store';
 import { STORAGES } from 'src/app/interfas/sotarage';
 import { NameappAction } from 'src/app/redux/app.actions';
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 
 @Component({
   selector: 'app-ayudas',
@@ -18,36 +18,24 @@ export class AyudasPage implements OnInit {
   };
 
   constructor(
-    private videoPlayer: VideoPlayer,
     private _store: Store<STORAGES>,
-    private Router: Router
+    private Router: Router,
+    private iab: InAppBrowser
   ) { }
 
   ngOnInit() {
   }
 
   Vervideo1(){
-    this.videoPlayer.play('https://www.youtube.com/embed/ALZHF5UqnU4').then(() => {
-      console.log('video completed');
-    }).catch(err => {
-      console.log(err);
-    });
+    const browser = this.iab.create("https://www.youtube.com/embed/ALZHF5UqnU4", '_system');
   }
 
   Vervideo2(){
-    this.videoPlayer.play('https://www.youtube.com/embed/ALZHF5UqnU4').then(() => {
-      console.log('video completed');
-    }).catch(err => {
-      console.log(err);
-    });
+    const browser = this.iab.create("https://www.youtube.com/embed/ALZHF5UqnU4", '_system');
   }
 
   Vervideo3(){
-    this.videoPlayer.play('https://www.youtube.com/embed/ALZHF5UqnU4').then(() => {
-      console.log('video completed');
-    }).catch(err => {
-      console.log(err);
-    });
+    const browser = this.iab.create("https://www.youtube.com/embed/ALZHF5UqnU4", '_system');
   }
 
   nexPaso(){

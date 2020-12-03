@@ -12,7 +12,7 @@ import { CobrosService } from 'src/app/service-component/cobros.service';
   styleUrls: ['./embajadores.page.scss'],
 })
 export class EmbajadoresPage implements OnInit {
-  
+  selecciono:boolean = false;
   listEmbajadores:any = [];
   query:any = {
     where:{

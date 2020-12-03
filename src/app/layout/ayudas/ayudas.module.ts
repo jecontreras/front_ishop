@@ -7,7 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { AyudasPageRoutingModule } from './ayudas-routing.module';
 
 import { AyudasPage } from './ayudas.page';
-import { VideoPlayer } from '@ionic-native/video-player/ngx';
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 
 @NgModule({
   imports: [
@@ -17,7 +17,7 @@ import { VideoPlayer } from '@ionic-native/video-player/ngx';
     AyudasPageRoutingModule
   ],
   providers:[
-    VideoPlayer
+    InAppBrowser
   ],
   declarations: [AyudasPage]
 })

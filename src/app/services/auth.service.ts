@@ -45,15 +45,15 @@ export class AuthService implements CanActivate {
     }
 
     public isLogged() {
-        if (!localStorage.getItem('user')) {
-          this.router.navigate(['/login']);
+        if ( Object.keys( this.dataUser ).length == 0) {
+          this.router.navigate(['/portada']);
         } else {
           return false;
         }
     }
 
     public isLoggedIn() {
-      if (!localStorage.getItem('user')) {
+      if ( Object.keys( this.dataUser ).length == 0 ) {
         return false;
       } else {
         return true;

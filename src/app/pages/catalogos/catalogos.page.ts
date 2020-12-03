@@ -14,7 +14,7 @@ import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
   styleUrls: ['./catalogos.page.scss'],
 })
 export class CatalogosPage implements OnInit {
-  
+  selecciono:boolean = false;
   listCatalogos:any = [];
   query:any = {
     where:{
