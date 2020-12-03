@@ -1,11 +1,19 @@
-<ion-toolbar>
-  <ion-button slot="start" (click)="salir()" fill="clear">
-    <ion-icon name="arrow-back-outline"></ion-icon>
-  </ion-button>
-  <ion-text color="dark">
-    <h5>Buscador</h5>
-  </ion-text>
-</ion-toolbar>
+
+<ion-header no-border translucent>
+
+  <ion-toolbar color="success">
+    <ion-buttons slot="start" (click)="salir()" color="primary">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-text>
+      <ion-label>
+        Buscador
+      </ion-label>
+    </ion-text>
+  </ion-toolbar>
+
+</ion-header>
+
 <ion-content fullscreen>
 
   <!-- <ion-grid>
@@ -70,12 +78,12 @@
 <ion-toolbar>
   
   <ion-segment scrollable mode="md" (ionChange)="cambioCategoria( $event )">
-    <ion-segment-button mode="md" [value]="item" *ngFor="let item of listCategorias">
+    <ion-segment-button mode="md" [value]="item" class="textSegtman segmenButton" *ngFor="let item of listCategorias">
       <ion-label class="colorText" text-capitalize> {{ item.nombre }} </ion-label>
     </ion-segment-button>
   </ion-segment>
 
-  <ion-searchbar placeholder="Buscar Pelicula" animated debounce="700" [value]="textoBuscar" (ionChange)="buscar( $event )">
+  <ion-searchbar placeholder="Buscar Prductos" animated debounce="700" [value]="textoBuscar" (ionChange)="buscar( $event )">
   </ion-searchbar>
 
 </ion-toolbar>

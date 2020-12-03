@@ -1,9 +1,71 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>ayudas</ion-title>
+<ion-header no-border translucent>
+
+  <ion-toolbar color="success">
+    <ion-buttons slot="start" color="primary">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-text>
+      <ion-label>
+        Ayudas
+      </ion-label>
+    </ion-text>
   </ion-toolbar>
+
 </ion-header>
 
 <ion-content>
-
+  <ion-slides [options]="sliderOpts">
+    <ion-slide>
+      <ion-toolbar>
+        <div class="ion-text-center">
+          <img src="./assets/logo.png"><br>
+          <ion-text color="success">
+            <h4>¿Que es Ishop?</h4>
+          </ion-text>
+          <ion-button color="primary" (click)="Vervideo1()">
+            Ver Video
+          </ion-button>
+        </div>
+      </ion-toolbar>
+    </ion-slide>
+    <ion-slide>
+      <ion-toolbar>
+        <div class="ion-text-center">
+          <img src="./assets/ayuda/megafono.jpg"><br>
+          <ion-text color="success">
+            <h4>¿Como promocionar tu negocio?</h4>
+          </ion-text>
+          <ion-button color="primary" (click)="Vervideo2()">
+            Ver Video
+          </ion-button>
+        </div>
+      </ion-toolbar>
+    </ion-slide>
+    <ion-slide>
+      <ion-toolbar>
+        <div class="ion-text-center">
+          <img src="./assets/ayuda/carrito.jpg"><br>
+          <ion-text color="success">
+            <h4>¿Como subir tus órdenes?</h4>
+          </ion-text>
+          <ion-button color="primary" (click)="Vervideo3()">
+            Ver Video
+          </ion-button>
+        </div>
+      </ion-toolbar>
+    </ion-slide>
+    <ion-slide>
+      <ion-toolbar>
+        <div class="ion-text-center">
+          <img src="./assets/ayuda/bienvenido.jpg"><br>
+          <ion-text color="success">
+            <h4>¿UNETE A NOSOTROS?</h4>
+          </ion-text>
+          <ion-button color="primary" (click)="nexPaso()">
+            INICIAR
+          </ion-button>
+        </div>
+      </ion-toolbar>
+    </ion-slide>
+  </ion-slides>
 </ion-content>

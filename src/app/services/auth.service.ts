@@ -16,11 +16,19 @@ export interface User {
   providedIn: 'root'
 })
 export class AuthService implements CanActivate {
+
   dataUser:any = {};
-  constructor(private http: HttpClient, private router: Router, private _store: Store<PERSONA>) {
+  dataApp:any = {};
+
+  constructor(
+    private router: Router, 
+    private _store: Store<PERSONA>
+  ) {
       this._store.subscribe((store:any)=>{
         store = store.name;
+        if( !store ) return false;
         this.dataUser = store.persona || {};
+        this.dataApp = store.nameapp[0] || {};
       });
     }
 
@@ -66,7 +74,13 @@ export class AuthService implements CanActivate {
       if (Object.keys(identity).length >0) {
         return true;
       } else {
-        this.router.navigate(['/portada']);
+        try {
+          if( this.dataApp.iniciado ) this.router.navigate(['/portada']);
+          else this.router.navigate(['/ayudas']);
+        } catch (error) {
+          this.router.navigate(['/ayudas']);
+        }
+        
         return false;
       }
     }
