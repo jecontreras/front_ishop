@@ -28,6 +28,7 @@
     "@ngrx/store": "^8.6.0",
     "@ngrx/store-devtools": "^8.6.0",
     "cordova-android": "^8.1.0",
+    "cordova-android-support-gradle-release": "^3.0.1",
     "core-js": "^2.5.4",
     "es6-promise-plugin": "^4.2.2",
     "express": "^4.17.1",
