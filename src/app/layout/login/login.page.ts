@@ -55,7 +55,7 @@ export class LoginPage implements OnInit {
         if(res.success){
           let accion:any = new PersonaAction(res.data, 'post');
           this._store.dispatch(accion);
-          this._router.navigate(['/tabs/home']);
+          setTimeout( () => { this._router.navigate(['/tabs/home']); }, 2000 );
         }else{
           this.data.password = "";
           this._tools.presentToast("Error de login");

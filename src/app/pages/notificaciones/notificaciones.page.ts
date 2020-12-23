@@ -4,6 +4,7 @@ import { Store } from '@ngrx/store';
 import { NotificacionesService } from 'src/app/service-component/notificaciones.service';
 import { Router } from '@angular/router';
 import { ToolsService } from 'src/app/services/tools.service';
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 
 @Component({
   selector: 'app-notificaciones',
@@ -28,7 +29,8 @@ export class NotificacionesPage implements OnInit {
     private _store: Store<NOTIFICACIONES>,
     private _notificaion: NotificacionesService,
     private _tools: ToolsService,
-    private router: Router
+    private router: Router,
+    private iab: InAppBrowser
   ) { }
 
   ngOnInit() {
@@ -64,19 +66,8 @@ export class NotificacionesPage implements OnInit {
       }
     }, (err)=>{ console.error(err); this._tools.presentToast("Error de servidor o conexion"); });
   }
-  view(item:any){
-    if(item.tipo === 'chat'){
-      let data:any = {
-        id: item.articulo.id,
-        titulo: item.articulo.titulo,
-        foto: item.articulo.foto,
-        costopromosion: item.articulo.costopromosion,
-        costoventa: item.articulo.costoventa
-      };
-      /*let accion = new ArticuloSelectAction(data, 'post')
-      this._store.dispatch(accion)
-      this.router.navigate(['/chat_view', item.reseptor]);*/
-    }
+  view( item:any ){
+    const browser = this.iab.create( item.url , '_system');
   }
 
 }

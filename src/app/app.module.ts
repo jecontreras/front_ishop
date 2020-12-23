@@ -19,6 +19,10 @@ import { ComponentsModule } from 'src/app/components/components.module';
 import { ProductosPageModule } from './pages/productos/productos.module';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { File } from '@ionic-native/file/ngx';
+import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
+// import { FCM } from 'cordova-plugin-fcm-with-dependecy-updated/ionic/ngx';
+// import { Push } from '@ionic-native/push/ngx';
+//import { FCM } from '@ionic-native/fcm/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -35,12 +39,15 @@ import { File } from '@ionic-native/file/ngx';
     HttpClientModule,
     FormordenesPageModule,
     ComponentsModule,
-    ProductosPageModule
+    ProductosPageModule,
   ],
   providers: [
     StatusBar,
     SplashScreen, 
     SocialSharing,
+    LocalNotifications,
+    // Push,
+    // FCM,
     File,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],

@@ -35,6 +35,6 @@ export class PortadaPage implements OnInit {
   }
 
   ayuda(){
-    
+    this._router.navigate(['ayudas']);
   }
 }

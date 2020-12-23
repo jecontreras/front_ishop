@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { NotificacionesPageRoutingModule } from './notificaciones-routing.module';
 
 import { NotificacionesPage } from './notificaciones.page';
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 
 @NgModule({
   imports: [
@@ -14,6 +15,9 @@ import { NotificacionesPage } from './notificaciones.page';
     FormsModule,
     IonicModule,
     NotificacionesPageRoutingModule
+  ],
+  providers:[
+    InAppBrowser
   ],
   declarations: [NotificacionesPage]
 })

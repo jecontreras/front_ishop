@@ -5,6 +5,8 @@
 *.sw[mnpcod]
 .tmp
 *.tmp
+.functions
+*.functions
 *.tmp.*
 *.sublime-project
 *.sublime-workspace
@@ -26,6 +28,7 @@ npm-debug.log*
 /coverage
 /dist
 /node_modules
+/functions
 /platforms
 /plugins
 /www
