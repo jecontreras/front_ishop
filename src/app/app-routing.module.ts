@@ -22,11 +22,9 @@ const routes: Routes = [
     path: 'registro',
     loadChildren: () => import('./layout/registro/registro.module').then( m => m.RegistroPageModule)
   },  {
-    path: 'form-bancos',
-    loadChildren: () => import('./form/form-bancos/form-bancos.module').then( m => m.FormBancosPageModule)
+    path: 'ayudas',
+    loadChildren: () => import('./layout/ayudas/ayudas.module').then( m => m.AyudasPageModule)
   }
-
-
 
 ];
 

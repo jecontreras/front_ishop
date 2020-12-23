@@ -20,14 +20,14 @@
 
     </ion-toolbar>
   
-    <ion-toolbar color="success" class="submenu">
+    <ion-toolbar color="success" class="submenu" [routerLink]="['/tabs/perfil']">
      
       <ion-avatar slot="start" class="perfil">
         <img [src]=" dataUser.foto || './assets/perfil.png' ">
       </ion-avatar>
       <ion-label>
         <h3>Vamos {{ dataUser.nombre || '¡Juan Fernando!'}}</h3>
-        <p>Tu Código {{ dataUser.username }}</p>
+        <p>Tu Código {{ dataUser.cedula }}</p>
       </ion-label>
     
     </ion-toolbar>
@@ -39,7 +39,7 @@
         <h6>Ganancias Por Ventas</h6>
       </ion-text>
       <ion-label slot="end">
-        {{ _tools.monedaChange( 3, 2, dataResumen.gananciasVentasTotales || '$23.000' ) }}
+        {{ _tools.monedaChange( 3, 2, dataResumen.gananciasVentasTotales || 0 ) }}
       </ion-label>
 
     </ion-toolbar>
@@ -51,7 +51,7 @@
       <ion-label>
         <h2>Mira Como Logra tu</h2>
         <h3>Primera Venta</h3>
-        <ion-button color="success">
+        <ion-button color="success" (click)="openPasos()">
           ¡ver Pasos!
         </ion-button>
       </ion-label>

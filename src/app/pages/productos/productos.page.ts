@@ -161,8 +161,8 @@ export class ProductosPage  {
   async compartir( off ){
     let result:boolean = await this._archivos.compartir( { title: off.titulo, subtitle:'',foto: off.foto, url:'' } );
   }
-  async compartir2( off ){
-    let result:boolean = await this._archivos.compartir2( { title: off.titulo, subtitle:'',foto: off.foto, url:'' } );
+  async Descargar( off ){
+    
   }
 
 }

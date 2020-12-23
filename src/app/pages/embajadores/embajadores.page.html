@@ -6,7 +6,7 @@
     </ion-buttons>
     <ion-text>
       <ion-label>
-        Catalogos
+        Embajadores
       </ion-label>
     </ion-text>
   </ion-toolbar>
@@ -23,39 +23,30 @@
 
   <ion-grid>
     <ion-row *ngIf="!selecciono">
-      <ion-col size="6" class="tumbaPaddin2" *ngFor="let off of listCatalogos">
+      <ion-col size="6" class="tumbaPaddin2" *ngFor="let off of listEmbajadores">
         <ion-card class="marginCard">
-          <img [src]="( ( off.foto ) || './assets/product.jpg' )" (click)="openCatalago( off )">
+          <img [src]="( ( off.idPersona.foto ) || './assets/product.jpg' )">
           <ion-card-header class="tumbaPadding">
-            <ion-card-subtitle>{{ off['idEmpresa']?.nombre }}</ion-card-subtitle>
+            <ion-card-subtitle>
+              <ion-text class="espacio" color="primary">
+                <span>Vendedora: </span>
+                <span>{{ off['idPersona']?.nombre }}</span>
+              </ion-text>
+            </ion-card-subtitle>
             <ion-card-title>
               <ion-text color="success">
-                <span class="tituloClass">{{ off.titulo }}</span><br>
-                <span class="precioFormat espacio">
-                  {{ _tools.monedaChange(3,2, off.promocion || off.precios || 0 ) }}
-                </span>
-                <span class="precio precioPromicion precioFormat" *ngIf="off.promocion">
-                  {{ _tools.monedaChange(3,2, off.precios ) }}
-                </span><br>
                 <span class="precioFormat espacio grandeGanas">
-                  Comision: {{ _tools.monedaChange( 3,2, ( off.promocion || off.precios || 0 ) * ( off.comision || 10 ) / 100 ) }}
-                </span>
+                  Comision Ganancias: {{ _tools.monedaChange( 3,2, ( off.monto || 0 ) ) }}
+                </span><br>
               </ion-text>
             </ion-card-title>
           </ion-card-header>
-          <!-- <ion-card-content class="tumbaPadding">
-            <div class="ion-text-end">
-              <ion-button fill="clear" color="warning" (click)="compartir( off )">
-                <ion-icon name="share-social-outline"></ion-icon>
-              </ion-button>
-            </div>
-          </ion-card-content> -->
         </ion-card>
       </ion-col>
     </ion-row>
   </ion-grid>
 
-  <div class="ion-text-center" *ngIf="listCatalogos.length === 0">
+  <div class="ion-text-center" *ngIf="listEmbajadores.length === 0">
     <ion-title>
       <h6>No hay datos a mostrar</h6>
     </ion-title>

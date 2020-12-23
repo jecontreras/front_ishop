@@ -14,6 +14,11 @@ export interface STORAGES {
     regalos?: REGALOS;
     cliente?: CLIENTE;
 };
+
+export interface CATALAGODETALLE{
+
+}
+
 export interface BANCOS {
 
 }

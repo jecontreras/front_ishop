@@ -5,6 +5,8 @@
 export const environment = {
   production: false,
   url: "http://localhost:1337",
+  // ip remoto
+  //url: 'http://192.168.1.9:1337',
   //url: "https://backendishop.herokuapp.com",
   imgPathProductos: "https://backendishop.herokuapp.com/images/productos/"
 };

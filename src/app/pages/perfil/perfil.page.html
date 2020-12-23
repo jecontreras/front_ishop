@@ -7,8 +7,8 @@
         <img [src]="dataUser.idFoto || './assets/perfil.png'" class="perfil">
   
         <ion-text>
-          <h5>¡Hola {{ dataUser.nombre || 'Juan Fernando!' }}</h5>
-          <p>Tu correo es  {{ dataUser.email || 'juan@email.com' }}</p>
+          <h5>¡Hola {{ dataUser.nombre }}</h5>
+          <p>Tu correo es  {{ dataUser.email }}</p>
         </ion-text>
   
       </div>
@@ -17,13 +17,13 @@
   
     <ion-toolbar color="success" class="paddingToolbar2">
       <ion-text slot="start">
-          <h6>{{ dataUser.username || 'Fernando231' }}</h6>
+          <h6>{{ dataUser.username }}</h6>
           <p>Tu Codigo</p>
       </ion-text>
   
       <ion-text slot="end">
         <h6>{{ dataUser.clientes || 11 }}</h6>
-        <p>Clientes</p>
+        <p>{{ dataUser.cedula }}</p>
       </ion-text>
     </ion-toolbar>
 
@@ -49,7 +49,7 @@
       <ion-label>
         <h2>Ganancias por ventas</h2>
       </ion-label>
-      <p slot="end">{{ _tools.monedaChange( 3, 2, dataResumen.gananciasVentasTotales || '$23.000' ) }}</p>
+      <p slot="end">{{ _tools.monedaChange( 3, 2, dataResumen.gananciasVentasTotales || 0 ) }}</p>
     </ion-item>
     
     <ion-item>
@@ -57,7 +57,7 @@
       <ion-label>
         <h2>Valance por ganar</h2>
       </ion-label>
-      <p slot="end">{{ _tools.monedaChange( 3, 2, dataResumen.ventasEntregadasDetalles || '$0' ) }}</p>
+      <p slot="end">{{ _tools.monedaChange( 3, 2, dataResumen.ventasEntregadasDetalles || 0 ) }}</p>
     </ion-item>
 
   </ion-list>
@@ -82,7 +82,7 @@
       <ion-label>
         <h2>Ganancias de ventas por...</h2>
       </ion-label>
-      <p slot="end">{{ _tools.monedaChange( 3, 2, dataResumen.valanceGanarDetalles || '$23.000' ) }}</p>
+      <p slot="end">{{ _tools.monedaChange( 3, 2, dataResumen.valanceGanarDetalles || 0 ) }}</p>
     </ion-item>
 
   </ion-list>
@@ -107,7 +107,7 @@
       <ion-label>
         <h2>Ganancias totales</h2>
       </ion-label>
-      <p slot="end">{{ _tools.monedaChange( 3, 2, dataResumen.gananciasVentasComision || '$23.000' ) }}</p>
+      <p slot="end">{{ _tools.monedaChange( 3, 2, dataResumen.gananciasVentasComision || 0 ) }}</p>
     </ion-item>
 
   </ion-list>
