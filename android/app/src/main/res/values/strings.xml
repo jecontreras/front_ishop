@@ -2,6 +2,6 @@
 <resources>
     <string name="app_name">ishopt</string>
     <string name="title_activity_main">ishopt</string>
-    <string name="package_name">io.ionic.starter</string>
-    <string name="custom_url_scheme">io.ionic.starter</string>
+    <string name="package_name">com.ishop</string>
+    <string name="custom_url_scheme">com.ishop</string>
 </resources>

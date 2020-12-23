@@ -27,8 +27,10 @@ export class AuthService implements CanActivate {
       this._store.subscribe((store:any)=>{
         store = store.name;
         if( !store ) return false;
-        this.dataUser = store.persona || {};
-        this.dataApp = store.nameapp[0] || {};
+        try {
+          this.dataUser = store.persona || {};
+          this.dataApp = store.nameapp[0] || {};
+        } catch (error) { this.dataApp = true; }
       });
     }
 

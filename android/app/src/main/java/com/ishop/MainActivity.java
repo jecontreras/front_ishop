@@ -1,4 +1,4 @@
-package io.ionic.starter;
+package com.ishop;
 
 import android.os.Bundle;
 
