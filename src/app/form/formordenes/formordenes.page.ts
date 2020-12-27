@@ -59,14 +59,16 @@ export class FormordenesPage implements OnInit {
           emailVendedor: this.evento.emailVendedor,
           cedulaVendedor: this.evento.cedulaVendedor,
           celularCliente: this.evento.idCliente.cedula,
-          direccionCliente: this.evento.direccionCliente
+          direccionCliente: this.evento.direccionCliente,
+          barrioCliente: this.evento.barrioCliente
         },
         factura: {
           fecha_pedido: this.evento.fecha_pedido,
           id: this.evento.id,
           comision: this.evento.comision,
           precio: this.evento.precio,
-          codigo: this.evento.codigo
+          codigo: this.evento.codigo,
+          detalles: this.evento.detalles
         },
         total: this.evento.precio,
         ganancias: this.evento.comision,
@@ -139,13 +141,15 @@ export class FormordenesPage implements OnInit {
         cedulaVendedor: this.dataUser.cedula,
         emailVendedor: this.dataUser.email,
         ciudadCliente: this.data.cliente.ciudadCliente,
-        direccionCliente: this.data.cliente.direccionCliente
+        direccionCliente: this.data.cliente.direccionCliente,
+        detalles: this.data.factura.detalles
       },
       cliente: {
         nombreCliente: this.data.cliente.nombreCliente,
         cedulaCliente: this.data.cliente.cedulaCliente,
         celularCliente: this.data.cliente.celularCliente,
-        emailCliente: this.data.cliente.emailCliente
+        emailCliente: this.data.cliente.emailCliente,
+        barrioCliente: this.data.cliente.barrioCliente
       },
       articulo: this.data.articulo
     };
@@ -162,9 +166,15 @@ export class FormordenesPage implements OnInit {
       this.btnDisabled = false;
       let accion = new OrdenesAction( res.data, 'post');
       this._store.dispatch(accion);
+      this.borrarCarrito();
       this.close();
     },(error)=> console.error(error));
     
+  }
+
+  borrarCarrito(){
+    let accion = new CarritoAction( { }, 'drop');
+    this._store.dispatch( accion );
   }
 
   openCarro(){

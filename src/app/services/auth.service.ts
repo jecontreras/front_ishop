@@ -16,11 +16,21 @@ export interface User {
   providedIn: 'root'
 })
 export class AuthService implements CanActivate {
+
   dataUser:any = {};
-  constructor(private http: HttpClient, private router: Router, private _store: Store<PERSONA>) {
+  dataApp:any = {};
+
+  constructor(
+    private router: Router, 
+    private _store: Store<PERSONA>
+  ) {
       this._store.subscribe((store:any)=>{
         store = store.name;
-        this.dataUser = store.persona || {};
+        if( !store ) return false;
+        try {
+          this.dataUser = store.persona || {};
+          this.dataApp = store.nameapp[0] || {};
+        } catch (error) { this.dataApp = true; }
       });
     }
 
@@ -37,15 +47,15 @@ export class AuthService implements CanActivate {
     }
 
     public isLogged() {
-        if (!localStorage.getItem('user')) {
-          this.router.navigate(['/login']);
+        if ( Object.keys( this.dataUser ).length == 0) {
+          this.router.navigate(['/portada']);
         } else {
           return false;
         }
     }
 
     public isLoggedIn() {
-      if (!localStorage.getItem('user')) {
+      if ( Object.keys( this.dataUser ).length == 0 ) {
         return false;
       } else {
         return true;
@@ -66,7 +76,13 @@ export class AuthService implements CanActivate {
       if (Object.keys(identity).length >0) {
         return true;
       } else {
-        this.router.navigate(['/portada']);
+        try {
+          if( this.dataApp.iniciado ) this.router.navigate(['/portada']);
+          else this.router.navigate(['/ayudas']);
+        } catch (error) {
+          this.router.navigate(['/ayudas']);
+        }
+        
         return false;
       }
     }

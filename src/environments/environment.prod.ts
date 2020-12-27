@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  url: "https://backendishop.herokuapp.com",
-  imgPathProductos: "https://backendishop.herokuapp.com/images/productos/"
+  url: "https://backendishops.herokuapp.com",
+  imgPathProductos: "https://backendishops.herokuapp.com/images/productos/"
 };

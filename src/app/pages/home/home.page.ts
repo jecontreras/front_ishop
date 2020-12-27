@@ -72,6 +72,7 @@ export class HomePage implements OnInit {
   }
 
   getHome(){
+    this._tools.presentLoading();
     this._home.get({ where: {} }).subscribe((res:any)=> this.dataFormatHome(res), (error)=> this._tools.presentToast("Error de servidor"));
   }
 
@@ -90,6 +91,7 @@ export class HomePage implements OnInit {
         this.ev.target.complete();
       }
     }
+    this._tools.dismisPresent();
   }
 
   openProducto( item:any, info:any ){
