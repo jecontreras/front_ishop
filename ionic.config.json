@@ -2,7 +2,9 @@
   "name": "ishopt",
   "integrations": {
     "cordova": {},
-    "capacitor": {}
+    "capacitor": {
+      "enabled": false
+    }
   },
   "type": "angular"
 }
