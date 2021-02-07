@@ -156,13 +156,14 @@ export class ProductosPage  {
     let accion = new CarritoAction(item, 'post');
     this._store.dispatch(accion);
     this._tools.presentToast("Agregado al Carro");
+    this.selecciono='';
   }
   
   async compartir( off ){
     let result:boolean = await this._archivos.compartir( { title: off.titulo, subtitle:'',foto: off.foto, url:'' } );
   }
   async Descargar( off ){
-    
+    this._archivos.download( off.foto );
   }
 
 }

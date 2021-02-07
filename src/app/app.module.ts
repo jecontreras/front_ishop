@@ -23,6 +23,7 @@ import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
 // import { FCM } from 'cordova-plugin-fcm-with-dependecy-updated/ionic/ngx';
 // import { Push } from '@ionic-native/push/ngx';
 //import { FCM } from '@ionic-native/fcm/ngx';
+import { FileTransfer } from '@ionic-native/file-transfer/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -49,6 +50,7 @@ import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
     // Push,
     // FCM,
     File,
+    FileTransfer,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

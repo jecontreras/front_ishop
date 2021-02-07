@@ -3,7 +3,7 @@ import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { File } from '@ionic-native/file/ngx';
 import { Platform } from '@ionic/angular';
 import * as _ from 'lodash';
-// import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
+import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
 import { ServiciosService } from '../services/servicios.service';
 
 @Injectable({
@@ -16,7 +16,7 @@ export class ArchivoService {
     private _model: ServiciosService,
     private socialSharing: SocialSharing,
     private file: File,
-    // private transfer: FileTransfer
+    private transfer: FileTransfer
   ) {
   }
   get(query: any){
@@ -40,16 +40,36 @@ export class ArchivoService {
     });
   }
 
+  download( urls:string ) {
+    const url = 'http://www.example.com/file.pdf';
+    const fileTransfer: FileTransferObject = this.transfer.create();
+    fileTransfer.download(url, this.file.dataDirectory + 'file.pdf').then((entry) => {
+      console.log('download complete: ' + entry.toURL());
+    }, (error) => {
+      // Controlamos el error aquí.
+    });
+  }
+
   async compartir( item ){
     this.compartirWhat( item );
     if( this.platform.is('cordova') ){
-      // let foto:any = await this.getBase64( item.foto );
-      // await this.socialSharing.share(
-      //   item.title,
-      //   item.subtitle,
-      //   item.foto,
-      //   item.url
-      // );
+      let foto:any = await this.getBase64( item.foto );
+      await this.socialSharing.share(
+         item.title,
+         item.subtitle,
+         item.foto,
+         item.url
+      );
+    }else{
+      if (navigator['share']) {
+        navigator['share']({
+          title: item.title,
+          text: item.subtitle,
+          url: item.foto,
+        })
+          .then(() => console.log('Successful share'))
+          .catch((error) => console.log('Error sharing', error));
+      }else console.log("no se pudo compartir porque no se soporta");
     }
     return true;
   }
@@ -116,6 +136,7 @@ export class ArchivoService {
   // }
 
 }
+
 
 export interface ARCHIVO {
 
