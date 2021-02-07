@@ -5,6 +5,7 @@ import { PERSONA } from 'src/app/interfas/sotarage';
 import { Store } from '@ngrx/store';
 import { PersonaAction } from 'src/app/redux/app.actions';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-registro',
@@ -25,10 +26,17 @@ export class RegistroPage implements OnInit {
     private _user: UserService,
     private _tools: ToolsService,
     private _store: Store<PERSONA>,
-    private _router: Router
+    private _router: Router,
+    private _authSrvice: AuthService
   ) { }
 
   ngOnInit() {
+  }
+
+  ionViewWillEnter(){
+    if (this._authSrvice.isLoggedIn()) {
+      this._router.navigate(['/tabs/home']);
+    }
   }
 
   iniciar(){

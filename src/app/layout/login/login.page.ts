@@ -29,13 +29,20 @@ export class LoginPage implements OnInit {
     private _router: Router,
     private _authSrvice: AuthService
   ) { 
-    if (this._authSrvice.isLoggedIn()) {
+    /*if (this._authSrvice.isLoggedIn()) {
       this._router.navigate(['/tabs/home']);
-    }
+    }*/
   }
 
   ngOnInit() {
   }
+
+  ionViewWillEnter(){
+    if (this._authSrvice.isLoggedIn()) {
+      this._router.navigate(['/tabs/home']);
+    }
+  }
+  
   validarDocumento(){
     this._user.get({where:{cedula: this.data.cedula}}).subscribe((res:any)=>{
       if(res.data[0]){this.disablePass = true;}

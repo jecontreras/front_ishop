@@ -41,9 +41,9 @@ export class ArchivoService {
   }
 
   download( urls:string ) {
-    const url = 'http://www.example.com/file.pdf';
+    const url = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZNktOcgcWTKigKPy9EetLxT6UC0kGnHkgqw&usqp=CAU';
     const fileTransfer: FileTransferObject = this.transfer.create();
-    fileTransfer.download(url, this.file.dataDirectory + 'file.pdf').then((entry) => {
+    fileTransfer.download(url, this.file.dataDirectory + 'images.jpg').then((entry) => {
       console.log('download complete: ' + entry.toURL());
     }, (error) => {
       // Controlamos el error aquí.
