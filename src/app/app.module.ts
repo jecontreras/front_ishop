@@ -20,6 +20,7 @@ import { ProductosPageModule } from './pages/productos/productos.module';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { File } from '@ionic-native/file/ngx';
 import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
+import { NgxCurrencyModule } from "ngx-currency";
 // import { FCM } from 'cordova-plugin-fcm-with-dependecy-updated/ionic/ngx';
 // import { Push } from '@ionic-native/push/ngx';
 //import { FCM } from '@ionic-native/fcm/ngx';
@@ -40,6 +41,7 @@ import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
     FormordenesPageModule,
     ComponentsModule,
     ProductosPageModule,
+    NgxCurrencyModule
   ],
   providers: [
     StatusBar,

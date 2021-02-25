@@ -77,10 +77,10 @@ export class AuthService implements CanActivate {
         return true;
       } else {
         try {
-          if( this.dataApp.iniciado ) this.router.navigate(['/portada']);
-          else this.router.navigate(['/ayudas']);
+          if( this.dataApp.iniciado ) this.router.navigate(['/login']);
+          else this.router.navigate(['/login']);
         } catch (error) {
-          this.router.navigate(['/ayudas']);
+          this.router.navigate(['/login']);
         }
         
         return false;

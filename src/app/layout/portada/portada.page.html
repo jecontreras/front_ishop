@@ -1,14 +1,55 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title slot="start">Lista Precios</ion-title>
+    <ion-toggle color="primary" (click)="eventoOcultar()" [(ngModel)]="ocultarDs">Titulo Ocultar</ion-toggle>
+    <ion-button slot="end" color="danger" (click)="limpiar()">Limpiar</ion-button>
+  </ion-toolbar>
+</ion-header>
 <ion-content>
-  <ion-slides [options]="sliderOpts">
-    <ion-slide>
-      <div class="ion-text-center">
-        <img src="./assets/portada.jpg">
-        <ion-button fill="clear" color="success" (click)="ingresar()">Ingresar con tu cuenta</ion-button>
-        <ion-button color="success" (click)="registrar()">Crea tu cuenta</ion-button>
-        <ion-text color="success" (click)="ayuda()">
-          <p>¿Como funciona?</p>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="6" *ngFor="let item of dataCosto" class="border">
+        <ion-text [color]="item.color" (click)="openSelect( item )">
+          <ion-label *ngIf="ocultarDs">
+            {{ item.title}}
+          </ion-label>
+          <ion-label>
+            <input class="casillaButtonPagos" currencyMask [disabled]="true"  [(ngModel)]="item.valor" [options]="opciones" />
+          </ion-label>
         </ion-text>
-      </div>
-    </ion-slide>
-  </ion-slides>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-list>
+    <ion-header>
+      Precios Seleccionados
+    </ion-header>
+  </ion-list>
+  <ion-chip outline color="primary" *ngFor="let item of seleccionados" (click)="eliminar( item )" class="ion-padding">
+    <ion-label>
+      Precio 
+      <input class="casillaButtonPagos" currencyMask [disabled]="true"  [(ngModel)]="item.valor" [options]="opciones" />
+    </ion-label>
+    <ion-label>
+      Cantidad
+      <input class="casillaButtonPagos" currencyMask [disabled]="true"  [(ngModel)]="item.cantidad" [options]="opciones" />
+    </ion-label>
+    <ion-label>
+      Total 
+      <input class="casillaButtonPagos" currencyMask [disabled]="true"  [(ngModel)]="item.total" [options]="opciones" />
+    </ion-label>
+    <ion-icon name="close"></ion-icon>
+  </ion-chip>
 </ion-content>
+
+<ion-footer class="ion-padding">
+  <ion-toolbar>
+    Precio Total <input class="casillaButtonPagos" currencyMask [disabled]="true"  [(ngModel)]="data.total" [options]="opciones" />
+    <ion-button slot="end" *ngIf="seleccionados.length" color="success" (click)="finalizar()">Finalizar Venta</ion-button>
+  </ion-toolbar>
+  <ion-toolbar>
+    Vueltos <input class="casillaButtonPagos" currencyMask [disabled]="true"  [(ngModel)]="data.vueltos" [options]="opciones" />
+    <ion-button slot="end" color="danger" (click)="limpiar()">Limpiar</ion-button>
+  </ion-toolbar>
+</ion-footer>

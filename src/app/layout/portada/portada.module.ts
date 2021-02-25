@@ -7,13 +7,15 @@ import { IonicModule } from '@ionic/angular';
 import { PortadaPageRoutingModule } from './portada-routing.module';
 
 import { PortadaPage } from './portada.page';
+import { NgxCurrencyModule } from "ngx-currency";
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    PortadaPageRoutingModule
+    PortadaPageRoutingModule,
+    NgxCurrencyModule
   ],
   declarations: [PortadaPage]
 })

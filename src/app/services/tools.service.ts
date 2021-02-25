@@ -7,13 +7,18 @@ import { ToastController, LoadingController, AlertController } from '@ionic/angu
 export class ToolsService {
   
   loading:any;
-
+  currency:any = { prefix: '$ ',align: 'left', thousands: '.', decimal: ',', precision: 0 };
+  
   constructor(
     public toastCtrl: ToastController,
     public loadingCrl: LoadingController,
-    public alertController: AlertController
+    public alertController: AlertController,
   ) { }
- 
+  
+  codigo(){
+    return (Date.now().toString(20).substr(2, 3) + Math.random().toString(20).substr(2, 3)).toUpperCase();
+  }
+  
   async presentToast(mensaje:string) {
     const toast = await this.toastCtrl.create({
       message: mensaje,
@@ -104,6 +109,50 @@ export class ToolsService {
     }
     separados = separados.filter( (row:any)=> row != "");
     return '$' + separados.join(".") + ''; //+ ',' + inputNum[1];
+  }
+
+  async cantidadSelect( item:any ){
+    return new Promise( async( resolve ) =>{
+      const alert = await this.alertController.create({
+        cssClass: 'my-custom-class',
+        header: 'Cantidad ' + item.valor,
+        keyboardClose: false,
+        backdropDismiss: false,
+        animated: true,
+        inputs: [
+          {
+            name: 'valor',
+            type: 'number',
+            // value: "1",
+            placeholder: 'Cantidad asignar...'
+          }
+        ],
+        
+        buttons: [
+          {
+            text: 'CONFIRMAR',
+            cssClass: 'primaryBTN',
+            handler: ( ev:any ) => {
+              console.log('Confirm Ok', ev);
+              resolve( Number( ev.valor || 1 ) );
+            }
+          },
+          {
+            text: 'CANCELAR',
+            role: 'cancel',
+            cssClass: 'secondaryBTN',
+            handler: () => {
+              resolve( false );
+              // console.log('Confirm Cancel');
+            }
+          }, 
+        ]
+      });
+  
+      await alert.present();
+      const firstInput: any = document.querySelector('ion-alert input');
+	    firstInput.focus();
+    });
   }
 
 }

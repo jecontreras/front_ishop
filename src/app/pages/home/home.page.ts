@@ -1,13 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import * as _ from 'lodash';
 import { Store } from '@ngrx/store';
 import { STORAGES } from 'src/app/interfas/sotarage';
-import { ModalController } from '@ionic/angular';
-import { BuscadorComponent } from 'src/app/components/buscador/buscador.component';
-import { HomeService } from 'src/app/service-component/home.service';
+import { DataService } from 'src/app/services/data.service';
 import { ToolsService } from 'src/app/services/tools.service';
-import { ResumenPersonaService } from 'src/app/service-component/resumen-persona.service';
-import { Router } from '@angular/router';
-import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 
 @Component({
   selector: 'app-home',
@@ -16,103 +12,78 @@ import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 })
 export class HomePage implements OnInit {
   dataUser:any = {};
-  sliderOpts = {
-    allowSlidePrev: false,
-    allowSlideNext: false
-  };
-  data_app:any = [];
-  slideOpts = {
-    slidesPerView: 2.6,
-    freeMode: true
-  }; 
-  public ev:any = {};
-  public disable_list:boolean = true;
-  dataResumen:any = {};
+  data:any = {};
+  textoBuscar:string;
+  listArticulos:any = [];
+  listSeleccionado:any = [];
+  vista:boolean = true;
 
   constructor( 
     private _store: Store<STORAGES>,
-    private modalCtrl: ModalController,
-    private _home: HomeService,
     public _tools: ToolsService,
-    private Router: Router,
-    private _resumenPersona: ResumenPersonaService,
-    private iab: InAppBrowser
+    private _data: DataService
   ) {
-    this.storeGet();
-    if( Object.keys(this.data_app).length == 0 ) this.getHome();
-    console.log("*****************************pasando--------------------->>>>>>>>>>>>>>>")
+    this._store.subscribe((store:any)=>{
+      store = store.name;
+      if( !store ) return false;
+      // this.listRow = store.ordenes || [];
+      this.dataUser = store.persona || {};
+    });
   }
 
   ngOnInit() {
-    this.getResumen();  
+    this.listArticulos = this._data.lista;
   }
   
-  getResumen(){
-    this._resumenPersona.get( { where: { idPersona: this.dataUser.id }, limit: 1 } ).subscribe(( res:any )=>{
-      this.dataResumen = res.data[0] || {};
-    });
+
+  buscarProducto( ev:any ){
+    this.textoBuscar = ev.detail.value;
+    //console.log("***2", this.textoBuscar);
+    if( this.textoBuscar == "") this.listArticulos = this._data.lista;
+    else this.listArticulos = this.findMatches( this.textoBuscar);
   }
 
-  storeGet(){
-    this._store.subscribe((store:any)=>{
-      store = store.name;
-      this.dataUser = store.persona || {};
-      // this.data_app = store.nameapp || [];
-    });
-  }
-  async ionViewWillEnter(){
-    this.storeGet();
-    if( Object.keys(this.data_app).length == 0 ) this.getHome();
-  }
-  doRefresh(ev){
-    this.ev = ev;
-    this.disable_list = false;
-    this.data_app = [];
-    this.getHome();
-  }
+  findMatches( wordToSearch:string ) {
+    return this.listArticulos.filter(rorw => {
+        const regex = new RegExp(wordToSearch, 'gi');
+        return rorw.titulo.match(regex)
+    })
+}
 
-  getHome(){
-    this._tools.presentLoading();
-    this._home.get({ where: {} }).subscribe((res:any)=> this.dataFormatHome(res), (error)=> this._tools.presentToast("Error de servidor"));
-  }
-
-  dataFormatHome(res:any){
-    // for(let row of res.data){
-    //   let filtro:any = this.data_app.find(item => item.id == row.id);
-    //   if(!filtro){
-    //     let accion = new NameappAction( row, 'post');
-    //     this._store.dispatch(accion);
-    //   }
-    // }
-    this.data_app.push(...res.data );
-    if(this.ev){
-      this.disable_list = true;
-      if(this.ev.target){
-        this.ev.target.complete();
-      }
+  async seleccionando( data:any ){
+    if( !data.check ){
+      data.cantidad = ( await this._tools.cantidadSelect( data ) );
+      console.log( data );
+      if( !data.cantidad ) return false;
+      data.valor = Number( data.valor );
+      data.total = Number( data.valor ) * Number( data.cantidad );
+      this.listSeleccionado.push( data );
+      data.check = !data.check;
+    }else{
+      this.listSeleccionado = this.listSeleccionado.filter( ( item:any )=> item.id !== data.id );
+      data.check = !data.check;
     }
-    this._tools.dismisPresent();
+    this.suma();
   }
 
-  openProducto( item:any, info:any ){
-    if( info.tipo == 'articulos') this.Router.navigate( [ '/tabs/productoView', item .id ] );
+  suma(){
+    this.data.total = _.sumBy( this.listSeleccionado, 'total');
   }
 
-  openSearch(){
-    this.modalCtrl.create({
-      component: BuscadorComponent,
-      componentProps: {
-        obj: {}
-      }
-    }).then(modal=>modal.present());
+  verTiket(){
+    this.suma();
+    this.vista = false;
   }
 
-  compartir(obj:any){
-    console.log(obj);
+  creandoTiket(){
+    this.suma();
+    this.vista = true;
   }
 
-  openPasos(){
-    const browser = this.iab.create("https://www.youtube.com/watch?v=t9h-ML5acDA", '_system');
+  async finalizarTiket(){
+    let alert:any = await this._tools.presentAlertConfirm( { mensaje: "Deseas Finalizar Ticket"} );
+    if( !alert ) return false;
+
   }
 
 }
